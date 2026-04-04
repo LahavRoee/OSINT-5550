@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>OSINT יל"ק 5550 — v2026.04.04</title>
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://lahavroee.github.io/OSINT-5550/v2026.04.04/">
@@ -45,30 +46,57 @@
     line-height: 1.6;
   }
 
-  /* ── Sticky Header ── */
+  /* ══ Sticky Header ══════════════════════════════════════════ */
   .sticky-header {
     position: sticky;
     top: 0;
     z-index: 100;
     background: rgba(7,13,26,0.97);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
     padding: 10px 16px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
   }
-  .header-logo { font-size: 22px; }
-  .header-title { font-size: 15px; font-weight: 700; color: var(--gold); }
-  .header-sub   { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
-  .header-date  {
-    margin-right: auto;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text);
-    direction: ltr;
-    text-align: left;
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
   }
+
+  .header-logo {
+    height: 28px;
+    filter: invert(1) brightness(0.85);
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .header-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    display: none;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .header-version { font-size: 11px; color: var(--text-muted); }
+
   .header-count {
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -76,194 +104,358 @@
     padding: 3px 10px;
     font-size: 12px;
     color: var(--text-dim);
+    font-weight: 600;
   }
 
-  /* ── Hebrew date bar ── */
-  .date-bar {
-    background: var(--surface);
+  .pdf-link {
+    background: var(--gold);
+    color: var(--bg);
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    white-space: nowrap;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+  }
+  .pdf-link:active { background: var(--gold-dim); }
+
+  .map-btn {
+    background: rgba(99,102,241,0.15);
+    border: 1px solid #6366f1;
+    color: #a5b4fc;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    min-height: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .map-btn:active, .map-btn.active { background: rgba(99,102,241,0.35); }
+
+  /* ══ Tactical Map ════════════════════════════════════════════ */
+  .map-section {
+    display: none;
+    border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    padding: 6px 16px;
-    font-size: 11px;
-    color: var(--text-muted);
+    background: var(--surface);
+  }
+  .map-section.open { display: block; }
+
+  .map-section-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .map-section-bar:active { background: var(--surface2); }
+
+  .map-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .map-section-meta { font-size: 12px; color: var(--text-muted); }
+
+  #tactical-map {
+    height: 420px;
+    width: 100%;
+    background: #0d1b2a;
+  }
+  @media (min-width: 640px) { #tactical-map { height: 520px; } }
+
+  .map-legend {
     display: flex;
     gap: 16px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
   }
-  .date-bar span { white-space: nowrap; }
+  .map-legend-item { display: flex; align-items: center; gap: 6px; }
+  .map-legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.2);
+    flex-shrink: 0;
+  }
+  .map-hint { margin-right: auto; font-size: 11px; color: var(--text-muted); font-weight: 400; }
 
-  /* ── Sector nav cards ── */
+  .leaflet-popup-content { direction: rtl; font-family: 'Heebo', sans-serif; }
+
+  /* ══ Hero ═══════════════════════════════════════════════════ */
+  .hero {
+    padding: 22px 16px 18px;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .hero-dates { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+
+  .hero h1 {
+    font-size: clamp(18px, 4.5vw, 24px);
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .notice-banner {
+    background: rgba(201,168,76,.07);
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: var(--radius);
+    padding: 11px 15px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: right;
+    line-height: 1.6;
+  }
+  .notice-banner strong { color: var(--gold); }
+
+  /* ══ Sector Cards ════════════════════════════════════════════ */
   .sector-nav {
-    display: flex;
+    max-width: 720px;
+    margin: 22px auto 0;
+    padding: 0 16px;
+  }
+  .sector-nav-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  .sector-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 8px;
-    padding: 12px 16px;
+  }
+
+  .sector-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.1s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-family: 'Heebo', sans-serif;
+    min-height: 70px;
+  }
+  .sector-card:active { transform: scale(0.97); }
+  .sector-card[data-actor="HAMAS"]:hover,
+  .sector-card[data-actor="HAMAS"].active     { border-color: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"]:hover,
+  .sector-card[data-actor="HEZBOLLAH"].active { border-color: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"]:hover,
+  .sector-card[data-actor="IRAN"].active      { border-color: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"]:hover,
+  .sector-card[data-actor="OTHERS"].active    { border-color: var(--c-others); }
+
+  .sector-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .sector-card[data-actor="HAMAS"]     .sector-dot { background: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"] .sector-dot { background: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"]      .sector-dot { background: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"]    .sector-dot { background: var(--c-others); }
+  .sector-name  { font-weight: 700; font-size: 14px; color: var(--text); }
+  .sector-count { font-size: 12px; color: var(--text-dim); }
+
+  /* ══ Main Content ════════════════════════════════════════════ */
+  .content {
+    max-width: 720px;
+    margin: 24px auto 0;
+    padding: 0 16px 60px;
+  }
+
+  .actor-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    border-bottom: 1px solid var(--border);
+    padding: 2px 0;
   }
-  .sector-nav::-webkit-scrollbar { display: none; }
-  .sector-card {
+  .actor-tabs::-webkit-scrollbar { display: none; }
+
+  .actor-tab {
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-height: 44px;
     display: flex;
     align-items: center;
     gap: 6px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 12px;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: border-color .2s;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
   }
-  .sector-card:hover { border-color: var(--gold-dim); }
-  .sector-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
-  .sector-name { font-weight: 600; }
-  .sector-count { color: var(--text-dim); font-size: 11px; }
+  .actor-tab:active { transform: scale(0.97); }
+  .actor-tab.active { border-color: var(--gold); color: var(--text); }
 
-  /* ── Domain filter ── */
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .actor-tab[data-actor="HAMAS"]     .dot { background: var(--c-hamas); }
+  .actor-tab[data-actor="HEZBOLLAH"] .dot { background: var(--c-hizb); }
+  .actor-tab[data-actor="IRAN"]      .dot { background: var(--c-iran); }
+  .actor-tab[data-actor="OTHERS"]    .dot { background: var(--c-others); }
+
+  .tab-count { background: var(--surface2); padding: 2px 7px; border-radius: 4px; font-size: 11px; }
+
   .domain-filters {
     display: flex;
     gap: 6px;
-    padding: 10px 16px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+    flex-wrap: wrap;
   }
-  .domain-filters::-webkit-scrollbar { display: none; }
-  .filter-btn {
+  .domain-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 4px 12px;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
     font-size: 12px;
     color: var(--text-dim);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all .2s;
-    font-family: 'Heebo', sans-serif;
+    min-height: 34px;
+    transition: all 0.15s;
   }
-  .filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .domain-btn:active { transform: scale(0.95); }
+  .domain-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,.08); }
 
-  /* ── Actor tabs ── */
-  .actor-tabs-bar {
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    border-bottom: 2px solid var(--border);
-    padding: 0 16px;
-    gap: 2px;
-  }
-  .actor-tabs-bar::-webkit-scrollbar { display: none; }
-  .actor-tab {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 12px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: 'Heebo', sans-serif;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    color: var(--text-dim);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all .2s;
-  }
-  .actor-tab:hover { color: var(--text); }
-  .actor-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-
-  .tab-count {
-    background: var(--surface2);
-    border-radius: 10px;
-    padding: 1px 7px;
-    font-size: 11px;
-  }
-
-  /* ── Actor panels ── */
-  .actor-panels { padding: 12px 16px; }
   .actor-panel { display: none; }
-  .actor-panel.active { display: flex; flex-direction: column; gap: 12px; }
+  .actor-panel.active { display: block; }
 
-  /* ── Item card — raw intel, zero analysis ── */
+  /* ══ Item Card ═══════════════════════════════════════════════ */
   .item-card {
     background: var(--surface);
-    border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: border-color .2s;
+    margin-bottom: 10px;
+    border-right: 4px solid var(--border);
+    transition: border-right-color 0.2s, box-shadow 0.35s;
   }
-  .item-card:hover { border-color: var(--surface2); }
+  .item-card[data-actor="HAMAS"]     { border-right-color: var(--c-hamas); }
+  .item-card[data-actor="HEZBOLLAH"] { border-right-color: var(--c-hizb); }
+  .item-card[data-actor="IRAN"]      { border-right-color: var(--c-iran); }
+  .item-card[data-actor="OTHERS"]    { border-right-color: var(--c-others); }
 
-  /* Color accent by actor */
-  .item-card[data-actor="HAMAS"]     { border-right: 3px solid var(--c-hamas); }
-  .item-card[data-actor="HEZBOLLAH"] { border-right: 3px solid var(--c-hizb); }
-  .item-card[data-actor="IRAN"]      { border-right: 3px solid var(--c-iran); }
-  .item-card[data-actor="OTHERS"]    { border-right: 3px solid var(--c-others); }
+  /* Glow on map-click */
+  .item-card.map-highlight {
+    box-shadow: 0 0 0 2px var(--gold), 0 4px 28px rgba(201,168,76,.35);
+    animation: pulse-gold 0.7s ease-out;
+  }
+  @keyframes pulse-gold {
+    0%   { box-shadow: 0 0 0 8px rgba(201,168,76,.5); }
+    100% { box-shadow: 0 0 0 2px var(--gold), 0 4px 28px rgba(201,168,76,.35); }
+  }
 
   .item-card.hidden { display: none; }
 
   .item-top {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
   }
+
   .item-id {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    font-family: monospace;
-    background: var(--surface2);
-    border-radius: 4px;
-    padding: 2px 6px;
     color: var(--text-muted);
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
     letter-spacing: .03em;
   }
+
   .domain-tag {
     font-size: 10px;
     font-weight: 600;
-    background: rgba(201,168,76,.12);
-    border: 1px solid rgba(201,168,76,.3);
-    color: var(--gold);
+    padding: 2px 8px;
     border-radius: 4px;
-    padding: 2px 7px;
+    background: rgba(201,168,76,.1);
+    border: 1px solid rgba(201,168,76,.25);
+    color: var(--gold);
   }
-  .item-datetime {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-right: auto;
-  }
+
+  .item-datetime { font-size: 11px; color: var(--text-muted); margin-right: auto; }
+
   .item-source-link {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-size: 11px;
-    color: var(--gold-dim);
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: rgba(59,130,246,.1);
+    color: #60a5fa;
     text-decoration: none;
-    border: 1px solid rgba(201,168,76,.3);
-    border-radius: 4px;
-    padding: 2px 8px;
-    transition: color .2s, border-color .2s;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(59,130,246,.25);
+    transition: background 0.15s;
+    min-height: 28px;
+    white-space: nowrap;
   }
-  .item-source-link:hover { color: var(--gold); border-color: var(--gold); }
+  .item-source-link:hover { background: rgba(59,130,246,.2); }
 
-  /* Main content: verbatim translation */
+  .map-pin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(99,102,241,.12);
+    color: #a5b4fc;
+    font-size: 12px;
+    border: 1px solid rgba(99,102,241,.3);
+    cursor: pointer;
+    min-height: 28px;
+    transition: background 0.15s;
+    font-family: 'Heebo', sans-serif;
+  }
+  .map-pin-btn:hover { background: rgba(99,102,241,.28); }
+  .map-pin-btn.no-location { opacity: 0.25; cursor: default; pointer-events: none; }
+
   .item-translated {
     font-size: 14px;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--text);
     white-space: pre-wrap;
   }
 
-  /* Collapsible original text */
   .item-original {
     border-top: 1px solid var(--border);
     padding-top: 8px;
+    margin-top: 10px;
   }
   .item-original summary {
     font-size: 11px;
@@ -272,74 +464,96 @@
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+    user-select: none;
   }
   .item-original summary::before { content: '▶'; font-size: 9px; }
   details[open] .item-original summary::before { content: '▼'; }
   .item-original-text {
     font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 6px;
+    color: var(--text-dim);
+    margin-top: 8px;
     line-height: 1.6;
     direction: auto;
     white-space: pre-wrap;
   }
 
-  /* ── Notice banner ── */
-  .notice-banner {
-    margin: 12px 16px;
-    background: rgba(201,168,76,.07);
-    border: 1px solid rgba(201,168,76,.2);
-    border-radius: var(--radius);
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--text-dim);
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .notice-banner strong { color: var(--gold); }
-
-  /* ── Footer ── */
+  /* ══ Footer ══════════════════════════════════════════════════ */
   .page-footer {
-    margin-top: 40px;
-    padding: 20px 16px;
-    border-top: 1px solid var(--border);
     text-align: center;
-    font-size: 11px;
+    padding: 28px 16px;
     color: var(--text-muted);
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+    line-height: 1.9;
   }
   .page-footer a { color: var(--gold-dim); text-decoration: none; }
-  .footer-logo { font-size: 20px; margin-bottom: 6px; }
+  .footer-logo { font-size: 20px; margin-bottom: 4px; }
 
+  /* ══ Desktop ══════════════════════════════════════════════════ */
   @media (min-width: 640px) {
-    .actor-panels { padding: 16px 24px; }
-    .sticky-header { padding: 12px 24px; }
+    .header-sub { display: block; }
+    .hero { padding: 30px 24px 20px; }
+    .content { padding: 0 24px 60px; }
     .item-translated { font-size: 15px; }
+    .sector-nav { padding: 0 24px; }
+  }
+
+  @supports (padding: env(safe-area-inset-bottom)) {
+    body { padding-bottom: env(safe-area-inset-bottom); }
+    .sticky-header { padding-top: calc(10px + env(safe-area-inset-top)); }
   }
 </style>
 </head>
 <body>
 
-<!-- Sticky header -->
+<!-- ── Sticky Header ─────────────────────────────────────────────────────── -->
 <header class="sticky-header">
-  <div class="header-logo">🛡</div>
-  <div>
-    <div class="header-title">OSINT יל"ק 5550</div>
-    <div class="header-sub">ידיעות מתורגמות ומסווגות</div>
+  <div class="header-right">
+    <img src="../assets/logo.png" alt="לוגו" class="header-logo" onerror="this.style.display='none'">
+    <div>
+      <div class="header-title">OSINT יל"ק 5550</div>
+      <div class="header-sub">ידיעות מתורגמות ומסווגות</div>
+    </div>
   </div>
-  <div class="header-date" dir="ltr">04-APRIL-2026</div>
-  <div class="header-count">7 ידיעות</div>
+  <div class="header-left">
+    <span class="header-version">v2026.04.04</span>
+    <span class="header-count">7 ידיעות</span>
+    <a href="digest.pdf" class="pdf-link" download>PDF ↓</a>
+    <button class="map-btn" id="map-btn" title="מפה מודיעינית">🗺</button>
+  </div>
 </header>
 
-<!-- Hebrew / Gregorian date bar -->
-<div class="date-bar">
-  <span>יום שבת, 4 אפריל 2026</span>
-  <span>י״ז ניסן תשפ״ו</span>
+<!-- ── Tactical Map (lazy, collapsible) ──────────────────────────────────── -->
+<div class="map-section" id="map-section">
+  <div class="map-section-bar" id="map-bar">
+    <div class="map-section-title">🗺 מפה מודיעינית — לחץ על ידיעה</div>
+    <span class="map-section-meta">6 ידיעות ממופות · לחץ לסגירה ✕</span>
+  </div>
+  <div id="tactical-map"></div>
+  <div class="map-legend">
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-hamas)"></span>חמאס</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-hizb)"></span>חיזבאללה</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-iran)"></span>איראן</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-others)"></span>אחרים</div>
+    <span class="map-hint">לחץ על מרקר → עבור לידיעה</span>
+  </div>
 </div>
 
-<!-- Sector quick-nav -->
-<nav class="sector-nav"><div class="sector-card" data-actor="HAMAS">
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-dates">יום שבת, 4 אפריל 2026 | י״ז ניסן תשפ״ו</div>
+  <h1>04-APRIL-2026</h1>
+  <div class="notice-banner">
+    ℹ️ <strong>עיקרון פרשנות אפס:</strong> הידיעות מוצגות תרגום מילה במילה מהמקור. אין סיכום, אין פרשנות, אין המלצות. הקישור למקור מופיע בכל ידיעה.
+  </div>
+</section>
+
+<!-- ── Sector quick-nav ───────────────────────────────────────────────────── -->
+<div class="sector-nav">
+  <div class="sector-nav-title">בחר גזרה</div>
+  <div class="sector-cards"><div class="sector-card" data-actor="HAMAS">
       <span class="sector-dot"></span>
       <span class="sector-name">חמאס</span>
       <span class="sector-count">3 ידיעות</span>
@@ -355,47 +569,50 @@
       <span class="sector-dot"></span>
       <span class="sector-name">אחרים</span>
       <span class="sector-count">1 ידיעות</span>
-    </div></nav>
-
-<!-- Methodology notice -->
-<div class="notice-banner">
-  ℹ️ <span><strong>עיקרון פרשנות אפס:</strong> הידיעות מוצגות תרגום מילה במילה מהמקור. אין סיכום, אין פרשנות, אין המלצות. הקישור למקור מופיע בכל ידיעה.</span>
+    </div></div>
 </div>
 
-<!-- Domain filter -->
-<div class="domain-filters">
-  <button class="filter-btn active" data-domain="ALL">הכל</button>
-  <button class="filter-btn" data-domain="KINETIC">קינטי</button>
-  <button class="filter-btn" data-domain="TERRAIN">שטח</button>
-  <button class="filter-btn" data-domain="SOCIAL">חברתי</button>
-  <button class="filter-btn" data-domain="CYBER">סייבר</button>
-  <button class="filter-btn" data-domain="GENERAL">כללי</button>
-</div>
+<!-- ── Main content ──────────────────────────────────────────────────────── -->
+<main class="content">
 
-<!-- Actor tabs -->
-<div class="actor-tabs-bar"><button class="actor-tab active" data-actor="HAMAS">
-    🔴 חמאס
+  <div class="actor-tabs"><button class="actor-tab active" data-actor="HAMAS">
+    <span class="dot"></span>
+    חמאס
     <span class="tab-count">3</span>
   </button><button class="actor-tab" data-actor="HEZBOLLAH">
-    🟠 חיזבאללה
+    <span class="dot"></span>
+    חיזבאללה
     <span class="tab-count">2</span>
   </button><button class="actor-tab" data-actor="IRAN">
-    🟣 איראן
+    <span class="dot"></span>
+    איראן
     <span class="tab-count">1</span>
   </button><button class="actor-tab" data-actor="OTHERS">
-    ⚫ אחרים
+    <span class="dot"></span>
+    אחרים
     <span class="tab-count">1</span>
   </button></div>
 
-<!-- Actor panels -->
-<div class="actor-panels"><div class="actor-panel" id="panel-HAMAS" class="actor-panel active">
-    <div class="item-card" data-actor="HAMAS" data-domain="KINETIC">
+  <div class="domain-filters">
+    <button class="domain-btn active" data-domain="ALL">הכל</button>
+    <button class="domain-btn" data-domain="KINETIC">קינטי</button>
+    <button class="domain-btn" data-domain="TERRAIN">שטח</button>
+    <button class="domain-btn" data-domain="SOCIAL">חברתי</button>
+    <button class="domain-btn" data-domain="CYBER">סייבר</button>
+    <button class="domain-btn" data-domain="GENERAL">כללי</button>
+  </div>
+
+  <div class="actor-panel" id="panel-HAMAS" class="actor-panel active">
+    <div class="item-card" data-actor="HAMAS" data-domain="KINETIC" data-id="H-K1">
       <div class="item-top">
         <span class="item-id">H-K1</span>
         <span class="domain-tag">קינטי</span>
         <span class="item-datetime">04/04/2026 06:14</span>
-        <a href="https://t.me/qassam1brigades/12345" target="_blank" rel="noopener" class="item-source-link" title="פתח מקור מקורי">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <button class="map-pin-btn"
+    data-item-id="H-K1"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/qassam1brigades/12345" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         מקור
       </a>
       </div>
@@ -405,13 +622,16 @@
         <div class="item-original-text">شهداء القسام: استهدفنا تجمعًا لجنود الاحتلال بالرصاص الحي شمال مخيم النصيرات، وتأكد وقوع إصابات في صفوفهم.</div>
       </details>
     </div>
-    <div class="item-card" data-actor="HAMAS" data-domain="KINETIC">
+    <div class="item-card" data-actor="HAMAS" data-domain="KINETIC" data-id="H-K2">
       <div class="item-top">
         <span class="item-id">H-K2</span>
         <span class="domain-tag">קינטי</span>
         <span class="item-datetime">04/04/2026 08:52</span>
-        <a href="https://t.me/qassam1brigades/12346" target="_blank" rel="noopener" class="item-source-link" title="פתח מקור מקורי">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <button class="map-pin-btn"
+    data-item-id="H-K2"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/qassam1brigades/12346" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         מקור
       </a>
       </div>
@@ -421,11 +641,14 @@
         <div class="item-original-text">كتائب القسام: إطلاق 3 قذائف هاون صوب آليات الاحتلال المتمركزة على محور نتساريم.</div>
       </details>
     </div>
-    <div class="item-card" data-actor="HAMAS" data-domain="SOCIAL">
+    <div class="item-card" data-actor="HAMAS" data-domain="SOCIAL" data-id="H-S1">
       <div class="item-top">
         <span class="item-id">H-S1</span>
         <span class="domain-tag">חברתי</span>
         <span class="item-datetime">04/04/2026 10:30</span>
+        <button class="map-pin-btn"
+    data-item-id="H-S1"
+    title="הצג על המפה">📍</button>
         
       </div>
       <div class="item-translated">המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.</div>
@@ -434,13 +657,16 @@
         <div class="item-original-text">المكتب الإعلامي لحركة حماس: نؤكد أن المقاومة ستواصل عملياتها حتى انسحاب كامل قوات الاحتلال من القطاع.</div>
       </details>
     </div></div><div class="actor-panel" id="panel-HEZBOLLAH">
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K1">
       <div class="item-top">
         <span class="item-id">HZ-K1</span>
         <span class="domain-tag">קינטי</span>
         <span class="item-datetime">04/04/2026 07:20</span>
-        <a href="https://t.me/moqawama/9871" target="_blank" rel="noopener" class="item-source-link" title="פתח מקור מקורי">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K1"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/moqawama/9871" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         מקור
       </a>
       </div>
@@ -450,11 +676,14 @@
         <div class="item-original-text">المقاومة الإسلامية في لبنان: استهدفنا موقع ميرون بصاروخَي بركان وأُكّدت الإصابة.</div>
       </details>
     </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN">
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T1">
       <div class="item-top">
         <span class="item-id">HZ-T1</span>
         <span class="domain-tag">שטח</span>
         <span class="item-datetime">04/04/2026 11:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-T1"
+    title="הצג על המפה">📍</button>
         
       </div>
       <div class="item-translated">נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.</div>
@@ -463,13 +692,16 @@
         <div class="item-original-text">رصد تعزيزات عسكرية إسرائيلية على طول الشريط الحدودي من رأس الناقورة حتى المطلة.</div>
       </details>
     </div></div><div class="actor-panel" id="panel-IRAN">
-    <div class="item-card" data-actor="IRAN" data-domain="SOCIAL">
+    <div class="item-card" data-actor="IRAN" data-domain="SOCIAL" data-id="IR-S1">
       <div class="item-top">
         <span class="item-id">IR-S1</span>
         <span class="domain-tag">חברתי</span>
         <span class="item-datetime">04/04/2026 09:00</span>
-        <a href="https://www.tasnimnews.com/fa/news/2026/04/04/123456" target="_blank" rel="noopener" class="item-source-link" title="פתח מקור מקורי">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <button class="map-pin-btn no-location"
+    data-item-id="IR-S1"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://www.tasnimnews.com/fa/news/2026/04/04/123456" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         מקור
       </a>
       </div>
@@ -479,11 +711,14 @@
         <div class="item-original-text">وكالة تسنيم: المتحدث باسم الحرس الثوري يؤكد استمرار دعم إيران للمقاومة في فلسطين ولبنان.</div>
       </details>
     </div></div><div class="actor-panel" id="panel-OTHERS">
-    <div class="item-card" data-actor="OTHERS" data-domain="KINETIC">
+    <div class="item-card" data-actor="OTHERS" data-domain="KINETIC" data-id="O-K1">
       <div class="item-top">
         <span class="item-id">O-K1</span>
         <span class="domain-tag">קינטי</span>
         <span class="item-datetime">04/04/2026 13:15</span>
+        <button class="map-pin-btn"
+    data-item-id="O-K1"
+    title="הצג על המפה">📍</button>
         
       </div>
       <div class="item-translated">גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.</div>
@@ -491,57 +726,234 @@
         <summary>טקסט מקורי</summary>
         <div class="item-original-text">كتائب شهداء الأقصى: إطلاق نار على قوة إسرائيلية في منطقة جنين — لا إصابات معلنة.</div>
       </details>
-    </div></div></div>
+    </div></div>
 
-<!-- Footer -->
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
 <footer class="page-footer">
   <div class="footer-logo">🛡</div>
   <div>יל"ק 5550 — יסוד האש</div>
-  <div style="margin-top:4px"><a href="../../">ארכיון תחקירים</a> · <a href="digest.pdf">PDF</a></div>
-  <div style="margin-top:8px">v2026.04.04 · 04-APRIL-2026</div>
+  <div><a href="../../">ארכיון תחקירים</a> · <a href="digest.pdf">PDF</a></div>
+  <div style="margin-top:6px">v2026.04.04 · 04-APRIL-2026</div>
 </footer>
 
 <script>
-// ── Actor tab switching ──────────────────────────────────────────────────────
-document.querySelectorAll('.actor-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
+// ── Map items injected by sitebuilder ────────────────────────────────────────
+const MAP_ITEMS = [{"id":"H-K1","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 06:14","text":"שהידי אל-קסאם: תקפנו ריכוז חיילי כיבוש בירי חי צפון מחנה אל-נוסיירט, ואושרו פגיעות בשורותיהם.","lat":31.426,"lon":34.395},{"id":"H-K2","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 08:52","text":"גדודי אל-קסאם: ירי 3 פגזי מרגמה לעבר כלי רכב של הכיבוש המרוכזים על ציר נצרים.","lat":31.389,"lon":34.337},{"id":"H-S1","actor":"HAMAS","domain":"SOCIAL","datetime":"04/04/2026 10:30","text":"המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.","lat":31.5,"lon":34.467},{"id":"HZ-K1","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"04/04/2026 07:20","text":"ההתנגדות האסלאמית בלבנון: תקפנו את עמדת מירון בשני טילי בורקן ואושרה הפגיעה.","lat":32.997,"lon":35.421},{"id":"HZ-T1","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"04/04/2026 11:05","text":"נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.","lat":33.113,"lon":35.137},{"id":"IR-S1","actor":"IRAN","domain":"SOCIAL","datetime":"04/04/2026 09:00","text":"סוכנות תסנים: דובר משמרות המהפכה מאשר המשך תמיכת איראן בהתנגדות בפלסטין ולבנון.","lat":null,"lon":null},{"id":"O-K1","actor":"OTHERS","domain":"KINETIC","datetime":"04/04/2026 13:15","text":"גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.","lat":32.46,"lon":35.3}];
+
+const ACTOR_COLOR = {
+  HAMAS:'#dc2626', HEZBOLLAH:'#ea580c', IRAN:'#7c3aed', OTHERS:'#16a34a'
+};
+const ACTOR_HEB = {
+  HAMAS:'חמאס', HEZBOLLAH:'חיזבאללה', IRAN:'איראן', OTHERS:'אחרים'
+};
+const DOMAIN_HEB = {
+  KINETIC:'קינטי', TERRAIN:'שטח', SOCIAL:'חברתי', CYBER:'סייבר', GENERAL:'כללי'
+};
+
+// ── Actor tabs ────────────────────────────────────────────────────────────────
+document.querySelectorAll('.actor-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
     document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    const panel = document.getElementById('panel-' + btn.dataset.actor);
+    tab.classList.add('active');
+    const panel = document.getElementById('panel-' + tab.dataset.actor);
     if (panel) panel.classList.add('active');
-    // Re-apply domain filter
-    applyDomainFilter(currentDomain);
+    applyDomain(currentDomain);
   });
 });
 
-// ── Sector card → actor tab jump ────────────────────────────────────────────
+// ── Sector cards → activate tab + scroll ─────────────────────────────────────
 document.querySelectorAll('.sector-card').forEach(card => {
   card.addEventListener('click', () => {
-    const tab = document.querySelector(`.actor-tab[data-actor="${card.dataset.actor}"]`);
-    if (tab) { tab.click(); tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); }
+    const actor = card.dataset.actor;
+    document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
+    const tab = document.querySelector('.actor-tab[data-actor="' + actor + '"]');
+    if (tab) tab.classList.add('active');
+    const panel = document.getElementById('panel-' + actor);
+    if (panel) panel.classList.add('active');
+    card.classList.add('active');
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
+    currentDomain = 'ALL';
+    applyDomain('ALL');
+    document.querySelector('.content').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 
-// ── Domain filter ────────────────────────────────────────────────────────────
+// ── Domain filter ─────────────────────────────────────────────────────────────
 let currentDomain = 'ALL';
 
-function applyDomainFilter(domain) {
+function applyDomain(domain) {
+  currentDomain = domain;
   const panel = document.querySelector('.actor-panel.active');
   if (!panel) return;
   panel.querySelectorAll('.item-card').forEach(card => {
-    const show = domain === 'ALL' || card.dataset.domain === domain;
-    card.classList.toggle('hidden', !show);
+    card.classList.toggle('hidden', domain !== 'ALL' && card.dataset.domain !== domain);
   });
 }
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+document.querySelectorAll('.domain-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    currentDomain = btn.dataset.domain;
-    applyDomainFilter(currentDomain);
+    applyDomain(btn.dataset.domain);
   });
+});
+
+// ── Map pin buttons (📍 on each item card) ────────────────────────────────────
+document.querySelectorAll('.map-pin-btn:not(.no-location)').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const itemId = btn.dataset.itemId;
+    const ms = document.getElementById('map-section');
+    const mb = document.getElementById('map-btn');
+    if (!ms.classList.contains('open')) {
+      ms.classList.add('open');
+      mb && mb.classList.add('active');
+      ms.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => loadLeaflet(() => initMap(itemId)), 350);
+    } else {
+      flyToItem(itemId);
+      ms.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ── Highlight item card ───────────────────────────────────────────────────────
+function highlightItem(itemId) {
+  const card = document.querySelector('.item-card[data-id="' + itemId + '"]');
+  if (!card) return;
+  const actor = card.dataset.actor;
+  // Activate tab
+  document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+  const tab = document.querySelector('.actor-tab[data-actor="' + actor + '"]');
+  if (tab) tab.classList.add('active');
+  const panel = document.getElementById('panel-' + actor);
+  if (panel) panel.classList.add('active');
+  // Reset domain
+  document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
+  applyDomain('ALL');
+  // Highlight animation
+  document.querySelectorAll('.item-card.map-highlight').forEach(c => c.classList.remove('map-highlight'));
+  card.classList.add('map-highlight');
+  setTimeout(() => card.classList.remove('map-highlight'), 3200);
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
+}
+
+// ── Called from Leaflet popup button ─────────────────────────────────────────
+function handleMapItemClick(itemId) {
+  if (leafletMap) leafletMap.closePopup();
+  highlightItem(itemId);
+}
+
+// ── Leaflet lazy-load + map init ──────────────────────────────────────────────
+let mapReady = false;
+let leafletMap = null;
+let markersMap = {};
+
+function loadLeaflet(cb) {
+  if (window.L) { cb(); return; }
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  document.head.appendChild(css);
+  const js = document.createElement('script');
+  js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  js.onload = cb;
+  document.head.appendChild(js);
+}
+
+function initMap(focusItemId) {
+  if (mapReady) {
+    leafletMap && leafletMap.invalidateSize();
+    if (focusItemId) flyToItem(focusItemId);
+    return;
+  }
+  mapReady = true;
+
+  const valid = MAP_ITEMS.filter(i => i.lat && i.lon);
+  let center = [32.0, 35.2], zoom = 8;
+  if (valid.length === 1) { center = [valid[0].lat, valid[0].lon]; zoom = 12; }
+  else if (valid.length > 1) {
+    const lat = valid.reduce((s,i) => s + i.lat, 0) / valid.length;
+    const lon = valid.reduce((s,i) => s + i.lon, 0) / valid.length;
+    center = [lat, lon];
+    zoom = 9;
+  }
+
+  leafletMap = L.map('tactical-map', { zoomControl: true, attributionControl: false })
+               .setView(center, zoom);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 })
+   .addTo(leafletMap);
+  L.control.attribution({ prefix: '© OpenStreetMap' }).addTo(leafletMap);
+
+  valid.forEach(item => {
+    const color  = ACTOR_COLOR[item.actor] || '#94a3b8';
+    const aHeb   = ACTOR_HEB[item.actor]   || item.actor;
+    const dHeb   = DOMAIN_HEB[item.domain] || item.domain;
+    const snippet = item.text.length > 110 ? item.text.substring(0, 110) + '…' : item.text;
+
+    const popup = `
+      <div style="min-width:240px;max-width:300px;line-height:1.55;font-family:Heebo,sans-serif;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;">
+          <span style="background:${color}22;color:${color};border:1.5px solid ${color};border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;">${item.id}</span>
+          <span style="font-size:11px;color:#64748b;">${aHeb} · ${dHeb}</span>
+        </div>
+        ${item.datetime ? '<div style="font-size:11px;color:#94a3b8;margin-bottom:7px;">' + item.datetime + '</div>' : ''}
+        <div style="font-size:13px;color:#1e293b;line-height:1.6;margin-bottom:12px;">${snippet}</div>
+        <button onclick="handleMapItemClick('${item.id}')"
+          style="width:100%;background:${color};color:#fff;border:none;border-radius:7px;padding:8px 12px;font-weight:700;font-size:13px;cursor:pointer;font-family:Heebo,sans-serif;">
+          עבור לידיעה ↓
+        </button>
+      </div>`;
+
+    const marker = L.circleMarker([item.lat, item.lon], {
+      radius: 14,
+      fillColor: color,
+      color: '#fff',
+      weight: 2.5,
+      opacity: 1,
+      fillOpacity: 0.85,
+    }).addTo(leafletMap)
+      .bindPopup(popup, { maxWidth: 320, className: 'tactical-popup' })
+      .bindTooltip('<b>' + item.id + '</b> ' + snippet.substring(0, 40), { direction: 'top', sticky: true });
+
+    markersMap[item.id] = marker;
+  });
+
+  if (focusItemId) setTimeout(() => flyToItem(focusItemId), 200);
+}
+
+function flyToItem(itemId) {
+  const marker = markersMap[itemId];
+  if (!marker) return;
+  leafletMap.flyTo(marker.getLatLng(), 13, { duration: 0.8 });
+  setTimeout(() => marker.openPopup(), 900);
+}
+
+// ── Map open / close ──────────────────────────────────────────────────────────
+const mapBtn = document.getElementById('map-btn');
+const mapSection = document.getElementById('map-section');
+
+mapBtn && mapBtn.addEventListener('click', () => {
+  const isOpen = mapSection.classList.toggle('open');
+  mapBtn.classList.toggle('active', isOpen);
+  if (isOpen) {
+    mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => loadLeaflet(() => initMap(null)), 350);
+  }
+});
+
+// Click bar to close
+document.getElementById('map-bar') && document.getElementById('map-bar').addEventListener('click', () => {
+  mapSection.classList.remove('open');
+  mapBtn && mapBtn.classList.remove('active');
 });
 </script>
 </body>

@@ -26,12 +26,74 @@ const DOMAIN_HEB = {
   GENERAL: 'כללי',
 };
 
-// ─── Item card — verbatim translation + source link, zero analysis ────────────
+// ─── Location lookup — resolve text → lat/lon ─────────────────────────────────
+
+const LOCATION_COORDS = {
+  // South Lebanon
+  'אלחיאם':       [33.350, 35.487], 'אל חיאם':   [33.350, 35.487],
+  'קנטרה':        [33.283, 35.515],
+  'בינת ג\'ביל':  [33.115, 35.430], 'בינת גביל': [33.115, 35.430], 'בינת': [33.115, 35.430],
+  'עיתרון':       [33.083, 35.370],
+  'עינאתא':       [33.090, 35.447],
+  'שמע':          [33.103, 35.193],
+  'נאקורה':       [33.113, 35.137], 'אל נאקורה': [33.113, 35.137], 'ראס אל-נאקורה': [33.113, 35.137],
+  'ראמיה':        [33.133, 35.340],
+  'צור':          [33.270, 35.193],
+  'מרג\'יון':     [33.367, 35.593],
+  'דבל':          [33.090, 35.420],
+  'מירון':        [32.997, 35.421],
+  // Gaza
+  'עזה':          [31.500, 34.467], 'רצועת עזה': [31.500, 34.467], 'הרצועה': [31.500, 34.467],
+  'רפיח':         [31.287, 34.250],
+  'חאן יונס':     [31.340, 34.300], 'ח\'אן יונס': [31.340, 34.300],
+  'בית לאהיא':    [31.558, 34.493],
+  'ג\'בליה':      [31.527, 34.481],
+  'נוסיירט':      [31.426, 34.395], 'אל-נוסיירט': [31.426, 34.395], 'מחנה אל-נוסיירט': [31.426, 34.395],
+  'נצרים':        [31.389, 34.337], 'ציר נצרים':  [31.389, 34.337],
+  'שג\'עיה':      [31.497, 34.487],
+  // West Bank
+  'ג\'נין':       [32.460, 35.300],
+  'שכם':          [32.217, 35.260], 'נבלוס':  [32.217, 35.260],
+  'טולכרם':       [32.317, 35.013],
+  'קלקיליה':      [32.188, 34.970],
+  'רמאללה':       [31.900, 35.200],
+  'חברון':        [31.530, 35.100],
+  'יריחו':        [31.856, 35.462],
+  'טובאס':        [32.318, 35.373],
+  // North Israel
+  'קרית שמונה':   [33.207, 35.570],
+  'מטולה':        [33.270, 35.570], 'המטולה': [33.270, 35.570],
+  'נהריה':        [33.003, 35.094],
+  'עכו':          [32.928, 35.082],
+  // Yemen / Houthis
+  'צנעא':         [15.352, 44.207],
+  'עדן':          [12.780, 45.036],
+  'הורמוז':       [26.500, 56.500], 'מצרי הורמוז': [26.500, 56.500],
+  // Iran
+  'טהרן':         [35.689, 51.389], 'תהרן': [35.689, 51.389],
+  'איספהאן':      [32.660, 51.680],
+};
+
+/**
+ * Try to find coordinates for an item by scanning its translated text.
+ * Returns { lat, lon } or { lat: null, lon: null }.
+ */
+function resolveItemCoords(item) {
+  const text = (item.translated_text || item.original_text || '').toLowerCase();
+  for (const [name, coords] of Object.entries(LOCATION_COORDS)) {
+    if (text.includes(name.toLowerCase())) {
+      return { lat: coords[0], lon: coords[1] };
+    }
+  }
+  return { lat: null, lon: null };
+}
+
+// ─── Item card — verbatim translation + source link + map pin ─────────────────
 
 function buildItemCard(item) {
   const sourceLink = item.source_url
-    ? `<a href="${item.source_url}" target="_blank" rel="noopener" class="item-source-link" title="פתח מקור מקורי">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    ? `<a href="${item.source_url}" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         מקור
       </a>`
     : '';
@@ -42,7 +104,14 @@ function buildItemCard(item) {
 
   const domainLabel = DOMAIN_HEB[item.domain] || item.domain;
 
-  // Show original text as collapsible if it differs from translated
+  // Map pin button — enabled only when we have coords
+  const { lat, lon } = resolveItemCoords(item);
+  const hasLocation = lat !== null;
+  const mapPin = `<button class="map-pin-btn${hasLocation ? '' : ' no-location'}"
+    data-item-id="${item.id}"
+    title="${hasLocation ? 'הצג על המפה' : 'מיקום לא ידוע'}">📍</button>`;
+
+  // Collapsible original
   const showOriginal = item.original_text && item.original_text !== item.translated_text;
   const originalBlock = showOriginal
     ? `<details class="item-original">
@@ -52,11 +121,12 @@ function buildItemCard(item) {
     : '';
 
   return `
-    <div class="item-card" data-actor="${item.actor}" data-domain="${item.domain}">
+    <div class="item-card" data-actor="${item.actor}" data-domain="${item.domain}" data-id="${item.id}">
       <div class="item-top">
         <span class="item-id">${item.id}</span>
         <span class="domain-tag">${domainLabel}</span>
         ${datetime}
+        ${mapPin}
         ${sourceLink}
       </div>
       <div class="item-translated">${item.translated_text || item.original_text || ''}</div>
@@ -64,12 +134,13 @@ function buildItemCard(item) {
     </div>`;
 }
 
-// ─── Actor tab + panel ────────────────────────────────────────────────────────
+// ─── Actor tab ────────────────────────────────────────────────────────────────
 
 function buildActorTab(actorKey, actorData) {
   const count = (actorData.items || []).length;
   return `<button class="actor-tab" data-actor="${actorKey}">
-    ${ACTOR_EMOJIS[actorKey]} ${ACTOR_NAMES[actorKey]}
+    <span class="dot"></span>
+    ${ACTOR_NAMES[actorKey]}
     <span class="tab-count">${count}</span>
   </button>`;
 }
@@ -80,7 +151,7 @@ function buildActorPanel(actorKey, actorData) {
   return `<div class="actor-panel" id="panel-${actorKey}">${items}${empty}</div>`;
 }
 
-// ─── Sector nav cards (header quick-nav) ─────────────────────────────────────
+// ─── Sector nav cards ─────────────────────────────────────────────────────────
 
 function buildSectorCards(actors) {
   const actorOrder = ['HAMAS', 'HEZBOLLAH', 'IRAN', 'OTHERS'];
@@ -96,6 +167,29 @@ function buildSectorCards(actors) {
   }).filter(Boolean).join('');
 }
 
+// ─── Map items — all items with resolved coordinates ─────────────────────────
+
+function buildMapItemsJson(actors) {
+  const actorOrder = ['HAMAS', 'HEZBOLLAH', 'IRAN', 'OTHERS'];
+  const mapItems = [];
+  for (const k of actorOrder) {
+    const items = (actors[k]?.items || []);
+    for (const item of items) {
+      const { lat, lon } = resolveItemCoords(item);
+      mapItems.push({
+        id:       item.id,
+        actor:    item.actor,
+        domain:   item.domain,
+        datetime: item.datetime || null,
+        text:     item.translated_text || item.original_text || '',
+        lat,
+        lon,
+      });
+    }
+  }
+  return JSON.stringify(mapItems);
+}
+
 // ─── Main page builder ────────────────────────────────────────────────────────
 
 function buildVersionPage(data) {
@@ -103,28 +197,34 @@ function buildVersionPage(data) {
   let html = fs.readFileSync(templatePath, 'utf-8');
 
   const actorOrder = ['HAMAS', 'HEZBOLLAH', 'IRAN', 'OTHERS'];
-  const tabs   = actorOrder.map(k => buildActorTab(k, data.actors[k] || { items: [] })).join('');
-  const panels = actorOrder.map(k => buildActorPanel(k, data.actors[k] || { items: [] })).join('');
+  const tabs        = actorOrder.map(k => buildActorTab(k, data.actors[k] || { items: [] })).join('');
+  const panels      = actorOrder.map(k => buildActorPanel(k, data.actors[k] || { items: [] })).join('');
   const sectorCards = buildSectorCards(data.actors);
+  const mapItemsJson = buildMapItemsJson(data.actors);
 
   const dates = getBothDates(data.meta.date);
 
   const totalItems = actorOrder.reduce((n, k) => n + (data.actors[k]?.items || []).length, 0);
 
-  // Find first actor with items for default active tab
+  // Count how many items have coordinates
+  const mappedCount = JSON.parse(mapItemsJson).filter(i => i.lat).length;
+
+  // First actor with items → active by default
   const firstActive = actorOrder.find(k => (data.actors[k]?.items || []).length > 0) || 'HAMAS';
 
   html = html
-    .replace(/\{\{VERSION\}\}/g,       data.meta.version)
-    .replace(/\{\{DISPLAY_DATE\}\}/g,  dates.display)
-    .replace(/\{\{ITEM_COUNT\}\}/g,    String(totalItems))
+    .replace(/\{\{VERSION\}\}/g,        data.meta.version)
+    .replace(/\{\{DISPLAY_DATE\}\}/g,   dates.display)
+    .replace(/\{\{ITEM_COUNT\}\}/g,     String(totalItems))
     .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
-    .replace(/\{\{HEBREW_DATE\}\}/g,   dates.hebrew)
-    .replace('{{SECTOR_CARDS}}',       sectorCards)
-    .replace('{{ACTOR_TABS}}',         tabs)
-    .replace('{{ACTOR_PANELS}}',       panels);
+    .replace(/\{\{HEBREW_DATE\}\}/g,    dates.hebrew)
+    .replace(/\{\{MAPPED_COUNT\}\}/g,   String(mappedCount))
+    .replace('{{SECTOR_CARDS}}',        sectorCards)
+    .replace('{{ACTOR_TABS}}',          tabs)
+    .replace('{{ACTOR_PANELS}}',        panels)
+    .replace('{{MAP_ITEMS_JSON}}',      mapItemsJson);
 
-  // Set first actor tab active — match the <button> specifically to avoid hitting sector-cards
+  // Set first actor tab + panel active
   html = html.replace(
     `class="actor-tab" data-actor="${firstActive}">`,
     `class="actor-tab active" data-actor="${firstActive}">`
