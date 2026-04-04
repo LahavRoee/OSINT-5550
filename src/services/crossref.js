@@ -149,6 +149,7 @@ function generateCrossRefs(synthesisData) {
  */
 function buildCrossRefSidebar(crossRefs) {
   let html = '<div class="crossref-sidebar">';
+  html += '<button class="crossref-close">&times;</button>';
   html += '<h2>הצלבת מקורות</h2>';
   html += '<div class="crossref-desc">מקורות חיצוניים לאימות ובדיקה</div>';
 

@@ -113,36 +113,47 @@ function buildHomepage(digests) {
   const templatePath = path.join(config.paths.templates, 'index.html');
   let html = fs.readFileSync(templatePath, 'utf-8');
 
-  let latestSection = '<div class="latest"><div class="version">אין תחקירים עדיין</div></div>';
+  let latestSection = '';
   let archiveList = '';
+  let footerCta = '';
 
   if (digests.length > 0) {
     const latest = digests[0];
     const threatLevel = latest.threat_level || 'LOW';
+    const dates = getBothDates(latest.date);
     latestSection = `
-      <div class="latest">
-        <div class="version">${latest.version}</div>
-        <div class="info">
+      <div class="latest-card">
+        <div class="latest-version">${latest.version}</div>
+        <div class="latest-meta">
           <span class="threat-badge threat-${threatLevel}">${threatLevel}</span>
-          | ${latest.new_count || 0} פריטים | ${latest.date}
+          <span>${latest.new_count || 0} פריטים</span>
+          <span>${dates.hebrew}</span>
         </div>
-        <a href="${latest.version}/" class="btn-main">כנס לתחקיר האחרון</a>
+        <a href="${latest.version}/" class="btn-cta">כנס לתחקיר האחרון</a>
       </div>`;
+
+    footerCta = `<a href="${latest.version}/" class="btn-cta">לתחקיר האחרון</a>`;
 
     archiveList = digests.map(d => `
       <li class="archive-item">
         <div>
           <span class="ver">${d.version}</span>
-          <span class="detail"> — ${d.new_count || 0} פריטים</span>
+          <span class="detail"> \u2014 ${d.new_count || 0} פריטים</span>
         </div>
         <a href="${d.version}/">פתח</a>
       </li>`
     ).join('');
+  } else {
+    latestSection = `
+      <div class="latest-card">
+        <div class="latest-version" style="color:var(--text-dim)">אין תחקירים עדיין</div>
+      </div>`;
   }
 
   html = html
     .replace('{{LATEST_SECTION}}', latestSection)
-    .replace('{{ARCHIVE_LIST}}', archiveList);
+    .replace('{{ARCHIVE_LIST}}', archiveList)
+    .replace('{{FOOTER_CTA}}', footerCta);
 
   return html;
 }
