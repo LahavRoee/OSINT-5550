@@ -44,6 +44,88 @@ function buildItemCard(item) {
     </div>`;
 }
 
+// ─── Location coordinate lookup (for navigator_brief axes without lat/lon) ───
+const LOCATION_COORDS = {
+  // South Lebanon
+  'אלח\'יאם': [33.350, 35.487], 'אלחיאם': [33.350, 35.487],
+  'קנטרה': [33.283, 35.515],
+  'בינת ג\'ביל': [33.115, 35.430], 'בינת גביל': [33.115, 35.430], 'בינת': [33.115, 35.430],
+  'עיתרון': [33.083, 35.370],
+  'עינאתא': [33.090, 35.447],
+  'שמע': [33.103, 35.193],
+  'נאקורה': [33.113, 35.137], 'אלנאקורה': [33.113, 35.137],
+  'ראמיה': [33.133, 35.340],
+  'צור': [33.270, 35.193],
+  'מרג\'יון': [33.367, 35.593],
+  'ח\'רבת מאעז': [33.250, 35.480],
+  'דבל': [33.090, 35.420],
+  'רשאף': [33.095, 35.455],
+  'חאמול': [33.080, 35.210],
+  // Gaza
+  'עזה': [31.500, 34.467], 'רצועת עזה': [31.500, 34.467],
+  'רפיח': [31.287, 34.250],
+  'חאן יונס': [31.340, 34.300],
+  'בית לאהיא': [31.558, 34.493],
+  // West Bank
+  'ג\'נין': [32.460, 35.300],
+  'שכם': [32.217, 35.260], 'נבלוס': [32.217, 35.260],
+  'טולכרם': [32.317, 35.013],
+  'קלקיליה': [32.188, 34.970],
+  'רמאללה': [31.900, 35.200],
+  'חברון': [31.530, 35.100],
+  // North Israel
+  'קרית שמונה': [33.207, 35.570],
+  'מטולה': [33.270, 35.570],
+  'נהריה': [33.003, 35.094],
+  'עכו': [32.928, 35.082],
+  // Iran/Hormuz
+  'הורמוז': [26.500, 56.500], 'מצרי הורמוז': [26.500, 56.500],
+  'הרמוז': [26.500, 56.500],
+};
+
+function resolveCoords(axis) {
+  // Use explicit lat/lon if provided
+  if (axis.lat && axis.lon) return { lat: axis.lat, lon: axis.lon };
+
+  // Try matching axis_name and area against known locations
+  const text = `${axis.axis_name} ${axis.area || ''}`.toLowerCase();
+  for (const [name, coords] of Object.entries(LOCATION_COORDS)) {
+    if (text.includes(name.toLowerCase())) {
+      return { lat: coords[0], lon: coords[1] };
+    }
+  }
+  return { lat: null, lon: null };
+}
+
+function buildMapSection(axes) {
+  if (!axes || axes.length === 0) return '';
+
+  const axesWithCoords = axes.map(ax => {
+    const { lat, lon } = resolveCoords(ax);
+    return { ...ax, lat, lon };
+  });
+
+  const valid = axesWithCoords.filter(a => a.lat && a.lon);
+  if (valid.length === 0) return '';
+
+  const axesJson = JSON.stringify(axesWithCoords);
+
+  return `
+<div class="map-section" id="map-section">
+  <div class="map-section-bar" id="map-bar">
+    <div class="map-section-title">🗺 מפה טקטית — צירים חשופים</div>
+    <span class="map-section-meta">${valid.length} צירים ממופים | לחץ להרחבה</span>
+  </div>
+  <div id="tactical-map"></div>
+  <div class="map-legend">
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#dc2626"></span>הימנע</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#f59e0b"></span>זהירות</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#16a34a"></span>עקוב</div>
+    <div class="map-legend-item" style="margin-right:auto;color:var(--text-muted)">לחץ על marker לפרטים</div>
+  </div>
+</div>`;
+}
+
 // ─── Mobility Intelligence Builders ──────────────────────────────────────────
 
 const STATUS_SUBLABEL = { GO: 'מאושר לתנועה', CAUTION: 'יציאה בזהירות', 'NO-GO': 'אסור לצאת' };
@@ -220,6 +302,14 @@ function buildVersionPage(data) {
     </div>`;
   }).filter(Boolean).join('');
 
+  // Build tactical map
+  const mapSection = buildMapSection(data.navigator_brief || []);
+  const axesWithCoords = (data.navigator_brief || []).map(ax => {
+    const { lat, lon } = resolveCoords(ax);
+    return { ...ax, lat, lon };
+  });
+  const mapAxesJson = JSON.stringify(axesWithCoords);
+
   // Build mobility sections
   const missionStatusBanner = buildMissionStatusBanner(data.mission_status);
   const commanderBrief      = buildCommanderBrief(data.commander_brief);
@@ -246,7 +336,9 @@ function buildVersionPage(data) {
     .replace('{{COMMANDER_BRIEF}}', commanderBrief)
     .replace('{{NAVIGATOR_BRIEF}}', navigatorBrief)
     .replace('{{DAYNIGHT_MISSIONS}}', daynightMissions)
-    .replace('{{LESSONS_LEARNED}}', lessonsLearned);
+    .replace('{{LESSONS_LEARNED}}', lessonsLearned)
+    .replace('{{MAP_SECTION}}', mapSection)
+    .replace('{{MAP_AXES_JSON}}', mapAxesJson);
 
   // Cross-reference sidebar
   const crossRefs = generateCrossRefs(data);

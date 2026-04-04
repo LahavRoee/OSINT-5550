@@ -72,7 +72,9 @@ ${histSection}
       "threat_type": "IED|AMBUSH|DIRECT_FIRE|AERIAL|BLOCKED|MIXED",
       "time_pattern": "DAY|NIGHT|BOTH",
       "recommended_action": "AVOID|CAUTION|MONITOR",
-      "detail": "<פירוט קצר — מה האיום, איפה בדיוק>"
+      "detail": "<פירוט קצר — מה האיום, איפה בדיוק>",
+      "lat": <קו רוחב עשרוני של מרכז האיום, לדוגמה 33.35>,
+      "lon": <קו אורך עשרוני של מרכז האיום, לדוגמה 35.49>
     }
   ],
   "day_missions": [

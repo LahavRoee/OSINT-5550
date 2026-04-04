@@ -997,6 +997,95 @@
     font-weight: 500;
   }
 
+  /* ══════════════════════════════════════════
+     MAP BUTTON + MAP SECTION
+  ══════════════════════════════════════════ */
+  .map-btn {
+    background: rgba(99,102,241,0.15);
+    border: 1px solid #6366f1;
+    color: #a5b4fc;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    min-height: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .map-btn:active, .map-btn.active { background: rgba(99,102,241,0.35); }
+
+  .map-section {
+    display: none;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .map-section.open { display: block; }
+
+  .map-section-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .map-section-bar:active { background: var(--surface2); }
+
+  .map-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .map-section-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  #tactical-map {
+    height: 420px;
+    width: 100%;
+    background: #0d1b2a;
+  }
+
+  @media (min-width: 640px) { #tactical-map { height: 520px; } }
+
+  .map-legend {
+    display: flex;
+    gap: 16px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .map-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .map-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
+  /* Leaflet popup RTL fix */
+  .leaflet-popup-content { direction: rtl; font-family: 'Heebo', sans-serif; }
+
   /* --- Desktop --- */
   @media (min-width: 640px) {
     .header-date { display: inline; }
@@ -1032,6 +1121,7 @@
     <span class="header-date">{{HEBREW_DATE}}</span>
     <span class="threat-badge threat-{{THREAT_LEVEL}}">{{THREAT_LEVEL}}</span>
     <a href="digest.pdf" class="pdf-link" download>PDF</a>
+    <button class="map-btn" id="map-btn" title="מפה טקטית">🗺</button>
   </div>
 </header>
 
@@ -1085,6 +1175,9 @@
     {{COMMANDER_NOTE}}
   </div>
 </main>
+
+<!-- Tactical Map -->
+{{MAP_SECTION}}
 
 <!-- Cross-reference sidebar -->
 <div class="crossref-overlay" id="crossref-overlay"></div>
@@ -1169,6 +1262,91 @@ function closeSidebar() {
 toggle.addEventListener('click', openSidebar);
 overlay.addEventListener('click', closeSidebar);
 document.querySelector('.crossref-close')?.addEventListener('click', closeSidebar);
+
+// ── Tactical Map ────────────────────────────────────────────────────────────
+const MAP_AXES = {{MAP_AXES_JSON}};
+const mapSection = document.getElementById('map-section');
+const mapBtn = document.getElementById('map-btn');
+let mapReady = false;
+let leafletMap = null;
+
+function loadLeaflet(cb) {
+  if (window.L) { cb(); return; }
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  document.head.appendChild(css);
+  const js = document.createElement('script');
+  js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  js.onload = cb;
+  document.head.appendChild(js);
+}
+
+function initLeafletMap() {
+  if (mapReady) { leafletMap && leafletMap.invalidateSize(); return; }
+  mapReady = true;
+
+  const ACTION_COLOR = { AVOID: '#dc2626', CAUTION: '#f59e0b', MONITOR: '#16a34a' };
+  const ACTION_HEB   = { AVOID: 'הימנע', CAUTION: 'זהירות', MONITOR: 'עקוב' };
+  const TIME_HEB     = { DAY: 'יום ☀', NIGHT: 'לילה 🌙', BOTH: 'יום+לילה' };
+
+  // Center on valid axes or default to Israel/Lebanon border
+  const valid = MAP_AXES.filter(a => a.lat && a.lon);
+  let center = [33.1, 35.35], zoom = 10;
+  if (valid.length > 0) {
+    const lat = valid.reduce((s, a) => s + a.lat, 0) / valid.length;
+    const lon = valid.reduce((s, a) => s + a.lon, 0) / valid.length;
+    center = [lat, lon];
+    zoom = valid.length === 1 ? 12 : 10;
+  }
+
+  leafletMap = L.map('tactical-map', { zoomControl: true, attributionControl: false })
+               .setView(center, zoom);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '© OpenStreetMap',
+  }).addTo(leafletMap);
+
+  L.control.attribution({ prefix: '© OpenStreetMap' }).addTo(leafletMap);
+
+  valid.forEach(ax => {
+    const color  = ACTION_COLOR[ax.recommended_action] || '#94a3b8';
+    const popup  = `
+      <div style="min-width:220px;max-width:280px;">
+        <div style="font-size:16px;font-weight:900;margin-bottom:4px;">${ax.axis_name}</div>
+        <div style="font-size:12px;color:#64748b;margin-bottom:10px;">${ax.area || ''}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <span style="background:#f1f5f9;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;">${ax.threat_type}</span>
+          <span style="background:#f8fafc;padding:2px 8px;border-radius:4px;font-size:11px;">${TIME_HEB[ax.time_pattern] || ax.time_pattern}</span>
+        </div>
+        <div style="font-size:13px;color:#334155;line-height:1.55;margin-bottom:10px;">${ax.detail}</div>
+        <div style="background:${color}22;border:1.5px solid ${color};border-radius:6px;padding:7px 12px;font-weight:800;color:${color};font-size:14px;text-align:center;">${ACTION_HEB[ax.recommended_action]}</div>
+      </div>`;
+
+    L.circleMarker([ax.lat, ax.lon], {
+      radius: 18,
+      fillColor: color,
+      color: '#fff',
+      weight: 2.5,
+      opacity: 1,
+      fillOpacity: 0.88,
+    }).addTo(leafletMap)
+      .bindPopup(popup, { maxWidth: 300, className: 'tactical-popup' })
+      .bindTooltip(`<b>${ax.axis_name}</b>`, { direction: 'top', sticky: true });
+  });
+}
+
+// Map button — toggle section and lazy-load Leaflet
+mapBtn && mapBtn.addEventListener('click', () => {
+  if (!mapSection) return;
+  const isOpen = mapSection.classList.toggle('open');
+  mapBtn.classList.toggle('active', isOpen);
+  if (isOpen) {
+    mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => loadLeaflet(initLeafletMap), 250);
+  }
+});
 </script>
 </body>
 </html>

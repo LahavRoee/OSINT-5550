@@ -997,6 +997,95 @@
     font-weight: 500;
   }
 
+  /* ══════════════════════════════════════════
+     MAP BUTTON + MAP SECTION
+  ══════════════════════════════════════════ */
+  .map-btn {
+    background: rgba(99,102,241,0.15);
+    border: 1px solid #6366f1;
+    color: #a5b4fc;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    min-height: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .map-btn:active, .map-btn.active { background: rgba(99,102,241,0.35); }
+
+  .map-section {
+    display: none;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .map-section.open { display: block; }
+
+  .map-section-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .map-section-bar:active { background: var(--surface2); }
+
+  .map-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .map-section-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  #tactical-map {
+    height: 420px;
+    width: 100%;
+    background: #0d1b2a;
+  }
+
+  @media (min-width: 640px) { #tactical-map { height: 520px; } }
+
+  .map-legend {
+    display: flex;
+    gap: 16px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .map-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .map-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
+  /* Leaflet popup RTL fix */
+  .leaflet-popup-content { direction: rtl; font-family: 'Heebo', sans-serif; }
+
   /* --- Desktop --- */
   @media (min-width: 640px) {
     .header-date { display: inline; }
@@ -1032,6 +1121,7 @@
     <span class="header-date">י״ז ניסן תשפ״ו</span>
     <span class="threat-badge threat-HIGH">HIGH</span>
     <a href="digest.pdf" class="pdf-link" download>PDF</a>
+    <button class="map-btn" id="map-btn" title="מפה טקטית">🗺</button>
   </div>
 </header>
 
@@ -1543,6 +1633,22 @@
   </div>
 </main>
 
+<!-- Tactical Map -->
+
+<div class="map-section" id="map-section">
+  <div class="map-section-bar" id="map-bar">
+    <div class="map-section-title">🗺 מפה טקטית — צירים חשופים</div>
+    <span class="map-section-meta">4 צירים ממופים | לחץ להרחבה</span>
+  </div>
+  <div id="tactical-map"></div>
+  <div class="map-legend">
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#dc2626"></span>הימנע</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#f59e0b"></span>זהירות</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:#16a34a"></span>עקוב</div>
+    <div class="map-legend-item" style="margin-right:auto;color:var(--text-muted)">לחץ על marker לפרטים</div>
+  </div>
+</div>
+
 <!-- Cross-reference sidebar -->
 <div class="crossref-overlay" id="crossref-overlay"></div>
 <div class="crossref-sidebar"><button class="crossref-close">&times;</button><h2>הצלבת מקורות</h2><div class="crossref-desc">מקורות חיצוניים לאימות ובדיקה</div><div class="crossref-item" data-item-id="L-K1"><div class="crossref-item-header"><span class="crossref-id">L-K1</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K2"><div class="crossref-item-header"><span class="crossref-id">L-K2</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K3"><div class="crossref-item-header"><span class="crossref-id">L-K3</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-T1"><div class="crossref-item-header"><span class="crossref-id">L-T1</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-T2"><div class="crossref-item-header"><span class="crossref-id">L-T2</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K4"><div class="crossref-item-header"><span class="crossref-id">L-K4</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K5"><div class="crossref-item-header"><span class="crossref-id">L-K5</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K6"><div class="crossref-item-header"><span class="crossref-id">L-K6</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-G1"><div class="crossref-item-header"><span class="crossref-id">L-G1</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-G2"><div class="crossref-item-header"><span class="crossref-id">L-G2</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-T3"><div class="crossref-item-header"><span class="crossref-id">L-T3</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-G1"><div class="crossref-item-header"><span class="crossref-id">I-G1</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K1"><div class="crossref-item-header"><span class="crossref-id">I-K1</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-G2"><div class="crossref-item-header"><span class="crossref-id">I-G2</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K2"><div class="crossref-item-header"><span class="crossref-id">I-K2</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-G3"><div class="crossref-item-header"><span class="crossref-id">I-G3</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K3"><div class="crossref-item-header"><span class="crossref-id">I-K3</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K4"><div class="crossref-item-header"><span class="crossref-id">I-K4</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-S1"><div class="crossref-item-header"><span class="crossref-id">I-S1</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://x.com/search?q=Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">X/Twitter</span><span class="crossref-reason">ניטור רשתות</span><span class="crossref-reliability" style="color:#dc2626">🔴</span></a></div></div></div>
@@ -1626,6 +1732,91 @@ function closeSidebar() {
 toggle.addEventListener('click', openSidebar);
 overlay.addEventListener('click', closeSidebar);
 document.querySelector('.crossref-close')?.addEventListener('click', closeSidebar);
+
+// ── Tactical Map ────────────────────────────────────────────────────────────
+const MAP_AXES = [{"axis_name":"ציר אלח'יאם–קנטרה","area":"דרום לבנון","threat_type":"DIRECT_FIRE","time_pattern":"BOTH","recommended_action":"AVOID","detail":"שני טנקי מרכבה הושמדו בנ\"ט. חזבאללה מחזיק ציוד נ\"ט מדויק לאורך הציר","lat":33.35,"lon":35.487},{"axis_name":"ציר בינת ג'ביל–עיתרון","area":"בינת ג'ביל, עינאתא, דבל","threat_type":"AMBUSH","time_pattern":"BOTH","recommended_action":"CAUTION","detail":"קרבות פעילים — כיתור צה\"ל נתקל בהתנגדות. לא להיכנס ללא תיאום עם גורמי שטח","lat":33.115,"lon":35.43},{"axis_name":"ציר שמע–נאקורה","area":"שמע, אלנאקורה, חאמול","threat_type":"MIXED","time_pattern":"BOTH","recommended_action":"CAUTION","detail":"קרבות 60+ דקות בשמע. צה\"ל לא נוכח על הכביש הראשי — חשיפה לאש בצירים פתוחים","lat":33.103,"lon":35.193},{"axis_name":"ציר ראמיה–צור","area":"ראמיה, חזבאללה צפון","threat_type":"AERIAL","time_pattern":"DAY","recommended_action":"MONITOR","detail":"טיל קרקע-אוויר אילץ מסוק קרב לסגת. אין פעילות מסוקים בגובה נמוך מעל האזור","lat":33.133,"lon":35.34}];
+const mapSection = document.getElementById('map-section');
+const mapBtn = document.getElementById('map-btn');
+let mapReady = false;
+let leafletMap = null;
+
+function loadLeaflet(cb) {
+  if (window.L) { cb(); return; }
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  document.head.appendChild(css);
+  const js = document.createElement('script');
+  js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  js.onload = cb;
+  document.head.appendChild(js);
+}
+
+function initLeafletMap() {
+  if (mapReady) { leafletMap && leafletMap.invalidateSize(); return; }
+  mapReady = true;
+
+  const ACTION_COLOR = { AVOID: '#dc2626', CAUTION: '#f59e0b', MONITOR: '#16a34a' };
+  const ACTION_HEB   = { AVOID: 'הימנע', CAUTION: 'זהירות', MONITOR: 'עקוב' };
+  const TIME_HEB     = { DAY: 'יום ☀', NIGHT: 'לילה 🌙', BOTH: 'יום+לילה' };
+
+  // Center on valid axes or default to Israel/Lebanon border
+  const valid = MAP_AXES.filter(a => a.lat && a.lon);
+  let center = [33.1, 35.35], zoom = 10;
+  if (valid.length > 0) {
+    const lat = valid.reduce((s, a) => s + a.lat, 0) / valid.length;
+    const lon = valid.reduce((s, a) => s + a.lon, 0) / valid.length;
+    center = [lat, lon];
+    zoom = valid.length === 1 ? 12 : 10;
+  }
+
+  leafletMap = L.map('tactical-map', { zoomControl: true, attributionControl: false })
+               .setView(center, zoom);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '© OpenStreetMap',
+  }).addTo(leafletMap);
+
+  L.control.attribution({ prefix: '© OpenStreetMap' }).addTo(leafletMap);
+
+  valid.forEach(ax => {
+    const color  = ACTION_COLOR[ax.recommended_action] || '#94a3b8';
+    const popup  = `
+      <div style="min-width:220px;max-width:280px;">
+        <div style="font-size:16px;font-weight:900;margin-bottom:4px;">${ax.axis_name}</div>
+        <div style="font-size:12px;color:#64748b;margin-bottom:10px;">${ax.area || ''}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <span style="background:#f1f5f9;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;">${ax.threat_type}</span>
+          <span style="background:#f8fafc;padding:2px 8px;border-radius:4px;font-size:11px;">${TIME_HEB[ax.time_pattern] || ax.time_pattern}</span>
+        </div>
+        <div style="font-size:13px;color:#334155;line-height:1.55;margin-bottom:10px;">${ax.detail}</div>
+        <div style="background:${color}22;border:1.5px solid ${color};border-radius:6px;padding:7px 12px;font-weight:800;color:${color};font-size:14px;text-align:center;">${ACTION_HEB[ax.recommended_action]}</div>
+      </div>`;
+
+    L.circleMarker([ax.lat, ax.lon], {
+      radius: 18,
+      fillColor: color,
+      color: '#fff',
+      weight: 2.5,
+      opacity: 1,
+      fillOpacity: 0.88,
+    }).addTo(leafletMap)
+      .bindPopup(popup, { maxWidth: 300, className: 'tactical-popup' })
+      .bindTooltip(`<b>${ax.axis_name}</b>`, { direction: 'top', sticky: true });
+  });
+}
+
+// Map button — toggle section and lazy-load Leaflet
+mapBtn && mapBtn.addEventListener('click', () => {
+  if (!mapSection) return;
+  const isOpen = mapSection.classList.toggle('open');
+  mapBtn.classList.toggle('active', isOpen);
+  if (isOpen) {
+    mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => loadLeaflet(initLeafletMap), 250);
+  }
+});
 </script>
 </body>
 </html>
