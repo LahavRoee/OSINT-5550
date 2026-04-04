@@ -93,8 +93,8 @@ function buildVersionPage(data) {
   html = html
     .replace(/\{\{VERSION\}\}/g, data.meta.version)
     .replace(/\{\{THREAT_LEVEL\}\}/g, data.meta.threat_level)
-    .replace('{{HEADLINE}}', data.situational_picture.substring(0, 80))
-    .replace('{{SITUATIONAL_PICTURE}}', data.situational_picture)
+    .replace(/\{\{HEADLINE\}\}/g, data.situational_picture.substring(0, 80))
+    .replace(/\{\{SITUATIONAL_PICTURE\}\}/g, data.situational_picture)
     .replace('{{TAKEAWAYS}}', takeaways)
     .replace('{{ACTOR_TABS}}', tabs)
     .replace('{{ACTOR_PANELS}}', panels)
