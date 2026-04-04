@@ -105,6 +105,16 @@ async function getUnprocessed() {
   return rowsToObjects(result);
 }
 
+async function getUpdatesForDate(dateStr) {
+  // dateStr: YYYY-MM-DD — returns only updates received on that calendar day
+  const d = await getDb();
+  const result = d.exec(
+    `SELECT * FROM updates WHERE date(received_at) = ? ORDER BY received_at ASC`,
+    [dateStr]
+  );
+  return rowsToObjects(result);
+}
+
 async function markProcessed(ids, digestId) {
   if (!ids.length) return;
   const d = await getDb();
@@ -190,7 +200,7 @@ function rowsToObjects(result) {
 }
 
 module.exports = {
-  getDb, save, insertUpdate, getUnprocessed, markProcessed,
+  getDb, save, insertUpdate, getUnprocessed, getUpdatesForDate, markProcessed,
   getPersistentIntel, upsertPersistentIntel,
   createDigest, updateDigest, getDigests,
 };

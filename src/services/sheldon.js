@@ -93,4 +93,11 @@ async function sendDigestViaSheldon(data) {
   return sendViaSheldon(message);
 }
 
-module.exports = { sendViaSheldon, sendDigestViaSheldon, buildDigestMessage };
+/**
+ * Send a plain alert/notification to Roee via Sheldon
+ */
+async function sendAlert(message) {
+  return sendViaSheldon(message);
+}
+
+module.exports = { sendViaSheldon, sendDigestViaSheldon, buildDigestMessage, sendAlert };

@@ -53,4 +53,11 @@ async function ingestMessage({ text, sourceNumber, sourceName }) {
   return id;
 }
 
-module.exports = { ingestMessage, classifyActor, classifyDomain };
+function classifyUpdate(text) {
+  return {
+    actor: classifyActor(text),
+    domain: classifyDomain(text),
+  };
+}
+
+module.exports = { ingestMessage, classifyActor, classifyDomain, classifyUpdate };

@@ -7,6 +7,8 @@
     "ingest": "node scripts/ingest-test.js",
     "ingest:wa": "node scripts/ingest-whatsapp.js",
     "digest": "node scripts/run-digest.js",
+    "daily": "node scripts/daily-check.js",
+    "webhook": "node src/server/ingest-webhook.js",
     "preview": "npx serve docs -p 3000",
     "push": "git add docs/ && git commit -m \"digest: v$(date +%Y.%m.%d)\" && git push"
   },
