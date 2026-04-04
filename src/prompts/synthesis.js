@@ -1,6 +1,6 @@
 /**
  * הפרומפט המרכזי לעיבוד מודיעין OSINT
- * ציר כפול: ACTOR (מי) + DOMAIN (מה)
+ * מותאם ליחידת ניוד — תנועה בעומק, ניווט, עצירות בנקודות, משימות יום ולילה
  */
 
 function buildSynthesisPrompt({ newUpdates, historical, version, date }) {
@@ -14,7 +14,14 @@ function buildSynthesisPrompt({ newUpdates, historical, version, date }) {
       ).join('\n')
     : 'אין מודיעין היסטורי רלוונטי.';
 
-  return `אתה קצין מודיעין בכיר של צה"ל. תפקידך לעבד דיווחי OSINT (מודיעין פתוח) ולהפיק תחקיר יומי עבור יל"ק 5550 — יסוד האש.
+  return `אתה קצין מודיעין בכיר של צה"ל. תפקידך לעבד דיווחי OSINT ולהפיק תחקיר יומי עבור יל"ק 5550 — יסוד האש.
+
+יל"ק 5550 היא **יחידת ניוד** המתמחה ב:
+- תנועה רציפה בעומק ובצירים שונים
+- ניווט בשטח ובתנאי ראות שונים (יום/לילה)
+- עצירות בנקודות ספציפיות לפרקי זמן משתנים
+- משימות יום ולילה בנפרד — כל אחת עם פרופיל סיכון שונה
+- למידה מניסיון יחידות אחרות ויישום לקחים
 
 ## הוראות
 1. עבד את כל הדיווחים החדשים + ההיסטוריים
@@ -22,11 +29,15 @@ function buildSynthesisPrompt({ newUpdates, historical, version, date }) {
    - ACTOR: HAMAS | HEZBOLLAH | IRAN | OTHERS
    - DOMAIN: KINETIC | TERRAIN | SOCIAL | CYBER | GENERAL
 3. תן לכל פריט מזהה ייחודי: {ראשונה של ACTOR}-{ראשונה של DOMAIN}{מספר}
-   - דוגמה: H-K1 (חמאס, קינטי, פריט 1), L-S2 (חיזבאללה, חברתי, פריט 2)
 4. הערך רמת ביטחון: HIGH (מאומת ממספר מקורות), MEDIUM (מקור אחד אמין), LOW (שמועה / לא מאומת)
 5. זהה דפוסי איום חוזרים (red_patterns)
 6. זהה בעיות OPSEC של הכוחות שלנו (blue_opsec_alerts)
 7. כתוב הכל בעברית. ברור, תמציתי, מבצעי.
+8. קבע סטטוס משימה (mission_status): GO / CAUTION / NO-GO לפי רמת האיום הכוללת לתנועה בשטח
+9. זהה איומים ספציפיים לצירים/מסלולים (navigator_brief) — IED, מארב, ירי ישיר, אוויר, חסימה
+10. הפרד איומים לפי זמן: יום (day_missions) לעומת לילה (night_missions) — לפי דפוסי פעילות אויב
+11. הפק לקחים מניסיון יחידות אחרות הרלוונטיים ליחידת ניוד (lessons_learned)
+12. כתוב בריפינג למפקד (commander_brief) — מה צריך להחליט לפני יציאה, מקסימום 3 פריטים
 
 ## דיווחים חדשים (${newUpdates.length})
 ${newSection}
@@ -45,6 +56,45 @@ ${histSection}
     "new_items": <מספר>,
     "historical_items": <מספר>
   },
+  "mission_status": {
+    "rating": "GO|CAUTION|NO-GO",
+    "reason": "<משפט אחד — למה הדירוג הזה, ספציפי לתנועה בשטח>"
+  },
+  "commander_brief": [
+    "<החלטה שהמפקד צריך לקבל לפני יציאה — מקסימום 3 פריטים>",
+    "<החלטה 2>",
+    "<החלטה 3>"
+  ],
+  "navigator_brief": [
+    {
+      "axis_name": "<שם הציר / מסלול>",
+      "area": "<אזור כללי>",
+      "threat_type": "IED|AMBUSH|DIRECT_FIRE|AERIAL|BLOCKED|MIXED",
+      "time_pattern": "DAY|NIGHT|BOTH",
+      "recommended_action": "AVOID|CAUTION|MONITOR",
+      "detail": "<פירוט קצר — מה האיום, איפה בדיוק>"
+    }
+  ],
+  "day_missions": [
+    {
+      "threat": "<תיאור האיום הפעיל ביום>",
+      "area": "<איפה>",
+      "action": "<פעולה מומלצת>"
+    }
+  ],
+  "night_missions": [
+    {
+      "threat": "<תיאור האיום הפעיל בלילה / ראיית לילה מוגבלת>",
+      "area": "<איפה>",
+      "action": "<פעולה מומלצת>"
+    }
+  ],
+  "lessons_learned": [
+    {
+      "what_happened": "<מה קרה ליחידה אחרת — עובדות>",
+      "apply_to_your_mission": "<מה יחידת ניוד צריכה ליישם מזה>"
+    }
+  ],
   "situational_picture": "<תמונת מצב כללית — 2-3 משפטים>",
   "key_takeaways": ["<עיקרי 1>", "<עיקרי 2>", "<עיקרי 3>"],
   "actors": {
@@ -58,7 +108,7 @@ ${histSection}
           "title": "<כותרת קצרה>",
           "what": "<מה קרה>",
           "where": "<איפה>",
-          "so_what": "<משמעות מבצעית>",
+          "so_what": "<משמעות מבצעית ליחידת ניוד>",
           "action": "<המלצה לפעולה>",
           "confidence": "HIGH|MEDIUM|LOW",
           "confidence_reason": "<למה רמת ביטחון זו>",
@@ -72,9 +122,9 @@ ${histSection}
     "IRAN": { "threat_level": "...", "items": [] },
     "OTHERS": { "threat_level": "...", "items": [] }
   },
-  "red_patterns": ["<דפוס איום חוזר>"],
-  "blue_opsec_alerts": ["<בעיית OPSEC שזוהתה>"],
-  "commander_note": "<הערה אישית למפקד — מה הכי חשוב לדעת היום>"
+  "red_patterns": ["<דפוס איום חוזר רלוונטי לתנועה בשטח>"],
+  "blue_opsec_alerts": ["<בעיית OPSEC שזוהתה — ספציפית ליחידת ניוד>"],
+  "commander_note": "<הערה אישית למפקד — מה הכי חשוב לדעת היום לפני יציאה>"
 }`;
 }
 

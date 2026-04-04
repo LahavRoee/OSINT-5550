@@ -17,7 +17,7 @@ async function synthesize({ newUpdates, historical, version, today }) {
 
   const response = await client.messages.create({
     model: config.anthropic.model,
-    max_tokens: 8000,
+    max_tokens: 12000,
     messages: [{ role: 'user', content: prompt }],
   });
 
@@ -86,7 +86,7 @@ async function runSynthesis({ updates, version, date }) {
 
   const response = await client.messages.create({
     model: config.anthropic.model,
-    max_tokens: 8000,
+    max_tokens: 12000,
     messages: [{ role: 'user', content: prompt }],
   });
 

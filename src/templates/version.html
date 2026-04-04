@@ -655,6 +655,348 @@
     line-height: 1.8;
   }
 
+  /* ══════════════════════════════════════════
+     MISSION STATUS BANNER
+  ══════════════════════════════════════════ */
+  :root {
+    --go: #16a34a; --go-bg: #052e16; --go-text: #bbf7d0;
+    --caution: #ca8a04; --caution-bg: #422006; --caution-text: #fef08a;
+    --nogo: #dc2626; --nogo-bg: #450a0a; --nogo-text: #fecaca;
+    --day-accent: #f59e0b; --night-accent: #6366f1;
+  }
+
+  .mission-status-banner {
+    margin: 0 auto 0;
+    padding: 12px 16px 0;
+    max-width: 100%;
+  }
+
+  .mission-status-card {
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 2px solid transparent;
+  }
+
+  .mission-status-card.status-GO    { background: var(--go-bg);     border-color: var(--go);     }
+  .mission-status-card.status-CAUTION { background: var(--caution-bg); border-color: var(--caution); }
+  .mission-status-card.status-NO-GO { background: var(--nogo-bg);   border-color: var(--nogo);   animation: pulse-nogo 2s ease-in-out infinite; }
+
+  @keyframes pulse-nogo {
+    0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
+    50%     { box-shadow: 0 0 0 8px rgba(220,38,38,0); }
+  }
+
+  .mission-status-label {
+    font-size: clamp(28px, 7vw, 44px);
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .status-GO     .mission-status-label { color: var(--go);     }
+  .status-CAUTION .mission-status-label { color: var(--caution); }
+  .status-NO-GO  .mission-status-label { color: var(--nogo);   }
+
+  .mission-status-meta { flex: 1; }
+  .mission-status-sublabel {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 4px;
+  }
+  .mission-status-reason {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .status-GO     .mission-status-reason,
+  .status-GO     .mission-status-sublabel { color: var(--go-text);     }
+  .status-CAUTION .mission-status-reason,
+  .status-CAUTION .mission-status-sublabel { color: var(--caution-text); }
+  .status-NO-GO  .mission-status-reason,
+  .status-NO-GO  .mission-status-sublabel { color: var(--nogo-text);   }
+
+  /* ══════════════════════════════════════════
+     COMMANDER BRIEF
+  ══════════════════════════════════════════ */
+  .commander-brief-section {
+    margin: 18px auto 0;
+    max-width: 720px;
+  }
+
+  .commander-brief-card {
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+
+  .commander-brief-card h2 {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .commander-brief-item {
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    border-right: 3px solid var(--gold);
+    color: var(--text);
+  }
+
+  .commander-brief-item:last-child { margin-bottom: 0; }
+
+  /* ══════════════════════════════════════════
+     NAVIGATOR BRIEF
+  ══════════════════════════════════════════ */
+  .navigator-section {
+    max-width: 720px;
+    margin: 0 auto 24px;
+    padding: 0 16px;
+  }
+
+  .navigator-section > h2 {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .navigator-legend {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .axis-cards { display: flex; flex-direction: column; gap: 8px; }
+
+  .axis-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    border-right: 5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 60px;
+  }
+
+  .axis-card.action-AVOID   { border-right-color: #dc2626; }
+  .axis-card.action-CAUTION { border-right-color: #f59e0b; }
+  .axis-card.action-MONITOR { border-right-color: #16a34a; }
+
+  .axis-main { flex: 1; min-width: 0; }
+
+  .axis-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+  }
+
+  .axis-name { font-weight: 700; font-size: 15px; color: var(--text); }
+  .axis-area { font-size: 12px; color: var(--text-dim); }
+
+  .axis-threat-type {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text-dim);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .axis-detail {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .axis-badges {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .time-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .time-DAY   { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .time-NIGHT { background: rgba(99,102,241,0.18); color: #a5b4fc; }
+  .time-BOTH  { background: rgba(148,163,184,0.12); color: #94a3b8; }
+
+  .action-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    white-space: nowrap;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+  }
+  .action-badge.badge-AVOID   { background: #450a0a; color: #fca5a5; border: 1px solid #dc2626; }
+  .action-badge.badge-CAUTION { background: #422006; color: #fde68a; border: 1px solid #f59e0b; }
+  .action-badge.badge-MONITOR { background: #052e16; color: #bbf7d0; border: 1px solid #16a34a; }
+
+  /* ══════════════════════════════════════════
+     DAY / NIGHT MISSIONS
+  ══════════════════════════════════════════ */
+  .daynight-wrapper {
+    margin-bottom: 24px;
+  }
+
+  .daynight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) { .daynight-grid { grid-template-columns: 1fr; } }
+
+  .daynight-col {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px;
+    border-top: 3px solid transparent;
+  }
+  .daynight-col.col-day   { border-top-color: var(--day-accent); }
+  .daynight-col.col-night { border-top-color: var(--night-accent); }
+
+  .daynight-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .daynight-icon { font-size: 16px; line-height: 1; }
+
+  .daynight-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .col-day   .daynight-title { color: var(--day-accent);   }
+  .col-night .daynight-title { color: var(--night-accent); }
+
+  .mission-threat-item {
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .mission-threat-item:last-child { margin-bottom: 0; }
+  .mission-threat-area   { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .mission-threat-action { margin-top: 6px; font-size: 12px; color: #86efac; font-weight: 600; }
+
+  /* ══════════════════════════════════════════
+     LESSONS LEARNED
+  ══════════════════════════════════════════ */
+  .lessons-section { margin-top: 28px; }
+
+  .lessons-section > h2 {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lesson-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-right: 4px solid #6366f1;
+  }
+
+  .lesson-what {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .lesson-what-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .lesson-apply {
+    padding: 10px 12px;
+    background: rgba(99,102,241,0.10);
+    border-radius: 8px;
+    border-right: 2px solid #6366f1;
+  }
+
+  .lesson-apply-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #a5b4fc;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .lesson-apply-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
   /* --- Desktop --- */
   @media (min-width: 640px) {
     .header-date { display: inline; }
@@ -693,19 +1035,22 @@
   </div>
 </header>
 
+<!-- Mission Status Banner — most prominent element -->
+{{MISSION_STATUS_BANNER}}
+
 <section class="hero">
   <div class="hero-dates">{{HEBREW_DATE}} | {{GREGORIAN_DATE}}</div>
   <h1>{{DISPLAY_DATE}}</h1>
 
-  <!-- Commander summary — first thing the commander sees -->
-  <div class="commander-summary">
-    <h2>סיכום למפקד</h2>
-    <div class="note-text">{{COMMANDER_NOTE}}</div>
-  </div>
+  <!-- Commander Brief — pre-departure decisions -->
+  {{COMMANDER_BRIEF}}
 
   <div class="situation-box">{{SITUATIONAL_PICTURE}}</div>
   <div class="takeaways">{{TAKEAWAYS}}</div>
 </section>
+
+<!-- Navigator Brief — axis-by-axis threats -->
+{{NAVIGATOR_BRIEF}}
 
 <!-- Sector quick-nav -->
 <div class="sector-nav">
@@ -715,6 +1060,9 @@
 </div>
 
 <main class="content">
+  <!-- Day / Night mission threat split -->
+  {{DAYNIGHT_MISSIONS}}
+
   <div class="actor-tabs">{{ACTOR_TABS}}</div>
   <div class="domain-filters">
     <button class="domain-btn active" data-domain="ALL">הכל</button>
@@ -729,6 +1077,9 @@
 
   {{RED_PATTERNS}}
   {{OPSEC_ALERTS}}
+
+  <!-- Lessons Learned from the field -->
+  {{LESSONS_LEARNED}}
 
   <div class="commander-note">
     {{COMMANDER_NOTE}}
