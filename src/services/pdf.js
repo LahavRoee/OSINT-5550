@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
 const config = require('../config');
+const { getBothDates } = require('../utils/hebrew-date');
 
 const ACTOR_NAMES = {
   HAMAS: 'חמאס',
@@ -39,48 +40,112 @@ function buildActorSection(actorKey, actorData) {
   `;
 }
 
-function renderHtml(data) {
+/**
+ * Filter synthesis data by sector (actor or domain)
+ * @param {object} data - full synthesis data
+ * @param {object} opts - { actor: 'HAMAS' } or { domain: 'KINETIC' } or null for all
+ */
+function filterBySector(data, opts) {
+  if (!opts) return data;
+
+  const filtered = JSON.parse(JSON.stringify(data)); // deep clone
+
+  if (opts.actor) {
+    // Keep only the specified actor
+    for (const key of Object.keys(filtered.actors)) {
+      if (key !== opts.actor) {
+        filtered.actors[key] = { threat_level: 'LOW', items: [] };
+      }
+    }
+    const actorItems = filtered.actors[opts.actor]?.items?.length || 0;
+    filtered.meta.new_items = actorItems;
+  }
+
+  if (opts.domain) {
+    // Filter items within each actor to only the specified domain
+    let totalItems = 0;
+    for (const key of Object.keys(filtered.actors)) {
+      const actor = filtered.actors[key];
+      if (actor.items) {
+        actor.items = actor.items.filter(item => item.domain === opts.domain);
+        totalItems += actor.items.length;
+      }
+    }
+    filtered.meta.new_items = totalItems;
+  }
+
+  return filtered;
+}
+
+function renderHtml(data, opts) {
   const templatePath = path.join(config.paths.templates, 'pdf.html');
   let html = fs.readFileSync(templatePath, 'utf-8');
 
-  const takeaways = data.key_takeaways.map(t => `<li>${t}</li>`).join('');
+  const filteredData = filterBySector(data, opts);
+
+  const takeaways = filteredData.key_takeaways.map(t => `<li>${t}</li>`).join('');
 
   const actorsSections = ['HAMAS', 'HEZBOLLAH', 'IRAN', 'OTHERS']
-    .map(key => buildActorSection(key, data.actors[key] || { items: [] }))
+    .map(key => buildActorSection(key, filteredData.actors[key] || { items: [] }))
     .join('');
 
-  const redPatterns = data.red_patterns && data.red_patterns.length > 0
-    ? `<div class="alerts-section"><h2>דפוסי איום חוזרים</h2>${data.red_patterns.map(p => `<div class="alert-item">${p}</div>`).join('')}</div>`
+  const redPatterns = filteredData.red_patterns && filteredData.red_patterns.length > 0
+    ? `<div class="alerts-section"><h2>דפוסי איום חוזרים</h2>${filteredData.red_patterns.map(p => `<div class="alert-item">${p}</div>`).join('')}</div>`
     : '';
 
-  const opsecAlerts = data.blue_opsec_alerts && data.blue_opsec_alerts.length > 0
-    ? `<div class="alerts-section"><h2>התראות OPSEC</h2>${data.blue_opsec_alerts.map(a => `<div class="alert-item opsec-item">${a}</div>`).join('')}</div>`
+  const opsecAlerts = filteredData.blue_opsec_alerts && filteredData.blue_opsec_alerts.length > 0
+    ? `<div class="alerts-section"><h2>התראות OPSEC</h2>${filteredData.blue_opsec_alerts.map(a => `<div class="alert-item opsec-item">${a}</div>`).join('')}</div>`
     : '';
+
+  // Dates
+  const dateStr = filteredData.meta.date; // DD/MM/YYYY
+  const dates = getBothDates(dateStr);
+
+  // Logo path (absolute file:// for Puppeteer)
+  const logoPath = path.join(config.paths.docs, 'assets', 'logo.png').replace(/\\/g, '/');
+
+  // Sector title
+  let sectorTitle = '';
+  if (opts?.actor) sectorTitle = ` — גזרת ${ACTOR_NAMES[opts.actor]}`;
+  if (opts?.domain) sectorTitle = ` — תחום ${opts.domain}`;
 
   html = html
-    .replace('{{VERSION}}', data.meta.version)
-    .replace('{{DATE}}', data.meta.date)
-    .replace(/\{\{THREAT_LEVEL\}\}/g, data.meta.threat_level)
-    .replace('{{NEW_ITEMS}}', data.meta.new_items)
-    .replace('{{SITUATIONAL_PICTURE}}', data.situational_picture)
+    .replace(/\{\{VERSION\}\}/g, filteredData.meta.version)
+    .replace(/\{\{THREAT_LEVEL\}\}/g, filteredData.meta.threat_level)
+    .replace('{{NEW_ITEMS}}', filteredData.meta.new_items)
+    .replace('{{SITUATIONAL_PICTURE}}', filteredData.situational_picture)
     .replace('{{TAKEAWAYS}}', takeaways)
     .replace('{{ACTORS_SECTIONS}}', actorsSections)
     .replace('{{RED_PATTERNS}}', redPatterns)
     .replace('{{OPSEC_ALERTS}}', opsecAlerts)
-    .replace('{{COMMANDER_NOTE}}', data.commander_note || '');
+    .replace('{{COMMANDER_NOTE}}', filteredData.commander_note || '')
+    .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
+    .replace(/\{\{HEBREW_DATE\}\}/g, dates.hebrew)
+    .replace('{{LOGO_PATH}}', 'file:///' + logoPath)
+    .replace('{{SECTOR_TITLE}}', sectorTitle);
 
   return html;
 }
 
-async function generate(data, version) {
-  const html = renderHtml(data);
+/**
+ * Generate PDF
+ * @param {object} data - synthesis data
+ * @param {string} version - e.g. 'v2026.04.04'
+ * @param {object} [sectorOpts] - optional { actor: 'HAMAS' } or { domain: 'KINETIC' }
+ */
+async function generate(data, version, sectorOpts) {
+  const html = renderHtml(data, sectorOpts);
 
-  // Ensure digests directory exists
   if (!fs.existsSync(config.paths.digests)) {
     fs.mkdirSync(config.paths.digests, { recursive: true });
   }
 
-  const pdfPath = path.join(config.paths.digests, `${version}.pdf`);
+  // Build filename with sector suffix
+  let suffix = '';
+  if (sectorOpts?.actor) suffix = `-${sectorOpts.actor.toLowerCase()}`;
+  if (sectorOpts?.domain) suffix = `-${sectorOpts.domain.toLowerCase()}`;
+
+  const pdfPath = path.join(config.paths.digests, `${version}${suffix}.pdf`);
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -101,4 +166,4 @@ async function generate(data, version) {
   return pdfPath;
 }
 
-module.exports = { generate, renderHtml };
+module.exports = { generate, renderHtml, filterBySector };

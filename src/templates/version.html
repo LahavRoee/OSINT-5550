@@ -102,6 +102,12 @@
     margin: 0 auto;
   }
 
+  .dates-bar {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
   .hero h1 {
     font-size: 24px;
     font-weight: 900;
@@ -369,15 +375,18 @@
 <body>
 
 <div class="sticky-header">
-  <span class="logo">OSINT 5550</span>
+  <img src="../assets/logo.png" alt="לוגו" style="height:32px;filter:invert(1) brightness(0.85);">
+  <span class="logo">OSINT יל"ק 5550</span>
   <div class="meta">
     <span>{{VERSION}}</span>
+    <span>{{HEBREW_DATE}}</span>
     <span class="threat-badge threat-{{THREAT_LEVEL}}">{{THREAT_LEVEL}}</span>
     <a href="digest.pdf" class="pdf-link" download>PDF</a>
   </div>
 </div>
 
 <div class="hero">
+  <div class="dates-bar">{{GREGORIAN_DATE}} | {{HEBREW_DATE}}</div>
   <h1>{{HEADLINE}}</h1>
   <div class="situation">{{SITUATIONAL_PICTURE}}</div>
   <div class="takeaways">{{TAKEAWAYS}}</div>
@@ -406,7 +415,8 @@
 </div>
 
 <div class="footer">
-  יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד
+  יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד<br>
+  {{GREGORIAN_DATE}} | {{HEBREW_DATE}}
 </div>
 
 <script>

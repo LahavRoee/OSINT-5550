@@ -9,7 +9,7 @@ const { execSync } = require('child_process');
 const db = require('../src/database');
 const pdf = require('../src/services/pdf');
 const builder = require('../src/services/sitebuilder');
-const wa = require('../src/services/whatsapp');
+const sheldon = require('../src/services/sheldon');
 const config = require('../src/config');
 
 async function run() {
@@ -56,9 +56,9 @@ async function run() {
     await db.markProcessed(updates.map(u => u.id), digestId);
   }
 
-  // WhatsApp
-  console.log('\uD83D\uDCF1 שולח לרועי בוואטסאפ...');
-  await wa.sendPdfToCommander(pdfPath, synthesisData);
+  // Sheldon
+  console.log('\uD83D\uDCF1 שולח לרועי דרך שלדון...');
+  await sheldon.sendDigestViaSheldon(synthesisData);
 
   console.log(`\n\u2705 הושלם!`);
   console.log(`   PDF: ${pdfPath}`);

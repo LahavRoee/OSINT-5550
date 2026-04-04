@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../config');
 const db = require('../database');
+const { getBothDates } = require('../utils/hebrew-date');
 
 const ACTOR_NAMES = {
   HAMAS: 'חמאס',
@@ -73,6 +74,8 @@ function buildVersionPage(data) {
   // Find first actor with items for default active tab
   const firstActiveActor = actorOrder.find(k => (data.actors[k]?.items || []).length > 0) || 'HAMAS';
 
+  const dates = getBothDates(data.meta.date);
+
   html = html
     .replace(/\{\{VERSION\}\}/g, data.meta.version)
     .replace(/\{\{THREAT_LEVEL\}\}/g, data.meta.threat_level)
@@ -83,7 +86,9 @@ function buildVersionPage(data) {
     .replace('{{ACTOR_PANELS}}', panels)
     .replace('{{RED_PATTERNS}}', redPatterns)
     .replace('{{OPSEC_ALERTS}}', opsecAlerts)
-    .replace('{{COMMANDER_NOTE}}', data.commander_note || '');
+    .replace('{{COMMANDER_NOTE}}', data.commander_note || '')
+    .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
+    .replace(/\{\{HEBREW_DATE\}\}/g, dates.hebrew);
 
   // Set first actor tab active
   html = html.replace(

@@ -233,11 +233,13 @@
 </head>
 <body>
   <div class="header">
+    <img src="{{LOGO_PATH}}" alt="לוגו יסוד האש" style="height:60px;margin-bottom:10px;filter:invert(1) brightness(0.85);">
     <h1>OSINT יל"ק 5550 — יסוד האש</h1>
-    <div class="sub">תחקיר מודיעין יומי</div>
+    <div class="sub">תחקיר מודיעין יומי{{SECTOR_TITLE}}</div>
     <div class="meta-bar">
       <span>{{VERSION}}</span>
-      <span>{{DATE}}</span>
+      <span>{{GREGORIAN_DATE}}</span>
+      <span>{{HEBREW_DATE}}</span>
       <span class="threat-badge threat-{{THREAT_LEVEL}}">{{THREAT_LEVEL}}</span>
       <span>{{NEW_ITEMS}} פריטים חדשים</span>
     </div>
@@ -262,7 +264,8 @@
   </div>
 
   <div class="footer">
-    יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד
+    יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד<br>
+    {{GREGORIAN_DATE}} | {{HEBREW_DATE}}
   </div>
 </body>
 </html>
