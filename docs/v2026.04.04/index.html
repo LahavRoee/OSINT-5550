@@ -198,104 +198,77 @@
 
   .leaflet-popup-content { direction: rtl; font-family: 'Heebo', sans-serif; }
 
-  /* ══ Hero ═══════════════════════════════════════════════════ */
+  /* ══ Hero — compact date bar ════════════════════════════════ */
   .hero {
-    padding: 28px 16px 20px;
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .hero-emblem {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,27,46,0.6);
   }
 
   .hero-emblem img {
-    height: 90px;
-    filter: brightness(0) invert(1) sepia(1) saturate(1.2) hue-rotate(5deg) brightness(0.95);
+    height: 36px;
+    filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(201,168,76,.5));
+    flex-shrink: 0;
     display: block;
-    margin: 0 auto;
-    drop-shadow: 0 0 30px rgba(201,168,76,.4);
-    filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(201,168,76,.55));
   }
 
-  .hero-emblem-ring {
-    position: absolute;
-    inset: -12px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,.15);
-    pointer-events: none;
-  }
+  .hero-text { flex: 1; min-width: 0; }
 
   .hero-unit-name {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     color: var(--gold-dim);
-    text-transform: uppercase;
-    margin-bottom: 8px;
+    white-space: nowrap;
   }
 
-  .hero-dates { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+  .hero-dates {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-  .hero h1 {
-    font-size: clamp(16px, 4vw, 22px);
+  .hero-date-badge {
+    margin-right: auto;
+    font-size: 13px;
     font-weight: 900;
     color: var(--gold);
-    margin-bottom: 0;
-    line-height: 1.4;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
-  .notice-banner {
-    background: rgba(201,168,76,.07);
-    border: 1px solid rgba(201,168,76,.2);
-    border-radius: var(--radius);
-    padding: 11px 15px;
-    font-size: 12px;
-    color: var(--text-dim);
-    text-align: right;
-    line-height: 1.6;
-  }
-  .notice-banner strong { color: var(--gold); }
-
-  /* ══ Sector Cards ════════════════════════════════════════════ */
+  /* ══ Sector strip — horizontal scroll ═══════════════════════ */
   .sector-nav {
-    max-width: 720px;
-    margin: 22px auto 0;
-    padding: 0 16px;
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-bottom: 1px solid var(--border);
   }
-  .sector-nav-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-dim);
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
-  }
-  .sector-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 8px;
-  }
+  .sector-nav::-webkit-scrollbar { display: none; }
 
   .sector-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 14px 12px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.2s, transform 0.1s;
-    text-align: center;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
+    gap: 6px;
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 5px 13px;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: border-color 0.15s;
+    white-space: nowrap;
     font-family: 'Heebo', sans-serif;
-    min-height: 70px;
+    flex-shrink: 0;
   }
-  .sector-card:active { transform: scale(0.97); }
+  .sector-card:active { opacity: 0.8; }
   .sector-card[data-actor="HAMAS"]:hover,
   .sector-card[data-actor="HAMAS"].active     { border-color: var(--c-hamas); }
   .sector-card[data-actor="HEZBOLLAH"]:hover,
@@ -305,13 +278,13 @@
   .sector-card[data-actor="OTHERS"]:hover,
   .sector-card[data-actor="OTHERS"].active    { border-color: var(--c-others); }
 
-  .sector-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .sector-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .sector-card[data-actor="HAMAS"]     .sector-dot { background: var(--c-hamas); }
   .sector-card[data-actor="HEZBOLLAH"] .sector-dot { background: var(--c-hizb); }
   .sector-card[data-actor="IRAN"]      .sector-dot { background: var(--c-iran); }
   .sector-card[data-actor="OTHERS"]    .sector-dot { background: var(--c-others); }
-  .sector-name  { font-weight: 700; font-size: 14px; color: var(--text); }
-  .sector-count { font-size: 12px; color: var(--text-dim); }
+  .sector-name  { font-weight: 700; font-size: 13px; color: var(--text); }
+  .sector-count { font-size: 11px; color: var(--text-dim); }
 
   /* ══ Main Content ════════════════════════════════════════════ */
   .content {
@@ -621,18 +594,17 @@
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-emblem">
-    <img src="../assets/logo.png" alt="לוגו יל&quot;ק 5550" onerror="this.style.display='none'">
-    <div class="hero-emblem-ring"></div>
+    <img src="../assets/logo.png" alt="לוגו" onerror="this.style.display='none'">
   </div>
-  <div class="hero-unit-name">יל״ק 5550 — יסוד האש</div>
-  <div class="hero-dates">יום שבת, 4 אפריל 2026 | י״ז ניסן תשפ״ו</div>
-  <h1>04-APRIL-2026</h1>
+  <div class="hero-text">
+    <div class="hero-unit-name">יל״ק 5550 — יסוד האש</div>
+    <div class="hero-dates">יום שבת, 4 אפריל 2026 | י״ז ניסן תשפ״ו</div>
+  </div>
+  <div class="hero-date-badge">04-APRIL-2026</div>
 </section>
 
 <!-- ── Sector quick-nav ───────────────────────────────────────────────────── -->
-<div class="sector-nav">
-  <div class="sector-nav-title">בחר גזרה</div>
-  <div class="sector-cards"><div class="sector-card" data-actor="HAMAS">
+<div class="sector-nav"><div class="sector-card" data-actor="HAMAS">
       <span class="sector-dot"></span>
       <span class="sector-name">חמאס</span>
       <span class="sector-count">3 ידיעות</span>
@@ -649,7 +621,6 @@
       <span class="sector-name">אחרים</span>
       <span class="sector-count">1 ידיעות</span>
     </div></div>
-</div>
 
 <!-- ── Main content ──────────────────────────────────────────────────────── -->
 <main class="content">
