@@ -19,6 +19,18 @@ const DOMAIN_HEB = {
   GENERAL: 'כללי',
 };
 
+// ─── Logo → base64 for PDF header ────────────────────────────────────────────
+
+function getLogoBase64() {
+  try {
+    const logoPath = path.join(config.paths.docs, 'assets', 'logo.png');
+    if (fs.existsSync(logoPath)) {
+      return 'data:image/png;base64,' + fs.readFileSync(logoPath).toString('base64');
+    }
+  } catch (e) { /* non-fatal */ }
+  return '';
+}
+
 // ─── Build actor section — verbatim items only ────────────────────────────────
 
 function buildActorSection(actorKey, actorData) {
@@ -26,24 +38,27 @@ function buildActorSection(actorKey, actorData) {
 
   const items = actorData.items.map(item => {
     const domainLabel = DOMAIN_HEB[item.domain] || item.domain;
-    const sourceLink = item.source_url
-      ? `<a href="${item.source_url}" class="source-link">מקור ↗</a>`
+    const timeStr = item.datetime
+      ? item.datetime.replace(/^\d{2}\/\d{2}\/\d{4}\s/, '').substring(0, 5)
       : '';
-    const datetime = item.datetime ? `<span class="item-datetime">${item.datetime}</span>` : '';
+    const sourceLink = item.source_url
+      ? `<a href="${item.source_url}" style="color:#60a5fa;font-size:10px;margin-right:6px;">מקור ↗</a>`
+      : '';
+
     const showOriginal = item.original_text && item.original_text !== item.translated_text;
     const originalBlock = showOriginal
-      ? `<div class="original-text">${item.original_text}</div>`
+      ? `<div style="font-size:10px;color:#475569;margin-top:7px;padding-top:7px;border-top:1px solid #1e293b;direction:auto;white-space:pre-wrap;">${item.original_text}</div>`
       : '';
 
     return `
     <div class="item-card item-${actorKey}">
-      <div class="item-top">
+      <div class="item-header">
+        ${timeStr ? `<span class="item-time">${timeStr}</span>` : ''}
         <span class="item-id">${item.id}</span>
         <span class="domain-tag">${domainLabel}</span>
-        ${datetime}
         ${sourceLink}
       </div>
-      <div class="item-translated">${item.translated_text || item.original_text || ''}</div>
+      <div class="item-body">${item.translated_text || item.original_text || ''}</div>
       ${originalBlock}
     </div>`;
   }).join('');
@@ -57,32 +72,32 @@ function buildActorSection(actorKey, actorData) {
     </div>`;
 }
 
-// ─── Render HTML from template ────────────────────────────────────────────────
+// ─── Render HTML ──────────────────────────────────────────────────────────────
 
 function renderHtml(data) {
   const templatePath = path.join(config.paths.templates, 'pdf.html');
   let html = fs.readFileSync(templatePath, 'utf-8');
 
-  const actorOrder = ['HAMAS', 'HEZBOLLAH', 'IRAN', 'OTHERS'];
+  const actorOrder = ['HEZBOLLAH', 'HAMAS', 'IRAN', 'OTHERS'];
   const actorsSections = actorOrder
     .map(key => buildActorSection(key, data.actors[key] || { items: [] }))
     .join('');
 
   const totalItems = actorOrder.reduce((n, k) => n + (data.actors[k]?.items?.length || 0), 0);
 
-  const dateStr = data.meta.date; // DD/MM/YYYY
+  const dateStr = data.meta.date;
   const dates = getBothDates(dateStr);
 
-  const logoPath = path.join(config.paths.docs, 'assets', 'logo.png').replace(/\\/g, '/');
+  const logoBase64 = getLogoBase64();
 
   html = html
-    .replace(/\{\{VERSION\}\}/g,       data.meta.version)
-    .replace(/\{\{ITEM_COUNT\}\}/g,    String(totalItems))
-    .replace(/\{\{ACTORS_SECTIONS\}\}/, actorsSections)
+    .replace(/\{\{VERSION\}\}/g,        data.meta.version)
+    .replace(/\{\{ITEM_COUNT\}\}/g,     String(totalItems))
+    .replace(/\{\{ACTORS_SECTIONS\}\}/g, actorsSections)
     .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
-    .replace(/\{\{HEBREW_DATE\}\}/g,   dates.hebrew)
-    .replace(/\{\{DISPLAY_DATE\}\}/g,  dates.display)
-    .replace('{{LOGO_PATH}}',          'file:///' + logoPath);
+    .replace(/\{\{HEBREW_DATE\}\}/g,    dates.hebrew)
+    .replace(/\{\{DISPLAY_DATE\}\}/g,   dates.display)
+    .replace('{{LOGO_BASE64}}',          logoBase64);
 
   return html;
 }
@@ -99,6 +114,34 @@ async function generate(data, version) {
   const displayDate = getDisplayDateString(data.meta.date);
   const pdfPath = path.join(config.paths.digests, `OSINT-5550_${displayDate}.pdf`);
 
+  const logoBase64 = getLogoBase64();
+
+  // Puppeteer header shown on every page
+  const headerHtml = `
+    <div style="
+      width:100%; padding:4px 15mm; box-sizing:border-box;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid #c9a84c; background:#070d1a;
+      font-family:Arial,sans-serif;
+    ">
+      <div style="display:flex;align-items:center;gap:8px;">
+        ${logoBase64
+          ? `<img src="${logoBase64}" style="height:18px;filter:brightness(0) invert(1) drop-shadow(0 0 4px rgba(201,168,76,.6));">`
+          : ''}
+        <span style="font-size:9px;font-weight:700;color:#c9a84c;letter-spacing:1px;">יל"ק 5550 — יסוד האש</span>
+      </div>
+      <span style="font-size:8px;color:#475569;direction:ltr;">${displayDate}</span>
+      <span style="font-size:8px;color:#475569;">עמוד <span class="pageNumber"></span> / <span class="totalPages"></span></span>
+    </div>`;
+
+  const footerHtml = `
+    <div style="
+      width:100%; padding:3px 15mm; box-sizing:border-box;
+      border-top:1px solid #1e293b; background:#070d1a;
+      text-align:center; font-size:8px; color:#334155;
+      font-family:Arial,sans-serif;
+    ">OSINT יל"ק 5550 | מידע פתוח בלבד | ${data.meta.version}</div>`;
+
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -111,7 +154,10 @@ async function generate(data, version) {
     path: pdfPath,
     format: 'A4',
     printBackground: true,
-    margin: { top: '20mm', bottom: '20mm', left: '15mm', right: '15mm' },
+    displayHeaderFooter: true,
+    headerTemplate: headerHtml,
+    footerTemplate: footerHtml,
+    margin: { top: '22mm', bottom: '14mm', left: '15mm', right: '15mm' },
   });
 
   await browser.close();

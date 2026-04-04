@@ -70,8 +70,8 @@
   }
 
   .header-logo {
-    height: 28px;
-    filter: invert(1) brightness(0.85);
+    height: 34px;
+    filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(201,168,76,.5));
     flex-shrink: 0;
   }
 
@@ -200,19 +200,51 @@
 
   /* ══ Hero ═══════════════════════════════════════════════════ */
   .hero {
-    padding: 22px 16px 18px;
+    padding: 28px 16px 20px;
     text-align: center;
     max-width: 720px;
     margin: 0 auto;
   }
 
-  .hero-dates { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .hero-emblem {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .hero-emblem img {
+    height: 90px;
+    filter: brightness(0) invert(1) sepia(1) saturate(1.2) hue-rotate(5deg) brightness(0.95);
+    display: block;
+    margin: 0 auto;
+    drop-shadow: 0 0 30px rgba(201,168,76,.4);
+    filter: brightness(0) invert(1) drop-shadow(0 0 16px rgba(201,168,76,.55));
+  }
+
+  .hero-emblem-ring {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,.15);
+    pointer-events: none;
+  }
+
+  .hero-unit-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .hero-dates { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
 
   .hero h1 {
-    font-size: clamp(18px, 4.5vw, 24px);
+    font-size: clamp(16px, 4vw, 22px);
     font-weight: 900;
     color: var(--gold);
-    margin-bottom: 16px;
+    margin-bottom: 0;
     line-height: 1.4;
   }
 
@@ -588,6 +620,11 @@
 
 <!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <section class="hero">
+  <div class="hero-emblem">
+    <img src="../assets/logo.png" alt="לוגו יל&quot;ק 5550" onerror="this.style.display='none'">
+    <div class="hero-emblem-ring"></div>
+  </div>
+  <div class="hero-unit-name">יל״ק 5550 — יסוד האש</div>
   <div class="hero-dates">יום שישי, 3 אפריל 2026 | ט״ז ניסן תשפ״ו</div>
   <h1>03-APRIL-2026</h1>
 </section>
