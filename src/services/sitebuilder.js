@@ -3,6 +3,7 @@ const path = require('path');
 const config = require('../config');
 const db = require('../database');
 const { getBothDates } = require('../utils/hebrew-date');
+const { generateCrossRefs, buildCrossRefSidebar } = require('./crossref');
 
 const ACTOR_NAMES = {
   HAMAS: 'חמאס',
@@ -89,6 +90,11 @@ function buildVersionPage(data) {
     .replace('{{COMMANDER_NOTE}}', data.commander_note || '')
     .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
     .replace(/\{\{HEBREW_DATE\}\}/g, dates.hebrew);
+
+  // Cross-reference sidebar
+  const crossRefs = generateCrossRefs(data);
+  const crossRefHtml = buildCrossRefSidebar(crossRefs);
+  html = html.replace('{{CROSSREF_SIDEBAR}}', crossRefHtml);
 
   // Set first actor tab active
   html = html.replace(

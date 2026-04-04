@@ -351,6 +351,125 @@
     margin-bottom: 8px;
   }
 
+  /* Cross-Reference Sidebar */
+  .crossref-sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    width: 280px;
+    height: calc(100vh - 60px);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 16px;
+    z-index: 90;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .crossref-sidebar.open { transform: translateX(0); }
+
+  .crossref-toggle {
+    position: fixed;
+    left: 0;
+    top: 120px;
+    z-index: 91;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-right: 1px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 8px;
+    cursor: pointer;
+    color: var(--gold);
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transition: left 0.3s ease;
+  }
+
+  .crossref-toggle.shifted { left: 280px; }
+
+  .crossref-sidebar h2 {
+    color: var(--gold);
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .crossref-desc {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+
+  .crossref-item {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .crossref-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .crossref-id {
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--text-dim);
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .crossref-status {
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .crossref-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .crossref-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: var(--surface);
+    text-decoration: none;
+    font-size: 11px;
+    color: var(--text-dim);
+    transition: background 0.15s;
+  }
+
+  .crossref-link:hover { background: var(--surface2); }
+
+  .crossref-source {
+    font-weight: 700;
+    color: var(--text);
+    min-width: 60px;
+  }
+
+  .crossref-reason {
+    flex: 1;
+    color: var(--text-dim);
+  }
+
+  .crossref-reliability { font-size: 14px; }
+
+  @media (max-width: 600px) {
+    .crossref-sidebar { width: 260px; }
+    .crossref-toggle.shifted { left: 260px; }
+  }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -414,6 +533,10 @@
   </div>
 </div>
 
+{{CROSSREF_SIDEBAR}}
+
+<button class="crossref-toggle" id="crossref-toggle">הצלבת מקורות</button>
+
 <div class="footer">
   יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד<br>
   {{GREGORIAN_DATE}} | {{HEBREW_DATE}}
@@ -442,6 +565,14 @@ document.querySelectorAll('.domain-btn').forEach(btn => {
     btn.classList.add('active');
     filterDomain(btn.dataset.domain);
   });
+});
+
+// Cross-ref sidebar toggle
+document.getElementById('crossref-toggle').addEventListener('click', () => {
+  const sidebar = document.querySelector('.crossref-sidebar');
+  const toggle = document.getElementById('crossref-toggle');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('shifted');
 });
 
 function filterDomain(domain) {
