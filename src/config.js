@@ -12,7 +12,7 @@ module.exports = {
     roeeNumber: process.env.ROEE_WHATSAPP,
   },
   github: {
-    username: process.env.GITHUB_USERNAME || 'roeelahav',
+    username: process.env.GITHUB_USERNAME || 'LahavRoee',
     repo: process.env.GITHUB_REPO || 'OSINT-5550',
   },
   paths: {

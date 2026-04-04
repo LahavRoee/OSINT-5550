@@ -74,7 +74,7 @@ function buildVersionPage(data) {
   const firstActiveActor = actorOrder.find(k => (data.actors[k]?.items || []).length > 0) || 'HAMAS';
 
   html = html
-    .replace('{{VERSION}}', data.meta.version)
+    .replace(/\{\{VERSION\}\}/g, data.meta.version)
     .replace(/\{\{THREAT_LEVEL\}\}/g, data.meta.threat_level)
     .replace('{{HEADLINE}}', data.situational_picture.substring(0, 80))
     .replace('{{SITUATIONAL_PICTURE}}', data.situational_picture)
