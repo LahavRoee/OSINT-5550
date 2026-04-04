@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>OSINT יל"ק 5550 — v2026.04.03</title>
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lahavroee.github.io/OSINT-5550/v2026.04.03/">
+<meta property="og:title" content="OSINT יל&quot;ק 5550 | 03-APRIL-2026 | 45 ידיעות">
+<meta property="og:description" content="ידיעות OSINT מתורגמות ומסווגות — 03-APRIL-2026">
+<meta property="og:image" content="https://lahavroee.github.io/OSINT-5550/assets/logo.png">
+<meta property="og:locale" content="he_IL">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #070d1a;
+    --surface: #0f1b2e;
+    --surface2: #162240;
+    --gold: #c9a84c;
+    --gold-dim: #a08838;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #475569;
+    --border: #1e293b;
+    --c-hamas:    #dc2626;
+    --c-hizb:     #ea580c;
+    --c-iran:     #7c3aed;
+    --c-others:   #16a34a;
+    --radius: 12px;
+  }
+
+  html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    direction: rtl;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ══ Sticky Header ══════════════════════════════════════════ */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7,13,26,0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .header-logo {
+    height: 28px;
+    filter: invert(1) brightness(0.85);
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .header-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    display: none;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .header-version { font-size: 11px; color: var(--text-muted); }
+
+  .header-count {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .pdf-link {
+    background: var(--gold);
+    color: var(--bg);
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    white-space: nowrap;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+  }
+  .pdf-link:active { background: var(--gold-dim); }
+
+  .map-btn {
+    background: rgba(99,102,241,0.15);
+    border: 1px solid #6366f1;
+    color: #a5b4fc;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    min-height: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .map-btn:active, .map-btn.active { background: rgba(99,102,241,0.35); }
+
+  /* ══ Tactical Map ════════════════════════════════════════════ */
+  .map-section {
+    display: none;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .map-section.open { display: block; }
+
+  .map-section-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .map-section-bar:active { background: var(--surface2); }
+
+  .map-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .map-section-meta { font-size: 12px; color: var(--text-muted); }
+
+  #tactical-map {
+    height: 420px;
+    width: 100%;
+    background: #0d1b2a;
+  }
+  @media (min-width: 640px) { #tactical-map { height: 520px; } }
+
+  .map-legend {
+    display: flex;
+    gap: 16px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .map-legend-item { display: flex; align-items: center; gap: 6px; }
+  .map-legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.2);
+    flex-shrink: 0;
+  }
+  .map-hint { margin-right: auto; font-size: 11px; color: var(--text-muted); font-weight: 400; }
+
+  .leaflet-popup-content { direction: rtl; font-family: 'Heebo', sans-serif; }
+
+  /* ══ Hero ═══════════════════════════════════════════════════ */
+  .hero {
+    padding: 22px 16px 18px;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .hero-dates { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+
+  .hero h1 {
+    font-size: clamp(18px, 4.5vw, 24px);
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .notice-banner {
+    background: rgba(201,168,76,.07);
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: var(--radius);
+    padding: 11px 15px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: right;
+    line-height: 1.6;
+  }
+  .notice-banner strong { color: var(--gold); }
+
+  /* ══ Sector Cards ════════════════════════════════════════════ */
+  .sector-nav {
+    max-width: 720px;
+    margin: 22px auto 0;
+    padding: 0 16px;
+  }
+  .sector-nav-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+  .sector-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+  }
+
+  .sector-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.1s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-family: 'Heebo', sans-serif;
+    min-height: 70px;
+  }
+  .sector-card:active { transform: scale(0.97); }
+  .sector-card[data-actor="HAMAS"]:hover,
+  .sector-card[data-actor="HAMAS"].active     { border-color: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"]:hover,
+  .sector-card[data-actor="HEZBOLLAH"].active { border-color: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"]:hover,
+  .sector-card[data-actor="IRAN"].active      { border-color: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"]:hover,
+  .sector-card[data-actor="OTHERS"].active    { border-color: var(--c-others); }
+
+  .sector-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .sector-card[data-actor="HAMAS"]     .sector-dot { background: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"] .sector-dot { background: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"]      .sector-dot { background: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"]    .sector-dot { background: var(--c-others); }
+  .sector-name  { font-weight: 700; font-size: 14px; color: var(--text); }
+  .sector-count { font-size: 12px; color: var(--text-dim); }
+
+  /* ══ Main Content ════════════════════════════════════════════ */
+  .content {
+    max-width: 720px;
+    margin: 24px auto 0;
+    padding: 0 16px 60px;
+  }
+
+  .actor-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2px 0;
+  }
+  .actor-tabs::-webkit-scrollbar { display: none; }
+
+  .actor-tab {
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .actor-tab:active { transform: scale(0.97); }
+  .actor-tab.active { border-color: var(--gold); color: var(--text); }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .actor-tab[data-actor="HAMAS"]     .dot { background: var(--c-hamas); }
+  .actor-tab[data-actor="HEZBOLLAH"] .dot { background: var(--c-hizb); }
+  .actor-tab[data-actor="IRAN"]      .dot { background: var(--c-iran); }
+  .actor-tab[data-actor="OTHERS"]    .dot { background: var(--c-others); }
+
+  .tab-count { background: var(--surface2); padding: 2px 7px; border-radius: 4px; font-size: 11px; }
+
+  .domain-filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .domain-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    min-height: 34px;
+    transition: all 0.15s;
+  }
+  .domain-btn:active { transform: scale(0.95); }
+  .domain-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,.08); }
+
+  .actor-panel { display: none; }
+  .actor-panel.active { display: block; }
+
+  /* ══ Item Card ═══════════════════════════════════════════════ */
+  .item-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-right: 4px solid var(--border);
+    transition: border-right-color 0.2s, box-shadow 0.35s;
+  }
+  .item-card[data-actor="HAMAS"]     { border-right-color: var(--c-hamas); }
+  .item-card[data-actor="HEZBOLLAH"] { border-right-color: var(--c-hizb); }
+  .item-card[data-actor="IRAN"]      { border-right-color: var(--c-iran); }
+  .item-card[data-actor="OTHERS"]    { border-right-color: var(--c-others); }
+
+  /* Glow on map-click */
+  .item-card.map-highlight {
+    box-shadow: 0 0 0 2px var(--gold), 0 4px 28px rgba(201,168,76,.35);
+    animation: pulse-gold 0.7s ease-out;
+  }
+  @keyframes pulse-gold {
+    0%   { box-shadow: 0 0 0 8px rgba(201,168,76,.5); }
+    100% { box-shadow: 0 0 0 2px var(--gold), 0 4px 28px rgba(201,168,76,.35); }
+  }
+
+  .item-card.hidden { display: none; }
+
+  .item-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .item-id {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    letter-spacing: .03em;
+  }
+
+  .domain-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(201,168,76,.1);
+    border: 1px solid rgba(201,168,76,.25);
+    color: var(--gold);
+  }
+
+  .item-datetime { font-size: 11px; color: var(--text-muted); margin-right: auto; }
+
+  .item-source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: rgba(59,130,246,.1);
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(59,130,246,.25);
+    transition: background 0.15s;
+    min-height: 28px;
+    white-space: nowrap;
+  }
+  .item-source-link:hover { background: rgba(59,130,246,.2); }
+
+  .map-pin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(99,102,241,.12);
+    color: #a5b4fc;
+    font-size: 12px;
+    border: 1px solid rgba(99,102,241,.3);
+    cursor: pointer;
+    min-height: 28px;
+    transition: background 0.15s;
+    font-family: 'Heebo', sans-serif;
+  }
+  .map-pin-btn:hover { background: rgba(99,102,241,.28); }
+  .map-pin-btn.no-location { opacity: 0.25; cursor: default; pointer-events: none; }
+
+  .item-translated {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+
+  .item-original {
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+    margin-top: 10px;
+  }
+  .item-original summary {
+    font-size: 11px;
+    color: var(--text-muted);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    user-select: none;
+  }
+  .item-original summary::before { content: '▶'; font-size: 9px; }
+  details[open] .item-original summary::before { content: '▼'; }
+  .item-original-text {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    line-height: 1.6;
+    direction: auto;
+    white-space: pre-wrap;
+  }
+
+  /* ══ Footer ══════════════════════════════════════════════════ */
+  .page-footer {
+    text-align: center;
+    padding: 28px 16px;
+    color: var(--text-muted);
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+    line-height: 1.9;
+  }
+  .page-footer a { color: var(--gold-dim); text-decoration: none; }
+  .footer-logo { font-size: 20px; margin-bottom: 4px; }
+
+  /* ══ Desktop ══════════════════════════════════════════════════ */
+  @media (min-width: 640px) {
+    .header-sub { display: block; }
+    .hero { padding: 30px 24px 20px; }
+    .content { padding: 0 24px 60px; }
+    .item-translated { font-size: 15px; }
+    .sector-nav { padding: 0 24px; }
+  }
+
+  @supports (padding: env(safe-area-inset-bottom)) {
+    body { padding-bottom: env(safe-area-inset-bottom); }
+    .sticky-header { padding-top: calc(10px + env(safe-area-inset-top)); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Sticky Header ─────────────────────────────────────────────────────── -->
+<header class="sticky-header">
+  <div class="header-right">
+    <img src="../assets/logo.png" alt="לוגו" class="header-logo" onerror="this.style.display='none'">
+    <div>
+      <div class="header-title">OSINT יל"ק 5550</div>
+      <div class="header-sub">ידיעות מתורגמות ומסווגות</div>
+    </div>
+  </div>
+  <div class="header-left">
+    <span class="header-version">v2026.04.03</span>
+    <span class="header-count">45 ידיעות</span>
+    <a href="digest.pdf" class="pdf-link" download>PDF ↓</a>
+    <button class="map-btn" id="map-btn" title="מפה מודיעינית">🗺</button>
+  </div>
+</header>
+
+<!-- ── Tactical Map (lazy, collapsible) ──────────────────────────────────── -->
+<div class="map-section" id="map-section">
+  <div class="map-section-bar" id="map-bar">
+    <div class="map-section-title">🗺 מפה מודיעינית — לחץ על ידיעה</div>
+    <span class="map-section-meta">22 ידיעות ממופות · לחץ לסגירה ✕</span>
+  </div>
+  <div id="tactical-map"></div>
+  <div class="map-legend">
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-hamas)"></span>חמאס</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-hizb)"></span>חיזבאללה</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-iran)"></span>איראן</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-others)"></span>אחרים</div>
+    <span class="map-hint">לחץ על מרקר → עבור לידיעה</span>
+  </div>
+</div>
+
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-dates">יום שישי, 3 אפריל 2026 | ט״ז ניסן תשפ״ו</div>
+  <h1>03-APRIL-2026</h1>
+</section>
+
+<!-- ── Sector quick-nav ───────────────────────────────────────────────────── -->
+<div class="sector-nav">
+  <div class="sector-nav-title">בחר גזרה</div>
+  <div class="sector-cards"><div class="sector-card" data-actor="HEZBOLLAH">
+      <span class="sector-dot"></span>
+      <span class="sector-name">חיזבאללה</span>
+      <span class="sector-count">35 ידיעות</span>
+    </div><div class="sector-card" data-actor="IRAN">
+      <span class="sector-dot"></span>
+      <span class="sector-name">איראן</span>
+      <span class="sector-count">10 ידיעות</span>
+    </div></div>
+</div>
+
+<!-- ── Main content ──────────────────────────────────────────────────────── -->
+<main class="content">
+
+  <div class="actor-tabs"><button class="actor-tab" data-actor="HAMAS">
+    <span class="dot"></span>
+    חמאס
+    <span class="tab-count">0</span>
+  </button><button class="actor-tab active" data-actor="HEZBOLLAH">
+    <span class="dot"></span>
+    חיזבאללה
+    <span class="tab-count">35</span>
+  </button><button class="actor-tab" data-actor="IRAN">
+    <span class="dot"></span>
+    איראן
+    <span class="tab-count">10</span>
+  </button><button class="actor-tab" data-actor="OTHERS">
+    <span class="dot"></span>
+    אחרים
+    <span class="tab-count">0</span>
+  </button></div>
+
+  <div class="domain-filters">
+    <button class="domain-btn active" data-domain="ALL">הכל</button>
+    <button class="domain-btn" data-domain="KINETIC">קינטי</button>
+    <button class="domain-btn" data-domain="TERRAIN">שטח</button>
+    <button class="domain-btn" data-domain="SOCIAL">חברתי</button>
+    <button class="domain-btn" data-domain="CYBER">סייבר</button>
+    <button class="domain-btn" data-domain="GENERAL">כללי</button>
+  </div>
+
+  <div class="actor-panel" id="panel-HAMAS"><p style="color:var(--text-dim);padding:20px;text-align:center;">אין ידיעות</p></div><div class="actor-panel" id="panel-HEZBOLLAH" class="actor-panel active">
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T1">
+      <div class="item-top">
+        <span class="item-id">HZ-T1</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-T1"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/hawanalebanon/100811" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / כללי / פינוי אוכלוסייה / הודעה מטעם ארגון רופאים ללא גבולות שיש מעל למליון עקורים והם סובלים וללא טיפול .
+
+ארגון "רופאים ללא גבולות" בהודעה: יותר ממיליון עקורים בלבנון והמהגרים מתמודדים עם דחיקה חמורה וחוסר טיפול .
+‏منظمة "أطباء بلا حدود" في بيان: أكثر من مليون نازح في لبنان والمهاجرون يواجهون تهميشًا حادًا ونقصًا في الرعاية .</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL" data-id="HZ-G1">
+      <div class="item-top">
+        <span class="item-id">HZ-G1</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-G1"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/rasedal3ado138e/338196" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / כללי / חזבאללה
+
+שקט זהיר מצד ההתנגדות בדרום ללבנון. האם צפויה הפתעה?
+🚫هدوء حذر من قبل المقاومة في جنوب لبنان هل هناك مفاجأة❓🔥</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K1">
+      <div class="item-top">
+        <span class="item-id">HZ-K1</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K1"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Janoubana/38152" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / פעילות צה"ל / סיכום פעילות צה״ל ליממה האחרונה
+
+סיכום התקיפות של צה"ל על אדמות לבנון בתאריך 2/4/2026:
+התקיפות שביצע חיל האוויר של צה"ל:
+💥 דרום:
+חארוף, זבדין, ברג׳ רחאל, כפרציר, אל-ח׳יאם, דיס אל-ח׳ריבה, דבין, אל-דלאפה, בינת ג'ביל, אל-מנצורי, ברעשית, כפרא, תבנין, אל-סלטאניה, עיתא אל-ג'בל, ברג׳ קלאוי, צרבין, אל-ג'מיג'מה, תולין, מג'דל סלם, עלמאן.
+💥 תקיפות שביצעו כטב״מים של צה"ל:
+כונין, חבוש.
+💥 הפגזות ארטילריה:
+ראשיה אל-פח'אר, בית יאחון, דבין, תבנין, עיתא אל-ג'בל, ברג׳ קלאוי, ג'באל אל-בטם, צדיקין, עריצ׳, דבין, דיס אל-ח׳ריבה, אבל אל-סקי, מג'דלזון, חאריצ׳, אל-ח׳יאם, יחמר אל-שקיף, ארנון, זוטר אל-ע׳רביה, זוטר אל-שרקיה.
+💥 פיצוצים שביצע צה"ל בכפרים בדרום:
+אל-טיבה, אל-נאקורה.
+⚠️ ملخص الإعتداءات الإسرائيلية على الأراضي اللبنانية بتاريخ ٢/٤/٢٠٢٦: 📍الغارات التي نفذها الطيران الحربي المعادي:
+💥 الجنوب:
+💥 الغارات التي نفذها الطيران المسير المعادي:
+كونين ، حبوش .
+💥 القصف المدفعي:
+💥 التفجيرات التي نفذها العدو في البلدات الجنوبية:
+الطيبة ، الناقورة .</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K2">
+      <div class="item-top">
+        <span class="item-id">HZ-K2</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K2"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/knat_b2sonshadeed/190328" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / כפרא בנת ג'ביל / צרבין / פעילות צה"ל / תקיפה אווירית באמצעות כטב״ם לעבר רכב של רשות הבריאות
+
+כטב״ם של צה"ל תקף רכב של רשות הבריאות בדרך כפרא–צרבין.
+
+הערה: לא דווח על נפגעים مراسل "ليبانون ديبايت": مسيّرة إسرائيلية تستهدف سيارة للهيئة الصحية على طريق كفرا–صربين</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K3">
+      <div class="item-top">
+        <span class="item-id">HZ-K3</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K3"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/nabatiehchannel/168359," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / כפרא בנת ג'ביל / צרבין / פעילות צה"ל / בעקבות תקיפת הבית נפגע אמבולנס שעלה באש
+
+התקיפה כוונה לבית ליד מרכז של רשות הבריאות, מה שהוביל לשריפה של אמבולנס שעמד ליד הבית.
+
+הערה: עדכון דווח קודם 🚨الغاره استهدفت منزلآ بجانب مركز للهيئه الصحيه مما ادت الى اشتعال سياره اسعاف كانت بجانب المنزل ‎[03/04/2026, 18:05:08] דביר בן אבי: *לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / מצב פעולות ההתנגדות האסלאמית בתאריך 02/04/2026 מצב פעולות ההתנגדות האסלאמית בתאריך 02-04-2026 האוסינט המטכ"לי* ‎image omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T2">
+      <div class="item-top">
+        <span class="item-id">HZ-T2</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-T2"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Janoubana/38153" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום ארועי לקיחת אחריות מטעם ההתנגדות האסלאמית לתאריך 02.04.2026 חלק 1 מתוך 4
+
+כהגנה על לבנון ועמה, פרסמה ההתנגדות האסלאמית ביום חמישי 02-04-2026 (49) הודעות צבאיות אודות פעולות התמודדות עם תנועות צה״ל בגבול הלבנוני-ישראלי וכן פעולות תקיפת עמדות בסיסים ופריסת צה״ל והישובים בצפון הארץ כדלקמן
+1. בשעה 20:00 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בגבעת ע׳דמאת׳א בעיירה עינאת׳א במטח טילים.
+2. בשעה 20:00 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בגבעת פריז בעיירה עינאתא במטח טילים.
+3. בשעה 23:30 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בישוב מלכיה במטח טילים.
+4. בשעה 23:50 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בעיירה רשאף במטח טילים.
+5. בשעה 23:55 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בגבעת ג׳ניג׳ל בעיירה אל-קנטרה בפגזי ארטילריה.
+6. בשעה 00:05 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בישוב מלכיה במטח טילים.
+7. בשעה 00:35 תקיפת ריכוז של חיילים וכלי רכב של צה״ל באזור אל-סדר בעיירה עינאתא במטח טילים.
+8. בשעה 01:30 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בישוב מטולה במטח טילים.
+9. בשעה 02:00 תקיפת תשתיות השייכות לצה״ל באזור קרית אתא ממזרח לעיר חיפה במטח טילים.
+10. בשעה 02:30 לאחר שאותר כוח של חיילי צה״ל שהתמקם בתוך אחד הבתים בעיירת הגבול אל-קוזח, פעילי ההתנגדות האסלאמית תקפו אותו בטיל מונחה ופגעו פגיעה ישירה , וכאשר החיילים ברחו לאזור הסמוך הם הותקפו בטילים ובפגזי ארטילריה.
+11. בשעה 06:00 במסגרת האזהרה שהפנתה ההתנגדות האסלאמית למספר ישובים בצפון הארץ , תקיפת הישוב אבן מנחם במספר של כטב״מים מתאבדים.
+12. בשעה 06:10 תקיפת ריכוז של חיילי צה״ל בישוב יראון במטח טילים.
+13. בשעה 06:10 תקיפת ריכוז של חיילי צה״ל בישוב מלכיה במטח טילים.
+14. בשעה 06:40 תקיפת ריכוז של חיילי צה״ל בישוב אביבים במטח טילים.
+⭕️ دفاعًا عن لبنان وشعبه، أصدرت المقاومة الإسلامية بتاريخ الخميس 02/04/2026، 49 بيانًا عسكريًا حول عمليات التصدي لتحركات العدو الإسرائيلي عند الحدود اللبنانية الفلسطينية، وكذلك عمليات استهداف مواقع وقواعد وانتشار جيش العدو الإسرائيلي ومستوطناته في شمال فلسطين المحتلة، وفقًا للآتي:
+11- الساعة 06:00 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة إيفن مناحيم بسربٍ من المسيّرات الانقضاضيّة.
+האוסינט המטכ"לי*.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T3">
+      <div class="item-top">
+        <span class="item-id">HZ-T3</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-T3"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Janoubana/38153" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום ארועי לקיחת אחריות מטעם ההתנגדות האסלאמית לתאריך 02.04.2026 חלק 2 מתוך 3
+
+15- בשעה 07:00 תקיפת ריכוז חיילים וכלי רכב של צה״ל בגבעת פריז בעיירה עינאתא בשלושה מטחי רקטות.
+16- בשעה 08:00 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת הישוב מטולה במטח רקטות.
+17- בשעה 08:30 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת העיר קריית שמונה במטח רקטות.
+18- בשעה 09:00 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת העיר קריית שמונה בפעם השנייה במטח רקטות.
+19- בשעה 09:15 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת הקיבוץ בית הלל במטח רקטות.
+20- בשעה 09:15 תקיפת דחפור D9 במשולש השחרור בטיל ישיר והשגת פגיעה ודאית.
+21- בשעה 10:00 תקיפת מסוק צה״ל בשמי העיירה הגבולית ראמיה בטיל קרקע אוויר ואילוצו לסגת.
+22- בשעה 10:25 תקיפת ריכוז חיילים וכלי רכב של צה״ל בשער פאטמה הגבולי במטח רקטות.
+23- בשעה 10:30 תקיפת ריכוזים גדולים של כלי רכב של צה״ל ברכס אל-שמיסאת בעיירה אל-טיבה בשלושה מטחי רקטות.
+24- בשעה 10:30 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת הישוב מטולה בפעם השנייה במטח רקטות.
+25- בשעה 10:30 תקיפת מפקדת הפיקוד הצפוני בצה״ל בסיס דדו מצפון לעיר צפת במטח רקטות.
+26- בשעה 10:40 תקיפת שני ריכוזים של חיילים וכלי רכב של צה״ל בעיירה אל-טיבה בשני מטחי רקטות.
+27- בין השעות 10:00 ל 11:00 תקיפת ריכוזי חיילים וכלי רכב של צה״ל בעיירות רשאף ובית ליף במטחי רקטות.
+28- בשעה 11:15 תקיפת ריכוז חיילים וכלי רכב של צה״ל ליד כיכר העיירה אל-קנטרה במטח רקטות ופגזי ארטילריה.
+29- בשעה 12:00 תקיפת ריכוז חיילי צה״ל בישוב משגב עם במטח רקטות.
+16- الساعة 08:00 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة المطلّة بصلية صاروخية.
+17- الساعة 08:30 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة كريات شمونة بصلية صاروخية.
+18- الساعة 09:00 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة كريات شمونة للمرّة الثانية بصلية صاروخية.
+19- الساعة 09:15 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلّة، استهداف مستوطنة بيت هلل، بصلية صاروخيّة.‏
+20- الساعة 09:15 استهداف جرّافة D9 عند مثلّث التحرير بصاروخ مباشر وتحقيق إصابة مؤكّدة.
+22- الساعة 10:25 استهداف تجمّع لجنود وآليات جيش العدوّ الإسرائيليّ عند بوابة فاطمة الحدوديّة بصليةٍ صاروخيّة.‏
+24- الساعة 10:30 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلّة، استهداف مستوطنة المطلّة للمرة الثانية، بصلية صاروخيّة.‏
+26- الساعة 10:40 استهداف تجمعين لجنود وآليات جيش العدوّ الإسرائيليّ في بلدة الطيبة بصليتين صاروخيّتين.‏</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T4">
+      <div class="item-top">
+        <span class="item-id">HZ-T4</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-T4"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Janoubana/38155," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום ארועי לקיחת אחריות מטעם ההתנגדות האסלאמית לתאריך 02.04.2026 חלק 3 מתוך 3
+
+30- בשעה 12:00, תקיפת טנק מרכבה של צה״ל מזרחית למתקן המעצר באל-ח'יאם בטיל מונחה, והושגה פגיעה ישירה.
+31- בשעה 12:30, תקיפת שני ריכוזי חיילים של צה״ל בשני בתים בעיירה אל-טיבה בטילים מונחים, והושגו פגיעות ישירות.
+32- בשעה 12:30, תקיפת ריכוזי חיילים וכלים של צה״ל בעמדות כפר גלעדי ואל-מארג' במטחי רקטות.
+33- בשעה 15:00, תקיפת ריכוז חיילים וכלים של צה״ל בגבעת ע'דמאת'א וגבעת פריז בעיירה עינאתא בפגזי ארטילריה.
+34- בשעה 07:00 ובשעה 15:00, תקיפת ריכוזי חיילים וכלים של צה״ל בגבעת פריז וגבעת ע'דמאת'א בעיירה עינאתא במספר מטחי רקטות.
+35- בשעה 07:00 ובשעה 15:00, תקיפת ריכוז חיילים וכלים של צה״ל בישוב  אביבים במטחי רקטות.
+36- בשעה 10:00 ובשעה 15:00, תקיפת ריכוז חיילים וכלים של צה״ל בעמדת אל-מאלכיה במטחי רקטות.
+37- בשעה 15:15, לאחר שאותר כוח של חיילי צה״ל שהתמקם בתוך אחד הבתים בעיירה אל-ביאצ׳ה, תקפו אותו לוחמי ההתנגדות האסלאמית באמצעות רחפן מתאבד, והושגו פגיעות ישירות.
+38- בשעה 15:30, תקיפת ריכוז חיילי צה״ל בעמדת ראס אל-נאקורה במטח רקטות.
+39- בשעה 15:30, במסגרת האזהרה שהופנתה על ידי ההתנגדות האסלאמית למספר ישובים בצפון הארץ, תקיפת הישוב שלומי במטח רקטות.
+40- בשעה 15:35, בתגובה לתקיפות המתמשכת של צה״ל נגד אזרחים, עקירה והרס בתים, לוחמי ההתנגדות האסלאמית תקפו תשתיות השייכות לצה״ל בקריות צפונית לעיר חיפה במטח רקטות.
+41- בשעה 14:50 ובשעה 16:00, תקיפת ריכוז חיילים וכלים של צה״ל בגבעת ע'דמאת'א וגבעת פריז בעיירה עינאתא בשלושה מטחי פגזי ארטילריה.
+42- בשעה 16:00, תקיפת ריכוז חיילים וכלים של צה״ל במשולש אל-סדר - פריז בעיירה עינאתא במטח רקטות ופגזי ארטילריה.
+43- בשעה 16:00, תקיפת טנק מרכבה של צה״ל בגבעת אל-צלעה בעיירה אל-קנטרה באמצעות רחפן מתאבד, והושגה פגיעה ישירה.
+44- בשעה 16:35, במסגרת האזהרה שהופנתה על ידי ההתנגדות האסלאמית למספר ישובים בצפון הארץ, תקיפת העיר נהריה במטח רקטות.
+45- בשעה 17:20, במסגרת האזהרה שהופנתה על ידי ההתנגדות האסלאמית למספר ישובים בצפון הארץ, תקיפת העיר קריית שמונה בפעם השלישית במטח רקטות.
+46- בשעה 18:20, בתגובה לתקיפות המתמשכת של צה״ל נגד אזרחים, עקירה והרס בתים, לוחמי ההתנגדות האסלאמית תקפו תשתיות השייכות לצה״ל בעיר כרמיאל במטח רקטות.
+47- בשעה 19:15, בתגובה לתקיפות המתמשכת של צה״ל נגד אזרחים, עקירה והרס בתים, לוחמי ההתנגדות האסלאמית תקפו בסיס עמיעד ובסיס פילון צפונית לכנרת במטח רקטות.
+48- בשעה 20:00, תקיפת עמדות ארטילריה של צה״ל בח'ירבת מאער במספר רחפנים מתאבדים.
+49- בשעה 20:00, תקיפת ריכוז חיילים וכלים של צה״ל בעיירה שמע בפגזי ארטילריה.
+ההתנגדות האסלאמית מחויבת להגן על אדמתה ותושביה, במיוחד כאשר צה״ל עובר את הגבול בפשעיו. תגובתה כוונה לאתרים צבאיים ולא כפי שצה״ל עושה בתקיפת אזרחים, וזוהי חובה מינימלית לרסנו ולמנוע ממנו להמשיך ביעדיו המסוכנים כלפי לבנון כמדינה, כעם וכמו התנגדות.
+#מערכת_הקש_הנאכל #הגנה_על_לבנון_ותושביה #המדיה_הצבאית
+31- الساعة 12:30 استهداف تجمعين لجنود جيش العدوّ الإسرائيليّ في منزلين في بلدة الطيبة بالصواريخ الموجّهة وحققوا إصابات مباشرة.‏
+39- الساعة 15:30 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة شلومي بصليةٍ صاروخيّة.
+44- الساعة 16:35 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة نهاريا بصليةٍ صاروخيّة.
+45- الساعة 17:20 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة كريات شمونة للمرّة الثالثة بصلية صاروخيّة.
+#معركة_العصف_المأكول
+#دفاعا_عن_لبنان_وشعبه
+#الإعلام_الحربي
+‎[03/04/2026, 18:05:09] דביר בן אבי: *לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום היומי של פעולות ההתנגדות האסלאמית באתריך 02-04-2026
+הסיכום היומי של פעולות ההתנגדות האסלאמית בתאריך 02-04-2026
+האוסינט המטכ"לי* ‎image omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL" data-id="HZ-G2">
+      <div class="item-top">
+        <span class="item-id">HZ-G2</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-G2"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/nahjmokawma/64653" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / פעילות צה"ל / ראיית כוחותינו / מטוסים של צה״ל טסים בגובה נמוך מאוד
+
+מטוסי קרב של צה״ל טסים בגובה נמוך מאוד מעל אזורים בהר לבנון.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K4">
+      <div class="item-top">
+        <span class="item-id">HZ-K4</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K4"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/noonnewslb/142434" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / יאטר / פעילות צה"ל / ירי ארטילרי לכיוון השכונה המזרחית
+
+ירי ארטילרי בקוטר 240 מ"מ  לכיוון השכונה המזרחית בעיירה יאטר</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K5">
+      <div class="item-top">
+        <span class="item-id">HZ-K5</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K5"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/nabatiehchannel/168373," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / יאטר / כפרא בנת ג'ביל / צרבין / בית ליף / פעילות צה"ל / תקיפות אוויריות
+
+סדרת תקיפות אוויריות על העיירות יאטר, כפרא, צרבין, בית ליף
+سلسلة غارات على : ياطر , كفرا , صربين , بيت ليف .
+‎[03/04/2026, 18:05:10] דביר בן אבי: *לבנון / דרום לבנון / יאטר / BDA / ההרוג עלי פוזי כוראני
+העיירה יאטר מודיעה על ההרוג *עלי פוזי כוראני*.
+بلدة ياطر تزف الشه🌹يد علي فوزي كوراني هنيئًا 🌹
+האוסינט המטכ"לי* ‎image omitted
+‎[03/04/2026, 18:05:11] דביר בן אבי: *לבנון / דרום לבנון / כפרא בנת ג'ביל / BDA / ההרוג מחמד מחמוד חמדאן
+הודעה מטעם עיריית כפרא :
+בגאווה והוקרה רבה עיריית כפרא מודיעה לתושביה הנכבדים ובני עיירתנו הנאמנים על ההרוג הלוחם
+מחמד מחמוד חמדאן
+כשהוא מגן על אדמתו עמו ומטרתו. עיריית כפרא מגישה את תנחומיה וברכותיה החמות ביותר למשפחת ההרוג הנכבדה ולכל תושבי העיירה, ומאשרת שדם ההרוגים יישאר מגדלור של כבוד ועמידות ושעיירתנו שהקריבה הרוגים תישאר נאמנה להקרבתם .
+الشهيد المجاهد
+محمد محمود حمدان
+האוסינט המטכ"לי* ‎image omitted
+‎[03/04/2026, 18:05:11] דביר בן אבי: *לבנון / דרום לבנון / BDA / חמולת ג'עפר × 7
+חמולת ג'עפר* בלבנון אבלה על אובדן שבעה מבניה שהקריבו את חייהם למען ארצם:
+עלי ח'צ'ר ג'עפר
+ח'צ'ר אמירה ג'עפר
+מהדי חסן ג'עפר
+באסל מחמד ג'עפר
+צח'ר חסין ג'עפר
+ואאל ח'צ'ר ג'עפר
+פדאא יאסין ג'עפר
+علي خضر جعفر
+خضر اميره جعفر
+مهدي حسن جعفر
+باسل محمد جعفر
+صخر حسين جعفر
+وائل خضر جعفر
+فداء ياسين جعفر
+האוסינט המטכ"לי* ‎image omitted
+‎[03/04/2026, 18:05:11] דביר בן אבי: *לבנון / דרום לבנון / אלדויר אלנבטיה / BDA / הלכי רוח / סרטון מיעד תקיפה אווירית
+הדוד השורד / העיקש / האיתן הזה באל-דויויר בעיצומה של המלחמה מסיר את הדאגה מהלב מצא לנו את התרנגולת סמיה
+סרטון
+ארבעה תקיפות אוויריות שתוצאתן הייתה איבוד קשר עם 8 עצי התאנה והעוף שלו האהובה "סמיה" אשר נקראה אחרי אהבת נעוריו שעברה בצעירותה לארה"ב וקבלה אזרחות אמריקאית אך הוא בעל אזרחות דרומית מאל-דויר  *שגאה בה מאוד
+האוסינט המטכ"לי* ‎video omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K6">
+      <div class="item-top">
+        <span class="item-id">HZ-K6</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K6"
+    title="הצג על המפה">📍</button>
+        <a href="https://www.facebook.com/share/p/1BQTqsUeLE/" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / BDA / סיכום יומי (אדום) של תקיפות צה"ל
+
+עדכון
+תאריך מקורי: 03/04/2026 03:58
+🔵 *סיכום התקיפות הישראליות בשטח לבנון ב-2/4/2026:
+תקיפות אוויריות שבוצעו על ידי מטוסי קרב של האויב:
+דרום:
+1. חארוף
+2. זבדין
+3. ברג' רחאל
+4. כפר ציר
+5. אל-ח'יאם
+6. דיס אל-ח'רבה
+7. דבין
+8.אל-דלאפה
+9. בנת ג'ביל
+10. אל-מנצורי
+11. ברעשית
+12. כפרא
+13. אל-ח'יאם (פעם 2 ע.ע.)
+14. תיבנין
+15. אל-סלטאניה
+16. עיתא אל-ג'בל
+17. ברג' קלאוי
+18. צרבין
+19. אל-ג'מיג'מה
+20. תולין
+21. מג'דל סלם
+22. עלאמן
+תקיפות אוויריות שבוצעו על ידי כטב"מים:
+1. כונין
+2. חבוש
+הפגזת ארטילריה:
+1. ראשאיא אל-פח'אר
+2. בית יאחון
+3. דבין
+4. תבנין
+5. עיתא אל-ג'בל
+6. ברג' קלאוי
+7. ג'בל אל-בטם
+8. צדיקין
+9. עריצ' דבין
+10. דיס אל-ח'ריבה
+11. אבל א-סקי
+12. מג'דלזון
+13. חאריצ'
+14. אל-ח'יאם (3 ע.ע.)
+15. יחמר אל שקיף
+16. ארנון
+17. זוטר אל-ע'רביה
+18. זוטר אל-שרקייה
+פיצוצים/ השמדות הדרום:
+1. אל-טיבה
+2. אל-נאקורה
+🔵 *ملخص الإعتداءات الإسرائيلية على الأراضي اللبنانية بتاريخ ٢/٤/٢٠٢٦:
+🟠 *الغارات التي نفذها الطيران الحربي المعادي:
+🔅 *الجنوب:
+حاروف
+زبدين
+برج رحال
+كفرصير
+الخيام
+ديس الخريبة
+دبين
+الدلافة
+بنت جبيل
+المنصوري
+برعشيت
+كفرا
+الخيام
+تبنين
+السلطانية
+عيتا الجبل
+برج قلاوي
+صربين
+الجميجمة
+تولين
+مجدل سلم
+علمان
+🟠 *الغارات التي نفذها الطيران المسير المعادي:
+كونين
+حبوش
+🟠 *القصف المدفعي المعادي:
+راشيا الفخار
+بيت ياحون
+دبين
+تبنين
+عيتا الجبل
+برج قلاوي
+جبال البطم
+صديقين
+عريض دبين
+ديس الخريبة
+ابل السقي
+مجدلزون
+حاريض
+الخيام
+يحمر الشقيف
+أرنون
+زوطر الغربية
+زوطر الشرقية
+🟠 *التفجيرات التي نفذها العدو في البلدات الجنوبية:
+الطيبة
+الناقورة</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL" data-id="HZ-G3">
+      <div class="item-top">
+        <span class="item-id">HZ-G3</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-G3"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/bintjbeilnews/169388" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון /כללי/הלכי רוח/נצרות/הקו הצהוב, קרב בינת ג׳בייל ועתיד נוצרי דרום לבנון – ניתוח טעון של ז׳ורז׳ גאנם
+
+הקו הצהוב, קרב בנת ג'בייל וגורל הנוצרים בדרום – קריאה נרחבת וחשובה של ג'ורז' ע'אנם בסצנה המורכבת.
+الخط الأصفر ومعركة بنت جبيل ومصير مسيحيّي الجنوب… قراءة تحليلية شاملة وخطيرة لجورج غانم في المشهد المعقّد</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL" data-id="HZ-G4">
+      <div class="item-top">
+        <span class="item-id">HZ-G4</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-G4"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/lebanondebate/213797" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון /כללי/נוצרים / ברגע מכריע: הוותיקן נכנס למשבר במסר תקיף
+
+ברגע קריטי... הוותיקן מצטרף למשבר עם מסר נחרץ
+في لحظة مفصلية… الفاتيكان يدخل على خط الأزمة برسالة حاسمة</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K7">
+      <div class="item-top">
+        <span class="item-id">HZ-K7</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K7"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/lebanondebate/213816" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון /התרעה /  צה״ל קורא לפינוי מיידי של שכונות בדרום ביירות
+
+התרעה מיידית לתושבי אל-דאצ׳ה א-ג׳נוביה בשכונות חארת ח׳ריק, אלע׳ביירי, אללילכי, אלהדת׳, בורג' אלבראג'נה, תחויאטת אלע׳דיר ושיאח לפנות את האזור מיד.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL" data-id="HZ-G5">
+      <div class="item-top">
+        <span class="item-id">HZ-G5</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-G5"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/lebanondebate/213825" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון /ראיית כוחותינו/צבא ישראל פוצץ הבוקר עשרות בתים בעיירה עייתא אל-שעב
+
+צה"ל פוצץ הבוקר עשרות בתים בעיתא אל-שעב.
+موقع "واللا" عن مصادر: الجيش الإسرائيلي فجر صباح اليوم عشرات المنازل في عيتا الشعب</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K8">
+      <div class="item-top">
+        <span class="item-id">HZ-K8</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K8"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/rasedal3ado138e/337821" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/דרום לבנון/יאטיר/פעולה צבאית
+
+תקיפה על העיירה יאטיר בדרום לבנון.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T5">
+      <div class="item-top">
+        <span class="item-id">HZ-T5</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-T5"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/rasdal3doj/2681877" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/דרום לבנון / חזבאללה/ישראל מצמצמת את יעדיה מול חיזבאללה, אך סוגיית האזור החיץ וחזרת התושבים נותרת מוקד עימות מרכזי
+
+إن إقرار "الجيش الإسرائيلي" بأن نزع سلاح حزب الله في ظل الظروف الحالية هو أمر غير ممكن، وانه ولم يعد هدف الحرب، هو تراجع جوهري نوعي، فرضته جهوزية حزب الله للحرب، وهذا نتاج الفعل الميداني.
+لكن الأهم، الاشارة إلى أن "المطلوب هو ابعاد الحزب عن الحدود بعمق حوالي 4 كلم"، فهو تراجع أيضا، عن إبعاده إلى ما بعد الليطاني.
+أما محاولة ترسيخ منطقة عازلة، خالية من السكان، ومنع عودتهم، فهي التحدي الكبير الذي سيواجه في لبنان حتما، لأن عنوان فتح الجبهة واستباق الهجمة الإسرائيلية هو ضرورة انسحاب "إسرائيل" وعودة الأهالي إلى قراهم.
+העובדה שצה"ל מודה שפירוק חיזבאללה מנשקו בנסיבות הנוכחיות הוא לא אפשרי, ושזה כבר לא המטרה של המלחמה, זה נסיגה משמעותית שנכפתה בגלל ההיערכות של חיזבאללה למלחמה, וזה תוצאה של הפעילות בשטח. אבל הכי חשוב, ההערה ש"המטרה היא להרחיק את הארגון מהגבול לעומק של כ-4 ק"מ", זו גם נסיגה, לעומת הדרישה להרחיק אותו מעבר לליטני. הניסיון ליצור אזור חיץ ריק מתושבים ולמנוע את חזרתם, הוא האתגר הגדול שיתמודד איתו בלבנון בטוח, כי הסיבה לפתיחת החזית והתגובה המוקדמת מול ההתקפה של ישראל היא הדרישה שישראל תיסוג והאזרחים יחזרו לכפרים שלהם.
+
+הערה: ישראל מצמצמת את יעדיה מול חיזבאללה, אך סוגיית האזור החיץ וחזרת התושבים נותרת מוקד עימות מרכזי إن إقرار "الجيش الإسرائيلي" بأن نزع سلاح حزب الله في ظل الظروف الحالية هو أمر غير ممكن، وانه ولم يعد هدف الحرب، هو تراجع جوهري نوعي، فرضته جهوزية حزب الله للحرب، وهذا نتاج الفعل الميداني. لكن الأهم، الاشارة إلى أن "المطلوب هو ابعاد الحزب عن الحدود بعمق حوالي 4 كلم"، فهو تراجع أيضا، عن إبعاده إلى ما بعد الليطاني. أما محاولة ترسيخ منطقة عازلة، خالية من السكان، ومنع عودتهم، فهي التحدي الكبير الذي سيواجه في لبنان حتما، لأن عنوان فتح الجبهة واستباق الهجمة الإسرائيلية هو ضرورة انسحاب "إسرائيل" وعودة الأهالي إلى قراهم.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K9">
+      <div class="item-top">
+        <span class="item-id">HZ-K9</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K9"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/janoub_lebnan23/38292" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/צריפא/פעילות צה"ל / רבע תקיפות רצופות בצריפא: מבנים וחנויות נהרסו
+
+מבזק: ארבע התקיפות האוויריות של צה"ל ברצף על סריפא גרמו להריסת חוסיניה, בניין של ארבע קומות וחנויות מסחריות.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K10">
+      <div class="item-top">
+        <span class="item-id">HZ-K10</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K10"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/bentjbail/1174" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/אל-ביאצ׳ה/שגרת חיים/לקיחת אחריות/תקיפת אתר רדאר בדרום לבנון באמצעות כטב”ם
+
+הודעה מצידה של ההתנגדות האסלאמית (22):
+דִּפְעָה לִלְבָּנָן וְעַמּוֹ, לוחמי ההתנגדות האסלאמית תקפו בשעה 15:05 ביום שבת, 28/03/2026, את אתר הרדאר בכפר אלביאצ׳ה באמצעות רחפן תקיפה.
+#מערכת_העופל_האכול #הגנה_על_לבנון_ועמה #הסברה_מלחמתית
+بيان صادر عن المقاومة الإسلامية (22):‏ بِسْمِ اللَّـهِ الرحمن الرَّحِيمِ ‏﴿أُذِنَ لِلَّذِينَ يُقَاتَلُونَ بِأَنَّهُمْ ظُلِمُوا وَإِنَّ اللَّهَ عَلَىٰ نَصْرِهِمْ لَقَدِيرٌ﴾‏ صَدَقَ اللهُ العَلِيّ العَظِيم دفاعًا عن لبنان وشعبه، استهدف مجاهدو المُقاومة الإسلاميّة عند الساعة 15:05 السبت 28/03/2026 موقع الرادار في بلدة البيّاضة بمحلّقة انقضاضيّة. ﴿وَمَا النَّصْرُ إِلاَّ مِنْ عِندِ اللّهِ الْعَزِيزِ الْحَكِيم﴾‏ السبت 28-03-2026‏ 8 شوال 1447 هـ #معركة_العصف_المأكول #دفاعا_عن_لبنان_وشعبه #الإعلام_الحربي</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K11">
+      <div class="item-top">
+        <span class="item-id">HZ-K11</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K11"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/almanarnews/245737," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/הערכת מלחמה/הסברה/סרט וידיו/ההתפתחויות האחרונות בגזרה הדרומית בלבנון – אזור נבטיה
+
+📹 דיווחים מצולמים | ההתפתחויות האחרונות בגזרה הדרומית של לבנון ובמיוחד באזור נבטיה
+📹 تقارير مصورة | آخر تطورات الجبهة الجنوبية للبنان وتحديدًا منطقة النبطية
+‎[03/04/2026, 18:05:15] דביר בן אבי: *לבנון / צריפא / BDA / לגיטימציה / תמונת אמבולנס שנפגע בתקיפה כביכול
+שני אמבולנסים השייכים לרשות הבריאות האסלאמית ו"כשאפה אל-רסאלה" האסלאמיים בעיירה סריפה ניזוקו כתוצאה מחידוש התקיפות האוויריות בזמן שצוותי אמבולנסים בדקו את הנזק שנגרם מהפשיטות הראשוניות.
+
+הערה: כשאפה אל-רסאלה (צופים) ארגון שייתכן ונתמך ע"י חזבאללה Two ambulances belonging to the Islamic Health Society and the Islamic Risala Scouts were damaged in the town of Srifa following renewed airstrikes, while rescue teams were inspecting the damage from the initial strikes האוסינט המטכ"לי* ‎image omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K12">
+      <div class="item-top">
+        <span class="item-id">HZ-K12</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K12"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/litaninews/61453" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/עיירת צריפא/פעילות צה"ל / תיעוד מהשטח: תוצאות תקיפה קשה בעיירה צריפא
+
+כתבת ליטאני ניוז מתוך האירוע: מתעדת את תוצאות התקיפה האכזרית על עיירת סרייפא לפני זמן קצר.
+להצטרפות לשירות חדשות ליטאני ניוז בווטסאפ, הצטרפו דרך הקישור (2):
+مراسلة الليطاني نيوز من قلب الحدث : توثق آثار الاعتداء الهمجي على بلدة صريفا منذ قليل 🛑للإشتراك بخدمة أخبار ليطاني نيوز عبر (واتساب) نرجو الانضمام عبر</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K13">
+      <div class="item-top">
+        <span class="item-id">HZ-K13</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K13"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/rasedal3ado138e/338473" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/צבא לבנון/  הודעת צבא לבנון: פיצוץ יזום של תחמושת באזור דכואנה
+
+מבזק: צבא לבנון מודיע שיחידה של הצבא תבצע פיצוץ של תחמושת שלא התפוצצה באזור דקוונה - אלמתן בתאריך 3.4.2026 בין השעות 13:30 ל-14:30.
+الجيش اللبناني: ستقوم وحدة من الجيش بتفجير ذخائر غير منفجرة في منطقة الدكوانة - المتن بتاريخ 3 /4 /2026 ما بين الساعة 13:30 والساعة 14:30</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K14">
+      <div class="item-top">
+        <span class="item-id">HZ-K14</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K14"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Electrohizbullah/169871," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / אלח'יאם / אלערקוב / הערכות צבאית / ראיית כוחותינו / ניתוח תמונת מצב בגזרה המזרחית לפי ערוץ אלמנאר
+
+כתב העיתונאי בערוץ אלמנאר, סאמר חג' עלי: מצב השטח בגזרה המזרחית: בציר אלח'יאם, למרות מטריית האש מהארטילריה ומהמטוסים, העימותים נמשכים וההתנגדות מתעמתת עם צה"ל באופן רציף בשכונות המזרחיות והמערביות שלה, ובאזור שבין מרכז העיר לכיכר.
+ביום חמישי במהלך העימותים הושמד טנק מרכבה ליד בית המעצר אלח'יאם, והותקפו עמדות של צה"ל המובילות אל העיר.
+באזור אלערקוב: המצב נשאר בעינו, צה"ל מבצע פעולות מיוחדות שם, כולל חדירה לנקודות שונות בכפרים הצמודים לגבול לצורך סריקות וחטיפה וכיוצא בזה. *צה"ל הקים סוללת ארטילריה חדשה בגבול כפרשובא*, כדי לתמוך במאמץ המלחמתי של סוללת אלזעורה בגולן הסורי שבשליטת צה"ל.
+בציר אלקנתרה - אלטיבה: ההתנגדות ביצעה מספר פעולות בשעות האחרונות, כולל תקיפת עמדות צה"ל בתחנות יציאה וריכוז, והיא עוקבת אחרי כל ניסיון של צה"ל להתרחב על מנת להתמודד איתו. צה"ל לא הצליח להשתלט על העיירות שהקיף, והכוחות שלו לא נכנסו לכל השכונות בכפרים האלה.
+‎[03/04/2026, 18:05:17] דביר בן אבי: *לבנון / סחמר /  אל-בקאע / BDA / דיווח על תקיפה אווירית של קבוצת מתפללים
+תהלוכת המתפללים הותקפה אוויריות ביציאתם מהמסגד בעיירה סחמר שבאל-בקאע המערבית, מה שגרם למותם של כמה מהקבוצה ולפציעתם של 11 בני אדם.
+האוסינט המטכ"לי* ‎image omitted
+‎[03/04/2026, 18:05:17] דביר בן אבי: חזבאללה מפרשן למה צהל רוצה להרוס את גשר סחמר הדרום לבנון ‎image omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K15">
+      <div class="item-top">
+        <span class="item-id">HZ-K15</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K15"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/lebanondebate/213961" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/דרום לבנון/בנת ג׳ביל/ יעדים / בינת ג’בייל במוקד: ניתוח צבאי מעמיק של זירות הלחימה בדרום לבנון
+
+בינת ג'בייל היא יעד מרכזי... תת-אלוף ת'ניר מספק ניתוח מדויק של צירי הלחימה היבשתית בדרום!
+
+הערה: הכתבה מנתחת את צירי הלחימה בדרום לבנון ומדגישה את החשיבות של בינת ג’בייל</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL" data-id="HZ-G6">
+      <div class="item-top">
+        <span class="item-id">HZ-G6</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-G6"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/bintjbeilnews/169490" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/סחמר/BDA/ תקיפת כטב״ם בסחמר: שני הרוגים ו-11 פצועים בקרב מתפללים שיצאו ממסגד
+
+מבזק: כטב"ם של צה"ל תקף מתפללים בזמן שיצאו מהמסגד בעיירה סוחמור בבקעע' אל-ע'רבי, מה שהביא למותם של שניים ולפציעתם של 11 נוספים.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K16">
+      <div class="item-top">
+        <span class="item-id">HZ-K16</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K16"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://x.com/i/status/2040035177586401462," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / אלח'יאם / פעילות צה"ל
+
+המשך העימותים בין חזבאללה וכוחות צה"ל בשכונות אלח'יאם
+📸 الصورة تعبيرية
+‎[03/04/2026, 18:05:19] דביר בן אבי: *לבנון / דרום לבנון / חזבאללה / אמל"ח / התפארות בכמות טילים ונשק
+ציוץ מתריס מתרברב בכמויות טילים ואמל"ח בידי החזבאללה.
+בסרטון נטען שיש בידם טילים.
+בטקסט בציוץ:
+" שפע רב,
+נתניהו אומר שאין נשק,
+הנשק קיים בשפע טובו של אללה"
+המלל בסרטון:
+"בעזרת אללה אנו מנצחים, ומה הלאה? *היום ירינו 'פאדי 2'* ואלו *16 רקטות 'מלאכּ 2',* ומחר *'פאדי 4',* אם ירצה אללה, וכו'"
+
+הערה: רצ"ב סרטון ‏رزق كتير האוסינט המטכ"לי* ‎video omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K17">
+      <div class="item-top">
+        <span class="item-id">HZ-K17</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K17"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/lebanondebate/214001" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/פעילות צה"ל /עיירת ג׳מג׳ייה/עיירת אל-חניה/ שתי תקיפות ישראליות בדרום לבנון: יעדים בבינת ג’ביל ובצור
+
+כתב "לבנון דיבייט": תקיפה של צה"ל פגעה בעיירה ג'מג׳יימה שבאזור בנת ג'ביל, ותקיפה נוספת פגעה בעיירה חאניה שבאזור צור.
+مراسل "ليبانون ديبايت": غارة إسرائيلية استهدفت بلدة الجميجمة قضاء بنت جبيل وأخرى استهدفت بلدة الحنية قضاء صور</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T6">
+      <div class="item-top">
+        <span class="item-id">HZ-T6</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-T6"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/redlinkleb/5091" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / ראיית כוחותינו
+
+עדכון כטב"מים מעל:
+נבטיה והסביבה
+חרבת אל-דווייר
+כפר רמאן
+זוטר אלע'רביב
+נבטיה
+כפר ציר
+ג'בשית
+שוקין
+יחמר
+עבא
+---------------------   צידון וכפרי אל-זהרני
+עדלון
+נפת צור :
+דראדגיא
+ארזון
+אסוד
+נפת מרג'עיון ובינת ג'ביל
+סלטאניה-בינת ג'בייל
+טיר סמחאת
+דיר אנטאר
+עלמאן-מרג'עיון
+אלח'יאם
+שקרא
+כפרא
+יחמר
+מערב אלבקאע
+זליא
+סחמר
+קליא
+הישמרו והיזהרו 🚨🚨🚨
+🤔⚠️ #تحديث #مسير ## النبطية وجوارها #خربة_الدوير #كفر_رمان #زوطر_الشرقية #النبطية #كفر_صير #جبشيت #شوكين #يحمر #عبا ــــــــــــــــــــــ ## صيدا وقرى الزهراني #عدلون ــــــــــــــــــــــ ## قضاء صور #دردغيا #أرزون #شحور ــــــــــــــــــــــ ## قضاء مرجعيون وبنت جبيل #سلطانية_بنت_جبيل #طير_سمحات #دير_انطار #علمان_مرجعيون #الخيام #شقرا #كفرا #يحمر ــــــــــــــــــــــ ## البقاع الغربي #زلايا #سحمر #قليا حيطة وحذر 🚨🚨🚨 🌐 Red_Alert 🇱🇧 | 🚨 Reporting |📞 WhatsApp</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K18">
+      <div class="item-top">
+        <span class="item-id">HZ-K18</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K18"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Lebanesenews24/80293" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון/כפר שמע/אל-נאקורה/ראיית כוחותינו / עימותים ממושכים בדרום לבנון: קרבות בשמעא ופיצוץ בנאקורה
+
+כתב אלמנאר: קרבות שמנהלת ההתנגדות כבר למעלה משעה בעיירה שמע נגד צה"ל, בזמן שהאויב ביצע פיצוץ בעיירה אנאקורה.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K19">
+      <div class="item-top">
+        <span class="item-id">HZ-K19</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K19"
+    title="הצג על המפה">📍</button>
+        <a href="https://x.com/AlakhbarNews/status/2039941648453448040?s=20" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / עין אבל / בית ליף / חאמול / אלנאקורה / אלח'יאם / אל-ביאצ'יה / ראיית כוחותינו
+
+לא נרשמה התקדמות קרקעית של האויב מאזורי אל-ביאצ'ה, א-טיבה, אל-ח'יאם ובית ליף–צרבין, בעוד חאנין נתונה להפגזה ארטילרית כבדה שמטרתה להכין את הקרקע לכיתורה מכיוון עיתא א-שעב, דבל ועין אִבל. מקור בשטח מסר ל״אל-אח׳באר״ כי האויב הצליח להתקדם בכמה צירים, אך לא הצליח להתבסס ולהתמקם בשל תקיפות ההתנגדות נגד כוחותיו באמצעות רקטות.
+בהתאם לכך, אין נוכחות של האויב על הכביש הראשי של א-נאקורה, שכן הוא יהיה חשוף מאזור החוף של צור. לכן הוא מתמקם בשכונות הפנימיות של העיירה ומשתמש באחד המלונות באזור חאמול כמרכז פעילות.
+لم يسجل تقدم ميداني للعدو، من البياضة والطيبة والخيام وبيت ليف - صربين، فيما تتعرض حانين لقصف مدفعي مكثف يمهد لتطويقها من عيتا الشعب ودبل وعين إبل. وأكد مصدر ميداني لـ«الأخبار» أن العدو تمكن من التقدم في بعض المحاور، لكنه عجز عن التثبيت والتموضع بسبب استهداف المقاومة لقواته بالصواريخ.</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K20">
+      <div class="item-top">
+        <span class="item-id">HZ-K20</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K20"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/rasedal3ado138e/338565" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דיר אלזהראני / פעילות צה"ל / BDA
+
+שתי התקיפות על העיירה דיר אל-זהראני (ואדי חמילה) – הטילים לא התפוצצו.
+🌟 🇱🇧🤔الغارتين التي استهدفتا بلدة دير الزهراني (وادي حميلا) الصواريخ لم تنفجر 🤍
+‎[03/04/2026, 18:05:21] דביר בן אבי: ‎image omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K21">
+      <div class="item-top">
+        <span class="item-id">HZ-K21</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="HZ-K21"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://www.instagram.com/p/DWq_tL_jNSb/?igsh=MXN2MDVjOGVoZWZxOQ==" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / רמאדיה / BDA / הרוגים בתקיפה אווירית
+
+כתב חדשות: ארבעה סורים נהרגו ואישה סורית שרדה תקיפה אווירית נגד חוות תרנגולות בפאתי אל-רמאדיה
+‎[03/04/2026, 18:05:21] דביר בן אבי: ‎video omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T7">
+      <div class="item-top">
+        <span class="item-id">HZ-T7</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-T7"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/rasedal3ado138e/338571" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / פעילות צה"ל / קרב בינת ג’ביל: תוכנית ההקפה הישראלית נכשלה – הדרום בוער
+
+קרב בינת גביל: איך נשברה התכנית של צה"ל לבצע כיתור מעיתרון לעינת׳א, ומואדי אלחג'יר עד גבול צור... האדמה בוערת בדרום לבנון! מה קרה בבית ליף, דבל ורשאף? המצב בשטח על המפה עם העיתונאי חסין מרתצ'א ביוטיוב... עקבו אחרי הפרטים:
+#בנתגביר #ואדילהג'יר #דרוםלבנון #חסיןמרתצ'א #המצבשדהמפה
+معركة بنت جبيل : كيف قُطعت خطة التطويق الاسرائيلية من عيترون إلى عيناتا ، و من وادي الحجير إلى تخوم صور .. الأرض تشتعل في جنوب لبنان ! ماذا حدث في بيت ليف و دبل و رشاف ؟ الميدان بالخارطة مع الاعلامي حسين مرتضى على يوتيوب .. تابعوا التفاصيل : #بنت_جبيل #وادي_الحجير #جنوب_لبنان #حسين_مرتضى #الميدان_بالخارطة</div>
+      
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K22">
+      <div class="item-top">
+        <span class="item-id">HZ-K22</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="HZ-K22"
+    title="הצג על המפה">📍</button>
+        <a href="https://x.com/i/status/2034426323075055809," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / דרום לבנון / פעילות צה"ל / לקיחת אחריות / טענה שהיממה החולפת עם הישגים רבים לחזבאללה
+
+`אלח'יאם / קנטרה / כפרא / רמאדיה / כפר ציר / בנת ג'ביל / ואדי אל-סלוקי / ראמיה / זבדין`
+> מאמר ב'אל-עדשה' ('העדשה') מסכם את הלחימה ביממה האחרונה בדרום לבנון ומתאר אותה כפגיעה הגדולה ביותר בצה"ל עד כה כביכול:
+" ההתנגדות מבצעת 60 התקפות בזק ומכוונת נגד טנקי מרכבה, בעוד שהכיבוש נוקם נגד אזרחים ב-44 ערים לבנוניות.
+יום שישי - 3 באפריל, 2026 - 13:00
+במה שתואר כיום ההרסני ביותר עבור כוחות הכיבוש וציודם מאז תחילת המתקפה הקרקעית שלהם, דרום לבנון הפכה ל"שטח קטל" עבור כוחות האליטה הציוניים.
+חזבאללה ביצע 60 תקיפות מדויקות שכוונו נגד טנקים, מסוקים ובסיסים צבאיים עמוק בתוך הישות הציונית. בתגובה לתבוסה זו בשדה הקרב, צבא הכיבוש שחרר את זעמו על אזרחים ותשתיות, ותקף 44 אזורים אזרחיים בגל הגדול ביותר של הפצצות אוויריות וארטילריות, שהביא לטבח של משפחות לבנוניות.
+זה היה ניסיון נואש להציל את תדמית ה"הרתעה" שהתנפצה על ידי טילי ההתנגדות ב"משולש השחרור" ובמרכז המעצר חיאם.
+"ציד כבד": ההתנגדות מוציאה את הטנקים והמסוקים של "מרכבה" משירות-
+24 השעות האחרונות היו עדות למבצעי התנגדות מקצועיים, כולל השמדת שני טנקי מרכבה בקנטרה ובאל-ח'יאם, וירי בדחפור צבאי מדגם D9, המשקף את כישלון השריון הישראלי כנגד טילים מונחים.
+בהתפתחות משמעותית, טיל קרקע-אוויר אילץ מסוק קרב להימלט משמיים מעל עיירת הגבול ראמיה, ושלח מסר ברור כי עליונותו האווירית של הכיבוש מאוימת כעת.
+התקיפות לא הוגבלו לגבול, אלא כוונו גם לעמדות ארטילריה בח'רבת מאעז ולבסיסים אסטרטגיים כמו דדו (מטה פיקוד הצפון) מצפון לצפת, והציבו את לב הצבא של הכיבוש לחסדי אש ההתנגדות.
+הטבח של "זבדין ואל-רמאדיה": הכיבוש נוקם במשפחות לבנוניות-
+כישלונות הכיבוש בשטח תורגמו לטרור מאורגן נגד אזרחים. בעיירה זבדין, תקיפה אווירית ישראלית מחקה משפחה שלמה (חבר מועצת העירייה בלאל ג'ואד, אמו ואחיו) מהמרשם האזרחי.
+שבעה שהידים נהרגו גם בפשיטות בוגדניות על אל-רמאדיה וכפר ציר, והכיבוש הרס קומפלקס מגורים בכפרא, והותיר כמה אנשים פצועים קשה.
+הסלמה זו באלימות נגד אזרחים ב-44 עיירות, מבנת ג'ביל ועד ואדי אל-סלוקי, חושפת את חוסר יכולתו של צבא הכיבוש להתעמת ישירות עם הלוחמים ואת פנייתו למדיניות אדמה חרוכה כדי לעקור את האוכלוסייה ולאכוף מציאות ביטחונית חדשה.
+"החשכה ציונית": צנזורה מסתירה את היקף הנכבה ב"קריית שמונה"-
+כלי תקשורת בישראל הודו כי שישה חיילים ומתנחלים נפצעו בירי רקטות שכוונו לקרית שמונה, נהריה ומטולה, אך משקיפים טוענים כי מספר הפצועים האמיתי גבוה בהרבה.
+הצנזורה הצבאית הישראלית מטילה הסתרה מוחלטת על תוצאות 1,250 התקיפות שביצעה ההתנגדות מאז תחילת מרץ, ומזהירה את המתנחלים מפני פרסום תמונות של האתרים המכוונים.
+סודיות זו נועדה להסתיר את העובדה שהצפון הכבוש הפך ל"אזור חיץ" וירטואלי, שבו טילי ההתנגדות שולטים למעשה בתנועתם של מתנחלים וחיילים כאחד.
+תקציר: "משוואת הדם והאש"-
+אירועי יום חמישי מוכיחים כי ההתנגדות הלבנונית עברה מעמדה הגנתית ל"מתקפת התשה" מקיפה, והפכה את הדרום לחור שחור שבולע את מנגנון הכיבוש. העובדה שמספר ההרוגים הגיע ל-1,345 מאז מרץ האחרון כתוצאה מתוקפנות ציונית-אמריקאית לא תחליש את נחישותם של הלוחמים, המדגימים מדי יום כי "הספינה הציונית" טובעת בביצת הדרום.
+בעוד שטראמפ ונתניהו מהמרים על התנקשויות ותקיפות אוויריות, התגובה מגיעה מ"משולש השחרור" ומ"שער פאטמה": "האדמה שייכת לבעליה החוקיים, והכובש נידון לכישלון".
+‎[03/04/2026, 18:05:22] דביר בן אבי: *לבנון / אלח'יאם / ראיית כוחותינו / תצלום אוירי עדכני של אל-ח'יאם (סרטון)
+
+הערה: רצ"ב הסרטון סרטון של תצלום אויר של אל-ח'יאם התאריך הרשום 1-4-2026 האוסינט המטכ"לי* ‎video omitted ‎[03/04/2026, 18:05:23] דביר בן אבי: ‎image omitted ‎[03/04/2026, 18:05:23] דביר בן אבי: ‎image omitted</div>
+      
+    </div></div><div class="actor-panel" id="panel-IRAN">
+    <div class="item-card" data-actor="IRAN" data-domain="GENERAL" data-id="IR-G1">
+      <div class="item-top">
+        <span class="item-id">IR-G1</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn"
+    data-item-id="IR-G1"
+    title="הצג על המפה">📍</button>
+        <a href="https://www.facebook.com/share/1DfqgkArfy/" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">איראן / טהראן / עיראק / המפרץ הפרסי / ירדן / דעת יחיד / דר' אל-כביסי: לאיראן יש 5מליון חמושים והיא עלולה לשלח אותם מחוץ לגבולותיה
+
+ראשית: קרב קרקעי חלקי עומד להתרחש, ורוב הכוחות הגיעו. נכון לעכשיו, ישנם 50,000 חיילים אמריקאים באזור.
+שנית: סין היא מטרה ארוכת טווח ומושפעת באופן משמעותי ממצרי הורמוז. נזק זה ייקח שלושה חודשים להתבטא בשוק הסיני מכיוון שלסין יש עתודה עצומה שעדיין לא נפגעה, כפי שצפתה את המלחמה.
+שלישית: אמריקה רוצה איראן חלשה מאוד, ואנו ממתינים להחלטה הגדולה והמסוכנת שלה: האם היא תפגע בתשתיות החשמל שלה, בתחנות הכוח וברשתות ההולכה? משמעות הדבר היא שהיא החליטה להחזיר את איראן עשרים שנה אחורה.
+רביעי: לאיראן יש חמישה מיליון חמושים, ואם העימות יתעצם (לאחר שתשתיות החשמל יותקפו), היא תעביר חלק מהם באופן בלתי נמנע למיקום אחר, אולי מחוץ לאיראן. זה כולל את גבולותיה עם עיראק וחלקים מהמפרץ.
+חמישית: לפני ההחלטה הגדולה של השמדת תשתיות ולאחר מכן פתיחת מבצע קרקעי, אמריקה מנסה להקים קואליציה בינלאומית, בדומה למדי למה שקרה בעיראק לפני הפלישה.
+שישית: מדינות המפרץ מנסות להשיג החלטה בינלאומית חדשה לבינלאומיות מיצרי הורמוז. זה יגן על המיצר מפני שליטה של ​​ישות אחת ויכריז את פעולותיה של איראן כבלתי לגיטימיות על פי המשפט הבינלאומי. זהו צעד פוליטי משמעותי בתגובה למה שהם רואים כתוקפנות.
+שביעית: מצבה של עיראק רעוע ביותר מכל הצדדים. ארצות הברית, באמצעות הצהרת שגרירותה, כועסת על הממשלה; מדינות המפרץ כועסות על התקפות שבוצעו מתוך עיראק נגד חלק ממדינותיהן; ואיראן כועסת על שיתוף הפעולה המתמשך עם ארצות הברית. במילים אחרות, אנו עומדים בפני המצב הפוליטי הגרוע ביותר שחווינו אי פעם, והכישלון להקים ממשלה חדשה מחמיר מצב זה.
+
+הערה: דר' אל-כביסי מנתח את המלחמה בזווית ראייה עיראקית ומרבה להקביל מצבים לאלו שקרו במלחמה עיראק</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC" data-id="IR-K1">
+      <div class="item-top">
+        <span class="item-id">IR-K1</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="IR-K1"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/BSpress/221370" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">תימן / איראן / השפעה / אמל"ח / תיעוד מתוך מחסני החימוש (רחפנים וטילים) במנהרות משה"מ
+
+טהראן מפרסמת סרטון וידאו שמגלה את גודל הארסנל הצבאי שלה שמאוחסן מתחת לאדמה! בסרטון רואים כלי טיס בלתי מאויש שטס בתוך מנהרות ענקיות מתחת לאדמה, והוא חושף כמויות גדולות של:
+- טילים בליסטיים
+- משגרי שיגור
+- כלי טיס בלתי מאוישים תוקפים
+הצגה איראנית חדשה של הכוח הצבאי המוסתר מתחת לאדמה, במסר ברור שהיכולות של איראן עדיין שלמות ומוכנות למרות המכות שקיבלה.
+
+הערה: סרטון השפעה</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC" data-id="IR-K2">
+      <div class="item-top">
+        <span class="item-id">IR-K2</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn"
+    data-item-id="IR-K2"
+    title="הצג על המפה">📍</button>
+        <a href="https://www.facebook.com/share/p/1AM2SWhW8C/?mibextid=wwXIfr," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">איראן / איראן / ראיית צבא ארה"ב / דעת יחיד / דר' אל-כביסי מנתח את השינויים בפיקוד הבכיר של צבא ארה"ב
+
+ראשית*:
+כולנו שמענו על פיטוריו של ראש המטות המשולבים של ארה"ב בשיא המלחמה. המפקד המפוטר השתייך לאסכולה זהירה ומקצועית, שנוצרה לאחר ניסיון מר, ובמיוחד במלחמת עיראק ומלחמת אפגניסטן, שם לוחמת הקרקע נבחנה מחדש מבחינת עלות, זמן ואבידות.
+אסכולה זו אינה דומה כלל לקצב, לאישיות ולחשיבתו של דונלד טראמפ, המבוססים על החלטות מהירות: לעשות או לא לעשות, ללא ויכוח ארוך.
+שנית*:
+מה שחשוב יותר הוא לא המפקד שפוטר, אלא יורשו. כאשר אנו מגלים שהמפקד החדש, כריסטופר לניף, בילה שנים בהובלת הדיוויזיה המוטסת ה-82, חוד החנית של פריסה מהירה, התמונה מתבהרת: אנו עדים לשינוי ברור מחשיבה מכוונת ומקצועית לחשיבה מהירה מאוד וביצועית, הנוטה להחלטיות ומתקרבת לקצב של טראמפ: מהיר, משתנה ופתוח לסיכונים מחושבים.
+שלישית*:
+וכאן מתחיל השינוי האמיתי בחשיבה. תפיסת המטות המשולבים החדשים מבוססת על נקודות, ורואה את העולם או את זירת המבצעים כנקודות חדירה מהירה. *היא קובעת*: היכן הכוח? היכן החולשה? כיצד תתבצע הנחיתה? כמה זמן ייקח להבטיח שליטה? בהתבסס על מערכות מודרניות שפותחו לאחר 2010, כולל לוויינים, סיור מדויק ופיקוד דיגיטלי, *הדוקטרינה שלה ברורה: פריסה מהירה וכפיית מציאות חדשה על הקרקע לפני שכל דיון יוכל להתגבש*.
+רביעית*:
+על פי היגיון זה, *מצר הורמוז לא ייחשב כנושא נפט או פוליטי, אלא כנקודות שליטה צבאיות פוטנציאליות*. באופן דומה, באב אל-מנדב והאיים הסובבים אותו ייחשבו רק כמרכזים מבצעיים שניתן להפעיל במהירות כדי לשנות את מאזן הכוחות, עם הערכה מדויקת של יכולותיה ומוכנותה הצבאית של איראן.
+חמישית*:
+החלפת הרמטכ"ל בזמן מלחמה מצביעה על פער בין ההנהגה הפוליטית לצבאית. עם סדרת השינויים המשפיעים על מספר מפקדים, התמונה מתבהרת: אנו עדים לכיול מחדש של הדוקטרינה הצבאית עצמה - מחשיבה איטית ומקצועית לחשיבה מהירה והחלטית, המתמקדת בביצוע ישיר ובהשגת תוצאות בשטח בזמן הקצר ביותר האפשרי.
+מסקנה*: מה שקורה אינו רק חילופי מפקד... אלא שינוי בקצב המלחמה עצמו.
+أولا:
+ثانيا:
+ثالثا:
+رابعا:
+خامسا:
+تغيير قائد الأركان في وقت الحرب دليل على وجود تباين بين القيادة السياسية والعسكرية. ومع سلسلة التغييرات التي طالت عددا من القيادات، يصبح المشهد أوضح: نحن أمام إعادة ضبط للعقيدة العسكرية نفسها—من عقل مهني بطيء، إلى عقل سريع حاسم، يركز على التنفيذ المباشر وتحقيق نتائج ميدانية في أقصر وقت ممكن.
+الخلاصة:
+ما يجري ليس مجرد تغيير قائد… بل تغيير في سرعة الحرب نفسها.
+‎[03/04/2026, 18:02:18] דביר בן אבי: *איראן / קשם / קוהנג'אן / ראיית צבא ארה"ב / דיווח על הפלת מטוס של צבא ארה"ב
+הכוחות המזוינים של איראן הודיעו כי הצליחו להפיל מטוס קרב מתקדם של האויב במים שבין איי הנגאם לאיי קשם.
+בהצהרה הודגשה כי המבצע היה בתגובה לטענותיו של נשיא ארה"ב דונלד טראמפ בנוגע להשמדת מערכות ההגנה האווירית האיראניות.
+האוסינט המטכ"לי* ‎image omitted
+‎[03/04/2026, 18:02:18] דביר בן אבי: *איראן / מצר הורמוז / בלתי מזוהה / בכירים / איום בסגירת מצרי הורמוז בפני ישראל וארה"ב לזמן בלתי מוגבל
+דובר הצבא של איראן אומר שמצרי הורמוז ייסגרו "בטווח הארוך" בפני ארה"ב וישראל.
+טראמפ אמר שהוא "ייפתח באופן טבעי" לאחר המלחמה.
+איראן פשוט אמרה שלא, זה לא ייפתח.
+שתי גרסאות שונות מאוד כיצד זה יסתיים
+מקור: @AJENews
+🚨🇮🇷🇺🇸 ÚLTIMA HORA: El portavoz militar de Irán dice que Ormuz estará cerrado "a largo plazo" a Estados Unidos e Israel.
+Fuente: @AJENews
+האוסינט המטכ"לי* ‎image omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="GENERAL" data-id="IR-G2">
+      <div class="item-top">
+        <span class="item-id">IR-G2</span>
+        <span class="domain-tag">כללי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn"
+    data-item-id="IR-G2"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Sahafh24/2629153" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">איראן / מצר הורמוז / אירועים מתפרצים / הקלה בסגירת מצרי הורמוז
+
+הודעה מפתיעה מאיראן בנוגע להרמז
+על פי "אל-ערבי ניוז":
+פורסמה הודעה חדשה מאיראן בעניין מצרי הרמז במפרץ הערבי, שמרמזת על *הקלה במשבר תנועת הספינות ומכליות הנפט והגז דרך המצר,* בעקבות האירועים האחרונים.
+المصدر ( العربي نيوز ) : العربي نيوز:صدر اعلان جديد عن ايران بشأن مضيق هرمز في الخليج العربي، تشي بانفراج لأزمة حركة السفن وناقلات النفط والغاز عبر المضيق، جراء الح 💢 صحافة 24 نت مباشر اولا باول اخر اخبار اليمن الان  أهم اخبار اليمن كل ساعتين</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC" data-id="IR-K3">
+      <div class="item-top">
+        <span class="item-id">IR-K3</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn"
+    data-item-id="IR-K3"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Sahafh24/2629156," target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">תימן / איראן / אירועים מתפרצים / תקיפה  משותפת של איראן ותימן כנגד קבוצת הספינות לינקולן
+
+פעולה משותפת של תימן ואיראן כוונה לעבר "לינקולן"
+(מקור: '26 ספטמבר'): משמרות המהפכה פרסמו היום הודעה ובה נאמר כי בוצעה פעולה לעבר קבוצת נושאת המטוסים האמריקאית אברהם לינקולן בצפון האוקיינוס ההודי עם 4 טילים.
+عمليات يمنية ايرانية مشتركة تستهدف "لينكولن"
+المصدر ( 26 سبتمبر ) : وقال حرس الثورة الإسلامية في بيان له، اليوم، أن الموجهة استهداف مجموعة حاملة الطائرات الأمريكية أبراهام لينكولن في شمال المحيط الهندي بـ 4 ص 💢 صحافة 24 نت مباشر اولا باول اخر اخبار اليمن الان
+‎[03/04/2026, 18:02:19] דביר בן אבי: *איראן / טהראן / BDA / הלכי רוח / משמרות המהפיכה / בכירים / לגיטימציה / כתבה מצולמת מאזור שהותקף
+המקום בו אני עומד כעת היה בית. לדברי תושבי השכונה הזו, הבית הזה נעלם לחלוטין. גבר ואישה מבוגרים גרו שם. יש הרוגים במקום הזה. בתים רבים ניזוקו ונהרסו. מספר ההרוגים במקום הזה הוא שישה, בנוסף לכשלושים פצועים, לפי הרשויות האיראניות. זהו אחד האזורים האזרחיים שהותקפו. שאלנו ושוחחנו עם התושבים. שאלנו אותם אם יש מרכז צבאי או מפקדה, או אפילו תחנת משטרה. הם אמרו לנו שאין כזה בכלל באזור הזה.
+הבניין הקרוב ביותר שניתן לתאר כשייך למדינה ולממשלה הוא מרכז לטיפול בבעלי מוגבלויות, וגם הוא ניזוק.
+אם נוכל לקרוא לזה מקום בבעלות המדינה, אז זה אזור מגורים מובהק.
+שישה הרוגים וכשלושים פצועים. כמובן, הרשויות האיראניות תמיד מאשימות את ארצות הברית וישראל בהתקפות אזרחים.
+אזורי מגורים הם מטרה עיקרית עבורן.
+הסהר האדום האיראני
+פרסם אתמול ספירה של
+בתים שנפצעו ברחבי איראן.
+הם אמרו שהמספר הגיע לכ-מאה ושבעים אלף בתים. בתים
+ויחידות מגורים ומסחר ברחבי איראן*.
+יותר מארבעים אלף יחידות כאלה בבירה, טהרן, לבדה
+הוא אמר יותר מארבעים אלף יחידות כאלה. הסהר האדום אמר שמספר בתי הספר שנפגעו הוא כיותר משבע מאות וחמישים בתי ספר בתי חולים ומרכזים רפואיים. שלוש מאות בתי חולים ומרכזים רפואיים ועשרות אמבולנסים
+אז נראה.
+כי כעת יש תגובות מצד משמרות המהפכה וצבא איראן
+שכנראה החלו לפגוע
+ועקבנו אחריכם על הפרסום לפני זמן מה
+בחיפה ובמקומות אחרים
+אלה אולי תגובות
+למטרה כזו במרכזים אזרחיים לפני זמן מה*.
+בפרסום הקודם, היינו באחד הגשרים החשובים ואכן, זהו הגשר הגדול והגבוה ביותר באיראן גשר B1, שנפגע
+אתמול.
+מרכז המחקר הרפואי
+שתואר כמרכז המחקר הרפואי הוותיק והיוקרתי ביותר
+בכל איראן ובמזרח התיכון
+נפגע אתמול* וכתוצאה מכך, יש *כעס מצד גורמים איראניים
+וממשמרות המהפכה
+על העלייה במספרם מיקוד
+שמשפיע על אזרחים איראנים
+וההתמקדות באזורים או אתרים במערב טהרן יותר מאשר באזורים אחרים האם זה גורם?
+מרים, המיקוד מתרחש ברחבי המדינה, לא רק בטהרן, למרות שטהרן היא האזור הממוקד בתדירות הגבוהה ביותר.
+זהו מרכז הכוח, הבירה, אז זה אולי נראה הגיוני, אבל איראן, מצפון לדרום, ממערב למזרח, ממוקדת. כל יום אנחנו מדברים על המקומות הממוקדים, בין אם שכונות מגורים או מה שנקרא תשתיות, תעשייתיות ואפילו צבאיות.
+אבל כרגע אנחנו מדברים על אזורים אלה של שכונות מגורים. דיברנו עם כולם כאן; אין תחנת משטרה אחת, אין משמרות המהפכה או מפקדת צבא. אז למה המקום הזה ממוקד? רבים שואלים, למה?
+כן, מקום כזה מוקדש אתמול. נשיא איראן, בציוץ, שאל איזה מסר אויבינו עשויים לנסות לשלוח לנו על ידי מיקוד במרכז המחקר הרפואי שהוא הזכיר קודם לכן. הוא קרא למוסדות רפואיים ולארגון הבריאות העולמי לפרסם הצהרה ולדון בנושא זה: מדוע מקומות כאלה, המוגנים על פי חוקים ואמנות בינלאומיים, נמצאים תחת הכוונת?
+قتلاء في هذا المكان
+أو حتى مخفر شرطة
+وهو أيضاً تضرر
+بأنها استهدفت
+المدنيين
+الأحياء السكنية
+هو هدف رئيسي لها
+بالأمس أصدر حصيلة
+للاستهدافات المنازل
+في عموم إيران
+عدد المنازل
+مئة وسبعين ألف منزل
+قال
+التي استهدفت تقريباً
+إذن على ما يبدو
+أن هناك
+ردود الفعل الآن
+في حيفا وفي غيرها
+هي ربما ردود
+والأعلى في إيران
+يوصف بأنه أقدم وأعرق
+مركز الأبحاث الطبية
+الأوسط استهدف بالأمس
+نعم
+نعم أمان
+האוסינט המטכ"לי* ‎video omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="TERRAIN" data-id="IR-T1">
+      <div class="item-top">
+        <span class="item-id">IR-T1</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn"
+    data-item-id="IR-T1"
+    title="הצג על המפה">📍</button>
+        <a href="https://www.facebook.com/share/p/1Chtq5pCgb/" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / בירות / איראן / דעת יחיד / ביקורת נגד המשטר / שגריר איראן ללבנון הוא המושל בפעול
+
+ראש הנחש והשליט בפועל של לבנון, זה שיוביל את לבנון למלחמה או לשלום, הוא שגריר איראן בלבנון, לא נשיא לבנון. זה כבר הוכח.
+הוא המושל הצבאי, הברמר של לבנון (בדיוק כפי שהאמריקאים היו בעיראק), *שכעת מתגורר במטה הפיקוד האזורי האיראני בלבנון*, סניף של משרד ההגנה האיראני *הממוקם בתוך השגרירות האיראנית.
+בתחילה הוא דחה את ההחלטה לגרש אותו מלבנון שהוציאה המדינה הלבנונית, כולל נשיא, ראש ממשלתה ושר החוץ שלה, ואמר להם במרומז: "לעזאזל אתם ועם ההחלטה שלכם! לכו תשרו את ההחלטה שלכם ותשתו את המים; זה רק יעזור לכם בתקופות של חרדה, מתח ותסכול. אני זה שנותן את הפקודות כאן, ואני אדרוש מכם דין וחשבון בהמשך על החלטה זו, שמתארגת את סמכותי בהנהגת לבנון.
+" שנית, בנוגע להיבט הצבאי, הוא קורא להם לעמוד מולו כשליט צבאי באמצעות מפלגת השטן (חזבאללה ע.ע.), ארגון הטרור הפשוע, שהיה חייב למסור את נשקו למדינה הלבנונית "כדי לחסוך מלבנון את זוועות המלחמה, לשאוף לעצור אותה,  שלבנון תאבד שליש משטחה ורבע מאוכלוסייתה תיהפך לחסרת בית ברחובות ובאוהלים".
+ואכן, פקודותיו אליהם ברורות: קחו את לבנון אל הלא נודע והמשיכו במלחמה, ללא קשר לתוצאות הקטסטרופליות עבור לבנון, גם אם כל לבנון תוקרב למען מנהיגם המוטעה, המטעה והמושחת, חמינאי, ולמען בנו ההומוסקסואל, כפי שייחסו לו כמה מקורות יודעי דבר, ולאבי ההנאה, ההנאה וטמאת התינוקות, מג'תבא, שאין לו שום דמיון לשמו, שכן הוא שנוא, נתעב, משעמם ומכוער כמו אביו.
+לסיכום, אנו שואלים: מתי לבנון תשוחרר באמת וביעילות, לא רק באופן נומינלי? מתי לבנון תהיה חופשית, נשלטת על ידי אנשים חופשיים שמקבלים באומץ את ההחלטות הנכונות, תוך התעלמות מחישובים אישיים ואלקטורליים, כדי לחסוך מלבנון ועמה את הכניעה הכפויה לאיראן ואת כניעתם המשפילה למפלגת השטן?
+שאלה: האם יש מישהו שיכול לענות עליה?
+ מואמן מחמד נדים כויפאתי
+
+הערה: מואמן מחמד נדים כויפאתי סורי כביכול שחי בשבדיה ומקטרג את עצמו כפרשן מדיני فهو الحاكم العسكري، بريمر لبنان " كما كان في العراق من الأمريكي " والذي يقيم الآن بمقر قيادة الإقليم اللبناني، فرع وزارة الدفاع الإيرانية بالسفارة الإيرانية وثانيًا، عن الشق العسكري وهو يتحداهم أن يقفوا أمامه  كحاكم عسكري من خلال حزب الشيطان التنظيم الإرهابي المجرم من أن يسلم سلاحه للدولة اللبنانية "لتجنيب لبنان ويلات الحرب، للسعي بإيقافها، خشية أن يفقد لبنان ثلث مساحته وأن يصبح ربع سكانه بلا مأوى في الشوارع والخيام"،</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC" data-id="IR-K4">
+      <div class="item-top">
+        <span class="item-id">IR-K4</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="IR-K4"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://www.facebook.com/share/p/1GwJtibZsb/" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">איראן / חוזסתאן / ראיית צבא ארה"ב / משמרות המהפיכה
+
+חדשות: מסוקים אמריקאים עורכים פעולות חיפוש אחר טייס אמריקאי שמטוסו הופל על ידי משמרות המהפכה האיראניים באיראן, על רקע עימותים ישירים בין כוחות אמריקאים למשמרות המהפכה באזור הגבול בין *ח'וזסתאן למחוזות כהכילויה* ובוייר-אחמד. הטלוויזיה הממלכתית האיראנית הודיעה כי הכוחות המזוינים קוראים לאזרחים ולשבטים חמושים לסייע בלכידת הטייס האמריקאי, ומציעים פרס לכל מי שיצליח ללכוד אותו.
+#عاجل مروحيات أمريكية تجري عمليات بحث عن طيار أمريكي أسقط الحرس الثوري طائرته في إيران، وسط اشتباكات مباشرة بين القوات الأمريكية والحرس الثوري في المنطقة الحدودية بين محافظتي خوزستان وكهكيلويه وبوير أحمد. التلفزيون الإيراني أعلن أن القوات المسلحة تدعو المواطنين والعشائر المسلحة للمساعدة في القبض على الطيار الأمريكي، مع تقديم مكافأة لأي شخص يتمكن من القبض عليه.</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC" data-id="IR-K5">
+      <div class="item-top">
+        <span class="item-id">IR-K5</span>
+        <span class="domain-tag">קינטי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn"
+    data-item-id="IR-K5"
+    title="הצג על המפה">📍</button>
+        <a href="https://t.me/Mellig/111585" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">איראן / צ'הארמהאל ובח'תיארי / ראיית צבא ארה"ב / דיווחים על סריקות שמתבצעות לאחר יירוט המטוס האמריקאי
+
+דיווח על מבצע "סריקה" בדרום-מערב איראן; מסוקי סיור באזור
+על פי דיווחים מקומיים, במחוזות צ'הארמחאל ובאכתיארי וכוהגילויה ובויראחמד בדרום-מערב איראן מתבצעות פעולות תחת הכותרת "סריקה". על פי מקורות מקומיים, במקביל לתנועות אלו, מסוקים מבצעים סיורים באזור והפעילות האווירית עלתה באופן משמעותי. לא פורסמו פרטים מדויקים על מהות המבצעים, מטרותיהם או הכוחות המעורבים, וגם ממקורות רשמיים לא ניתנה לכך הבהרה. הדיווחים לא אושרו באופן עצמאי.
+گزارش از پاکسازی در جنوب‌غرب ایران؛ گشت‌زنی هلیکوپترها در منطقه گزارش‌های محلی حاکی از آن است که در استان‌های چهارمحال‌وبختیاری و کهگیلویه‌وبویراحمد در جنوب‌غرب ایران، عملیات‌هایی تحت عنوان «پاکسازی» در حال انجام است. به گفته منابع محلی، همزمان با این تحرکات، هلیکوپترها در آسمان منطقه در حال گشت‌زنی هستند و فعالیت‌های هوایی به‌طور محسوسی افزایش یافته است. جزئیات دقیقی از ماهیت این عملیات، اهداف آن یا نیروهای درگیر منتشر نشده و منابع رسمی نیز تاکنون توضیح شفافی ارائه نکرده‌اند. این گزارش‌ها همچنان به‌صورت مستقل تأیید نشده‌اند. Mellig.net
+‎[03/04/2026, 18:02:21] דביר בן אבי: ‎video omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="SOCIAL" data-id="IR-S1">
+      <div class="item-top">
+        <span class="item-id">IR-S1</span>
+        <span class="domain-tag">חברתי</span>
+        <span class="item-datetime">2026-04-03 18:02</span>
+        <button class="map-pin-btn no-location"
+    data-item-id="IR-S1"
+    title="מיקום לא ידוע">📍</button>
+        <a href="https://t.me/mamlekate/102908" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">איראן / כללי / ראיית צבא ארה"ב / תמונות של כיסא המפלט של הטייס האמריקאי
+
+נאמר שגם כיסא הפליטה של המטוס נראה. עדיין אין תמונה של המטוס עצמו.
+❓ گفته شده صندلی eject هواپیما هم دیده شده. عکسی از خود هواپیما هنوز نیست. @mamlekate
+‎[03/04/2026, 18:02:22] דביר בן אבי: ‎image omitted
+‎[03/04/2026, 18:02:22] דביר בן אבי: ‎image omitted
+‎[03/04/2026, 18:02:22] דביר בן אבי: ‎image omitted
+‎[03/04/2026, 18:02:23] דביר בן אבי: ‎image omitted
+‎[03/04/2026, 18:02:23] דביר בן אבי: ‎image omitted</div>
+      
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="TERRAIN" data-id="IR-T2">
+      <div class="item-top">
+        <span class="item-id">IR-T2</span>
+        <span class="domain-tag">שטח</span>
+        <span class="item-datetime">2026-04-03 18:05</span>
+        <button class="map-pin-btn"
+    data-item-id="IR-T2"
+    title="הצג על המפה">📍</button>
+        <a href="https://www.facebook.com/share/p/1Chtq5pCgb/" target="_blank" rel="noopener" class="item-source-link">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>
+      </div>
+      <div class="item-translated">לבנון / בירות / איראן / דעת יחיד / ביקורת נגד המשטר / שגריר איראן ללבנון הוא המושל בפעול
+
+ראש הנחש והשליט בפועל של לבנון, זה שיוביל את לבנון למלחמה או לשלום, הוא שגריר איראן בלבנון, לא נשיא לבנון. זה כבר הוכח.
+הוא המושל הצבאי, הברמר של לבנון (בדיוק כפי שהאמריקאים היו בעיראק), *שכעת מתגורר במטה הפיקוד האזורי האיראני בלבנון*, סניף של משרד ההגנה האיראני *הממוקם בתוך השגרירות האיראנית.
+בתחילה הוא דחה את ההחלטה לגרש אותו מלבנון שהוציאה המדינה הלבנונית, כולל נשיא, ראש ממשלתה ושר החוץ שלה, ואמר להם במרומז: "לעזאזל אתם ועם ההחלטה שלכם! לכו תשרו את ההחלטה שלכם ותשתו את המים; זה רק יעזור לכם בתקופות של חרדה, מתח ותסכול. אני זה שנותן את הפקודות כאן, ואני אדרוש מכם דין וחשבון בהמשך על החלטה זו, שמתארגת את סמכותי בהנהגת לבנון.
+" שנית, בנוגע להיבט הצבאי, הוא קורא להם לעמוד מולו כשליט צבאי באמצעות מפלגת השטן (חזבאללה ע.ע.), ארגון הטרור הפשוע, שהיה חייב למסור את נשקו למדינה הלבנונית "כדי לחסוך מלבנון את זוועות המלחמה, לשאוף לעצור אותה,  שלבנון תאבד שליש משטחה ורבע מאוכלוסייתה תיהפך לחסרת בית ברחובות ובאוהלים".
+ואכן, פקודותיו אליהם ברורות: קחו את לבנון אל הלא נודע והמשיכו במלחמה, ללא קשר לתוצאות הקטסטרופליות עבור לבנון, גם אם כל לבנון תוקרב למען מנהיגם המוטעה, המטעה והמושחת, חמינאי, ולמען בנו ההומוסקסואל, כפי שייחסו לו כמה מקורות יודעי דבר, ולאבי ההנאה, ההנאה וטמאת התינוקות, מג'תבא, שאין לו שום דמיון לשמו, שכן הוא שנוא, נתעב, משעמם ומכוער כמו אביו.
+לסיכום, אנו שואלים: מתי לבנון תשוחרר באמת וביעילות, לא רק באופן נומינלי? מתי לבנון תהיה חופשית, נשלטת על ידי אנשים חופשיים שמקבלים באומץ את ההחלטות הנכונות, תוך התעלמות מחישובים אישיים ואלקטורליים, כדי לחסוך מלבנון ועמה את הכניעה הכפויה לאיראן ואת כניעתם המשפילה למפלגת השטן?
+שאלה: האם יש מישהו שיכול לענות עליה?
+ מואמן מחמד נדים כויפאתי
+
+הערה: מואמן מחמד נדים כויפאתי סורי כביכול שחי בשבדיה ומקטרג את עצמו כפרשן מדיני فهو الحاكم العسكري، بريمر لبنان " كما كان في العراق من الأمريكي " والذي يقيم الآن بمقر قيادة الإقليم اللبناني، فرع وزارة الدفاع الإيرانية بالسفارة الإيرانية وثانيًا، عن الشق العسكري وهو يتحداهم أن يقفوا أمامه  كحاكم عسكري من خلال حزب الشيطان التنظيم الإرهابي المجرم من أن يسلم سلاحه للدولة اللبنانية "لتجنيب لبنان ويلات الحرب، للسعي بإيقافها، خشية أن يفقد لبنان ثلث مساحته وأن يصبح ربع سكانه بلا مأوى في الشوارع والخيام"،</div>
+      
+    </div></div><div class="actor-panel" id="panel-OTHERS"><p style="color:var(--text-dim);padding:20px;text-align:center;">אין ידיעות</p></div>
+
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer class="page-footer">
+  <div class="footer-logo">🛡</div>
+  <div>יל"ק 5550 — יסוד האש</div>
+  <div><a href="../../">ארכיון תחקירים</a> · <a href="digest.pdf">PDF</a></div>
+  <div style="margin-top:6px">v2026.04.03 · 03-APRIL-2026</div>
+</footer>
+
+<script>
+// ── Map items injected by sitebuilder ────────────────────────────────────────
+const MAP_ITEMS = [{"id":"HZ-T1","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / כללי / פינוי אוכלוסייה / הודעה מטעם ארגון רופאים ללא גבולות שיש מעל למליון עקורים והם סובלים וללא טיפול .\n\nארגון \"רופאים ללא גבולות\" בהודעה: יותר ממיליון עקורים בלבנון והמהגרים מתמודדים עם דחיקה חמורה וחוסר טיפול .\n‏منظمة \"أطباء بلا حدود\" في بيان: أكثر من مليون نازح في لبنان والمهاجرون يواجهون تهميشًا حادًا ونقصًا في الرعاية .","lat":null,"lon":null},{"id":"HZ-G1","actor":"HEZBOLLAH","domain":"GENERAL","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / כללי / חזבאללה\n\nשקט זהיר מצד ההתנגדות בדרום ללבנון. האם צפויה הפתעה?\n🚫هدوء حذر من قبل المقاومة في جنوب لبنان هل هناك مفاجأة❓🔥","lat":null,"lon":null},{"id":"HZ-K1","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / פעילות צה\"ל / סיכום פעילות צה״ל ליממה האחרונה\n\nסיכום התקיפות של צה\"ל על אדמות לבנון בתאריך 2/4/2026:\nהתקיפות שביצע חיל האוויר של צה\"ל:\n💥 דרום:\nחארוף, זבדין, ברג׳ רחאל, כפרציר, אל-ח׳יאם, דיס אל-ח׳ריבה, דבין, אל-דלאפה, בינת ג'ביל, אל-מנצורי, ברעשית, כפרא, תבנין, אל-סלטאניה, עיתא אל-ג'בל, ברג׳ קלאוי, צרבין, אל-ג'מיג'מה, תולין, מג'דל סלם, עלמאן.\n💥 תקיפות שביצעו כטב״מים של צה\"ל:\nכונין, חבוש.\n💥 הפגזות ארטילריה:\nראשיה אל-פח'אר, בית יאחון, דבין, תבנין, עיתא אל-ג'בל, ברג׳ קלאוי, ג'באל אל-בטם, צדיקין, עריצ׳, דבין, דיס אל-ח׳ריבה, אבל אל-סקי, מג'דלזון, חאריצ׳, אל-ח׳יאם, יחמר אל-שקיף, ארנון, זוטר אל-ע׳רביה, זוטר אל-שרקיה.\n💥 פיצוצים שביצע צה\"ל בכפרים בדרום:\nאל-טיבה, אל-נאקורה.\n⚠️ ملخص الإعتداءات الإسرائيلية على الأراضي اللبنانية بتاريخ ٢/٤/٢٠٢٦: 📍الغارات التي نفذها الطيران الحربي المعادي:\n💥 الجنوب:\n💥 الغارات التي نفذها الطيران المسير المعادي:\nكونين ، حبوش .\n💥 القصف المدفعي:\n💥 التفجيرات التي نفذها العدو في البلدات الجنوبية:\nالطيبة ، الناقورة .","lat":33.115,"lon":35.43},{"id":"HZ-K2","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / כפרא בנת ג'ביל / צרבין / פעילות צה\"ל / תקיפה אווירית באמצעות כטב״ם לעבר רכב של רשות הבריאות\n\nכטב״ם של צה\"ל תקף רכב של רשות הבריאות בדרך כפרא–צרבין.\n\nהערה: לא דווח על נפגעים مراسل \"ليبانون ديبايت\": مسيّرة إسرائيلية تستهدف سيارة للهيئة الصحية على طريق كفرا–صربين","lat":null,"lon":null},{"id":"HZ-K3","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / כפרא בנת ג'ביל / צרבין / פעילות צה\"ל / בעקבות תקיפת הבית נפגע אמבולנס שעלה באש\n\nהתקיפה כוונה לבית ליד מרכז של רשות הבריאות, מה שהוביל לשריפה של אמבולנס שעמד ליד הבית.\n\nהערה: עדכון דווח קודם 🚨الغاره استهدفت منزلآ بجانب مركز للهيئه الصحيه مما ادت الى اشتعال سياره اسعاف كانت بجانب المنزل ‎[03/04/2026, 18:05:08] דביר בן אבי: *לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / מצב פעולות ההתנגדות האסלאמית בתאריך 02/04/2026 מצב פעולות ההתנגדות האסלאמית בתאריך 02-04-2026 האוסינט המטכ\"לי* ‎image omitted","lat":null,"lon":null},{"id":"HZ-T2","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום ארועי לקיחת אחריות מטעם ההתנגדות האסלאמית לתאריך 02.04.2026 חלק 1 מתוך 4\n\nכהגנה על לבנון ועמה, פרסמה ההתנגדות האסלאמית ביום חמישי 02-04-2026 (49) הודעות צבאיות אודות פעולות התמודדות עם תנועות צה״ל בגבול הלבנוני-ישראלי וכן פעולות תקיפת עמדות בסיסים ופריסת צה״ל והישובים בצפון הארץ כדלקמן\n1. בשעה 20:00 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בגבעת ע׳דמאת׳א בעיירה עינאת׳א במטח טילים.\n2. בשעה 20:00 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בגבעת פריז בעיירה עינאתא במטח טילים.\n3. בשעה 23:30 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בישוב מלכיה במטח טילים.\n4. בשעה 23:50 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בעיירה רשאף במטח טילים.\n5. בשעה 23:55 אתמול יום רביעי 01-04-2026 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בגבעת ג׳ניג׳ל בעיירה אל-קנטרה בפגזי ארטילריה.\n6. בשעה 00:05 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בישוב מלכיה במטח טילים.\n7. בשעה 00:35 תקיפת ריכוז של חיילים וכלי רכב של צה״ל באזור אל-סדר בעיירה עינאתא במטח טילים.\n8. בשעה 01:30 תקיפת ריכוז של חיילים וכלי רכב של צה״ל בישוב מטולה במטח טילים.\n9. בשעה 02:00 תקיפת תשתיות השייכות לצה״ל באזור קרית אתא ממזרח לעיר חיפה במטח טילים.\n10. בשעה 02:30 לאחר שאותר כוח של חיילי צה״ל שהתמקם בתוך אחד הבתים בעיירת הגבול אל-קוזח, פעילי ההתנגדות האסלאמית תקפו אותו בטיל מונחה ופגעו פגיעה ישירה , וכאשר החיילים ברחו לאזור הסמוך הם הותקפו בטילים ובפגזי ארטילריה.\n11. בשעה 06:00 במסגרת האזהרה שהפנתה ההתנגדות האסלאמית למספר ישובים בצפון הארץ , תקיפת הישוב אבן מנחם במספר של כטב״מים מתאבדים.\n12. בשעה 06:10 תקיפת ריכוז של חיילי צה״ל בישוב יראון במטח טילים.\n13. בשעה 06:10 תקיפת ריכוז של חיילי צה״ל בישוב מלכיה במטח טילים.\n14. בשעה 06:40 תקיפת ריכוז של חיילי צה״ל בישוב אביבים במטח טילים.\n⭕️ دفاعًا عن لبنان وشعبه، أصدرت المقاومة الإسلامية بتاريخ الخميس 02/04/2026، 49 بيانًا عسكريًا حول عمليات التصدي لتحركات العدو الإسرائيلي عند الحدود اللبنانية الفلسطينية، وكذلك عمليات استهداف مواقع وقواعد وانتشار جيش العدو الإسرائيلي ومستوطناته في شمال فلسطين المحتلة، وفقًا للآتي:\n11- الساعة 06:00 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة إيفن مناحيم بسربٍ من المسيّرات الانقضاضيّة.\nהאוסינט המטכ\"לי*.","lat":33.283,"lon":35.515},{"id":"HZ-T3","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום ארועי לקיחת אחריות מטעם ההתנגדות האסלאמית לתאריך 02.04.2026 חלק 2 מתוך 3\n\n15- בשעה 07:00 תקיפת ריכוז חיילים וכלי רכב של צה״ל בגבעת פריז בעיירה עינאתא בשלושה מטחי רקטות.\n16- בשעה 08:00 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת הישוב מטולה במטח רקטות.\n17- בשעה 08:30 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת העיר קריית שמונה במטח רקטות.\n18- בשעה 09:00 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת העיר קריית שמונה בפעם השנייה במטח רקטות.\n19- בשעה 09:15 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת הקיבוץ בית הלל במטח רקטות.\n20- בשעה 09:15 תקיפת דחפור D9 במשולש השחרור בטיל ישיר והשגת פגיעה ודאית.\n21- בשעה 10:00 תקיפת מסוק צה״ל בשמי העיירה הגבולית ראמיה בטיל קרקע אוויר ואילוצו לסגת.\n22- בשעה 10:25 תקיפת ריכוז חיילים וכלי רכב של צה״ל בשער פאטמה הגבולי במטח רקטות.\n23- בשעה 10:30 תקיפת ריכוזים גדולים של כלי רכב של צה״ל ברכס אל-שמיסאת בעיירה אל-טיבה בשלושה מטחי רקטות.\n24- בשעה 10:30 במסגרת האזהרה שהעבירה ההתנגדות האסלאמית למספר ישובים בצפון הארץ תקיפת הישוב מטולה בפעם השנייה במטח רקטות.\n25- בשעה 10:30 תקיפת מפקדת הפיקוד הצפוני בצה״ל בסיס דדו מצפון לעיר צפת במטח רקטות.\n26- בשעה 10:40 תקיפת שני ריכוזים של חיילים וכלי רכב של צה״ל בעיירה אל-טיבה בשני מטחי רקטות.\n27- בין השעות 10:00 ל 11:00 תקיפת ריכוזי חיילים וכלי רכב של צה״ל בעיירות רשאף ובית ליף במטחי רקטות.\n28- בשעה 11:15 תקיפת ריכוז חיילים וכלי רכב של צה״ל ליד כיכר העיירה אל-קנטרה במטח רקטות ופגזי ארטילריה.\n29- בשעה 12:00 תקיפת ריכוז חיילי צה״ל בישוב משגב עם במטח רקטות.\n16- الساعة 08:00 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة المطلّة بصلية صاروخية.\n17- الساعة 08:30 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة كريات شمونة بصلية صاروخية.\n18- الساعة 09:00 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة كريات شمونة للمرّة الثانية بصلية صاروخية.\n19- الساعة 09:15 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلّة، استهداف مستوطنة بيت هلل، بصلية صاروخيّة.‏\n20- الساعة 09:15 استهداف جرّافة D9 عند مثلّث التحرير بصاروخ مباشر وتحقيق إصابة مؤكّدة.\n22- الساعة 10:25 استهداف تجمّع لجنود وآليات جيش العدوّ الإسرائيليّ عند بوابة فاطمة الحدوديّة بصليةٍ صاروخيّة.‏\n24- الساعة 10:30 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلّة، استهداف مستوطنة المطلّة للمرة الثانية، بصلية صاروخيّة.‏\n26- الساعة 10:40 استهداف تجمعين لجنود وآليات جيش العدوّ الإسرائيليّ في بلدة الطيبة بصليتين صاروخيّتين.‏","lat":33.283,"lon":35.515},{"id":"HZ-T4","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום ארועי לקיחת אחריות מטעם ההתנגדות האסלאמית לתאריך 02.04.2026 חלק 3 מתוך 3\n\n30- בשעה 12:00, תקיפת טנק מרכבה של צה״ל מזרחית למתקן המעצר באל-ח'יאם בטיל מונחה, והושגה פגיעה ישירה.\n31- בשעה 12:30, תקיפת שני ריכוזי חיילים של צה״ל בשני בתים בעיירה אל-טיבה בטילים מונחים, והושגו פגיעות ישירות.\n32- בשעה 12:30, תקיפת ריכוזי חיילים וכלים של צה״ל בעמדות כפר גלעדי ואל-מארג' במטחי רקטות.\n33- בשעה 15:00, תקיפת ריכוז חיילים וכלים של צה״ל בגבעת ע'דמאת'א וגבעת פריז בעיירה עינאתא בפגזי ארטילריה.\n34- בשעה 07:00 ובשעה 15:00, תקיפת ריכוזי חיילים וכלים של צה״ל בגבעת פריז וגבעת ע'דמאת'א בעיירה עינאתא במספר מטחי רקטות.\n35- בשעה 07:00 ובשעה 15:00, תקיפת ריכוז חיילים וכלים של צה״ל בישוב  אביבים במטחי רקטות.\n36- בשעה 10:00 ובשעה 15:00, תקיפת ריכוז חיילים וכלים של צה״ל בעמדת אל-מאלכיה במטחי רקטות.\n37- בשעה 15:15, לאחר שאותר כוח של חיילי צה״ל שהתמקם בתוך אחד הבתים בעיירה אל-ביאצ׳ה, תקפו אותו לוחמי ההתנגדות האסלאמית באמצעות רחפן מתאבד, והושגו פגיעות ישירות.\n38- בשעה 15:30, תקיפת ריכוז חיילי צה״ל בעמדת ראס אל-נאקורה במטח רקטות.\n39- בשעה 15:30, במסגרת האזהרה שהופנתה על ידי ההתנגדות האסלאמית למספר ישובים בצפון הארץ, תקיפת הישוב שלומי במטח רקטות.\n40- בשעה 15:35, בתגובה לתקיפות המתמשכת של צה״ל נגד אזרחים, עקירה והרס בתים, לוחמי ההתנגדות האסלאמית תקפו תשתיות השייכות לצה״ל בקריות צפונית לעיר חיפה במטח רקטות.\n41- בשעה 14:50 ובשעה 16:00, תקיפת ריכוז חיילים וכלים של צה״ל בגבעת ע'דמאת'א וגבעת פריז בעיירה עינאתא בשלושה מטחי פגזי ארטילריה.\n42- בשעה 16:00, תקיפת ריכוז חיילים וכלים של צה״ל במשולש אל-סדר - פריז בעיירה עינאתא במטח רקטות ופגזי ארטילריה.\n43- בשעה 16:00, תקיפת טנק מרכבה של צה״ל בגבעת אל-צלעה בעיירה אל-קנטרה באמצעות רחפן מתאבד, והושגה פגיעה ישירה.\n44- בשעה 16:35, במסגרת האזהרה שהופנתה על ידי ההתנגדות האסלאמית למספר ישובים בצפון הארץ, תקיפת העיר נהריה במטח רקטות.\n45- בשעה 17:20, במסגרת האזהרה שהופנתה על ידי ההתנגדות האסלאמית למספר ישובים בצפון הארץ, תקיפת העיר קריית שמונה בפעם השלישית במטח רקטות.\n46- בשעה 18:20, בתגובה לתקיפות המתמשכת של צה״ל נגד אזרחים, עקירה והרס בתים, לוחמי ההתנגדות האסלאמית תקפו תשתיות השייכות לצה״ל בעיר כרמיאל במטח רקטות.\n47- בשעה 19:15, בתגובה לתקיפות המתמשכת של צה״ל נגד אזרחים, עקירה והרס בתים, לוחמי ההתנגדות האסלאמית תקפו בסיס עמיעד ובסיס פילון צפונית לכנרת במטח רקטות.\n48- בשעה 20:00, תקיפת עמדות ארטילריה של צה״ל בח'ירבת מאער במספר רחפנים מתאבדים.\n49- בשעה 20:00, תקיפת ריכוז חיילים וכלים של צה״ל בעיירה שמע בפגזי ארטילריה.\nההתנגדות האסלאמית מחויבת להגן על אדמתה ותושביה, במיוחד כאשר צה״ל עובר את הגבול בפשעיו. תגובתה כוונה לאתרים צבאיים ולא כפי שצה״ל עושה בתקיפת אזרחים, וזוהי חובה מינימלית לרסנו ולמנוע ממנו להמשיך ביעדיו המסוכנים כלפי לבנון כמדינה, כעם וכמו התנגדות.\n#מערכת_הקש_הנאכל #הגנה_על_לבנון_ותושביה #המדיה_הצבאית\n31- الساعة 12:30 استهداف تجمعين لجنود جيش العدوّ الإسرائيليّ في منزلين في بلدة الطيبة بالصواريخ الموجّهة وحققوا إصابات مباشرة.‏\n39- الساعة 15:30 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة شلومي بصليةٍ صاروخيّة.\n44- الساعة 16:35 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة نهاريا بصليةٍ صاروخيّة.\n45- الساعة 17:20 في إطار ‏التحذير الذي وجّهته المُقاومة الإسلاميّة لعددٍ من مستوطنات شمال فلسطين المحتلة، استهداف مستوطنة كريات شمونة للمرّة الثالثة بصلية صاروخيّة.\n#معركة_العصف_المأكول\n#دفاعا_عن_لبنان_وشعبه\n#الإعلام_الحربي\n‎[03/04/2026, 18:05:09] דביר בן אבי: *לבנון / דרום לבנון / חזבאללה / לקיחת אחריות / סיכום היומי של פעולות ההתנגדות האסלאמית באתריך 02-04-2026\nהסיכום היומי של פעולות ההתנגדות האסלאמית בתאריך 02-04-2026\nהאוסינט המטכ\"לי* ‎image omitted","lat":33.283,"lon":35.515},{"id":"HZ-G2","actor":"HEZBOLLAH","domain":"GENERAL","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / פעילות צה\"ל / ראיית כוחותינו / מטוסים של צה״ל טסים בגובה נמוך מאוד\n\nמטוסי קרב של צה״ל טסים בגובה נמוך מאוד מעל אזורים בהר לבנון.","lat":null,"lon":null},{"id":"HZ-K4","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / יאטר / פעילות צה\"ל / ירי ארטילרי לכיוון השכונה המזרחית\n\nירי ארטילרי בקוטר 240 מ\"מ  לכיוון השכונה המזרחית בעיירה יאטר","lat":null,"lon":null},{"id":"HZ-K5","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / יאטר / כפרא בנת ג'ביל / צרבין / בית ליף / פעילות צה\"ל / תקיפות אוויריות\n\nסדרת תקיפות אוויריות על העיירות יאטר, כפרא, צרבין, בית ליף\nسلسلة غارات على : ياطر , كفرا , صربين , بيت ليف .\n‎[03/04/2026, 18:05:10] דביר בן אבי: *לבנון / דרום לבנון / יאטר / BDA / ההרוג עלי פוזי כוראני\nהעיירה יאטר מודיעה על ההרוג *עלי פוזי כוראני*.\nبلدة ياطر تزف الشه🌹يد علي فوزي كوراني هنيئًا 🌹\nהאוסינט המטכ\"לי* ‎image omitted\n‎[03/04/2026, 18:05:11] דביר בן אבי: *לבנון / דרום לבנון / כפרא בנת ג'ביל / BDA / ההרוג מחמד מחמוד חמדאן\nהודעה מטעם עיריית כפרא :\nבגאווה והוקרה רבה עיריית כפרא מודיעה לתושביה הנכבדים ובני עיירתנו הנאמנים על ההרוג הלוחם\nמחמד מחמוד חמדאן\nכשהוא מגן על אדמתו עמו ומטרתו. עיריית כפרא מגישה את תנחומיה וברכותיה החמות ביותר למשפחת ההרוג הנכבדה ולכל תושבי העיירה, ומאשרת שדם ההרוגים יישאר מגדלור של כבוד ועמידות ושעיירתנו שהקריבה הרוגים תישאר נאמנה להקרבתם .\nالشهيد المجاهد\nمحمد محمود حمدان\nהאוסינט המטכ\"לי* ‎image omitted\n‎[03/04/2026, 18:05:11] דביר בן אבי: *לבנון / דרום לבנון / BDA / חמולת ג'עפר × 7\nחמולת ג'עפר* בלבנון אבלה על אובדן שבעה מבניה שהקריבו את חייהם למען ארצם:\nעלי ח'צ'ר ג'עפר\nח'צ'ר אמירה ג'עפר\nמהדי חסן ג'עפר\nבאסל מחמד ג'עפר\nצח'ר חסין ג'עפר\nואאל ח'צ'ר ג'עפר\nפדאא יאסין ג'עפר\nعلي خضر جعفر\nخضر اميره جعفر\nمهدي حسن جعفر\nباسل محمد جعفر\nصخر حسين جعفر\nوائل خضر جعفر\nفداء ياسين جعفر\nהאוסינט המטכ\"לי* ‎image omitted\n‎[03/04/2026, 18:05:11] דביר בן אבי: *לבנון / דרום לבנון / אלדויר אלנבטיה / BDA / הלכי רוח / סרטון מיעד תקיפה אווירית\nהדוד השורד / העיקש / האיתן הזה באל-דויויר בעיצומה של המלחמה מסיר את הדאגה מהלב מצא לנו את התרנגולת סמיה\nסרטון\nארבעה תקיפות אוויריות שתוצאתן הייתה איבוד קשר עם 8 עצי התאנה והעוף שלו האהובה \"סמיה\" אשר נקראה אחרי אהבת נעוריו שעברה בצעירותה לארה\"ב וקבלה אזרחות אמריקאית אך הוא בעל אזרחות דרומית מאל-דויר  *שגאה בה מאוד\nהאוסינט המטכ\"לי* ‎video omitted","lat":null,"lon":null},{"id":"HZ-K6","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / BDA / סיכום יומי (אדום) של תקיפות צה\"ל\n\nעדכון\nתאריך מקורי: 03/04/2026 03:58\n🔵 *סיכום התקיפות הישראליות בשטח לבנון ב-2/4/2026:\nתקיפות אוויריות שבוצעו על ידי מטוסי קרב של האויב:\nדרום:\n1. חארוף\n2. זבדין\n3. ברג' רחאל\n4. כפר ציר\n5. אל-ח'יאם\n6. דיס אל-ח'רבה\n7. דבין\n8.אל-דלאפה\n9. בנת ג'ביל\n10. אל-מנצורי\n11. ברעשית\n12. כפרא\n13. אל-ח'יאם (פעם 2 ע.ע.)\n14. תיבנין\n15. אל-סלטאניה\n16. עיתא אל-ג'בל\n17. ברג' קלאוי\n18. צרבין\n19. אל-ג'מיג'מה\n20. תולין\n21. מג'דל סלם\n22. עלאמן\nתקיפות אוויריות שבוצעו על ידי כטב\"מים:\n1. כונין\n2. חבוש\nהפגזת ארטילריה:\n1. ראשאיא אל-פח'אר\n2. בית יאחון\n3. דבין\n4. תבנין\n5. עיתא אל-ג'בל\n6. ברג' קלאוי\n7. ג'בל אל-בטם\n8. צדיקין\n9. עריצ' דבין\n10. דיס אל-ח'ריבה\n11. אבל א-סקי\n12. מג'דלזון\n13. חאריצ'\n14. אל-ח'יאם (3 ע.ע.)\n15. יחמר אל שקיף\n16. ארנון\n17. זוטר אל-ע'רביה\n18. זוטר אל-שרקייה\nפיצוצים/ השמדות הדרום:\n1. אל-טיבה\n2. אל-נאקורה\n🔵 *ملخص الإعتداءات الإسرائيلية على الأراضي اللبنانية بتاريخ ٢/٤/٢٠٢٦:\n🟠 *الغارات التي نفذها الطيران الحربي المعادي:\n🔅 *الجنوب:\nحاروف\nزبدين\nبرج رحال\nكفرصير\nالخيام\nديس الخريبة\nدبين\nالدلافة\nبنت جبيل\nالمنصوري\nبرعشيت\nكفرا\nالخيام\nتبنين\nالسلطانية\nعيتا الجبل\nبرج قلاوي\nصربين\nالجميجمة\nتولين\nمجدل سلم\nعلمان\n🟠 *الغارات التي نفذها الطيران المسير المعادي:\nكونين\nحبوش\n🟠 *القصف المدفعي المعادي:\nراشيا الفخار\nبيت ياحون\nدبين\nتبنين\nعيتا الجبل\nبرج قلاوي\nجبال البطم\nصديقين\nعريض دبين\nديس الخريبة\nابل السقي\nمجدلزون\nحاريض\nالخيام\nيحمر الشقيف\nأرنون\nزوطر الغربية\nزوطر الشرقية\n🟠 *التفجيرات التي نفذها العدو في البلدات الجنوبية:\nالطيبة\nالناقورة","lat":33.113,"lon":35.137},{"id":"HZ-G3","actor":"HEZBOLLAH","domain":"GENERAL","datetime":"2026-04-03 18:05","text":"לבנון /כללי/הלכי רוח/נצרות/הקו הצהוב, קרב בינת ג׳בייל ועתיד נוצרי דרום לבנון – ניתוח טעון של ז׳ורז׳ גאנם\n\nהקו הצהוב, קרב בנת ג'בייל וגורל הנוצרים בדרום – קריאה נרחבת וחשובה של ג'ורז' ע'אנם בסצנה המורכבת.\nالخط الأصفر ومعركة بنت جبيل ومصير مسيحيّي الجنوب… قراءة تحليلية شاملة وخطيرة لجورج غانم في المشهد المعقّد","lat":33.115,"lon":35.43},{"id":"HZ-G4","actor":"HEZBOLLAH","domain":"GENERAL","datetime":"2026-04-03 18:05","text":"לבנון /כללי/נוצרים / ברגע מכריע: הוותיקן נכנס למשבר במסר תקיף\n\nברגע קריטי... הוותיקן מצטרף למשבר עם מסר נחרץ\nفي لحظة مفصلية… الفاتيكان يدخل على خط الأزمة برسالة حاسمة","lat":null,"lon":null},{"id":"HZ-K7","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון /התרעה /  צה״ל קורא לפינוי מיידי של שכונות בדרום ביירות\n\nהתרעה מיידית לתושבי אל-דאצ׳ה א-ג׳נוביה בשכונות חארת ח׳ריק, אלע׳ביירי, אללילכי, אלהדת׳, בורג' אלבראג'נה, תחויאטת אלע׳דיר ושיאח לפנות את האזור מיד.","lat":null,"lon":null},{"id":"HZ-G5","actor":"HEZBOLLAH","domain":"GENERAL","datetime":"2026-04-03 18:05","text":"לבנון /ראיית כוחותינו/צבא ישראל פוצץ הבוקר עשרות בתים בעיירה עייתא אל-שעב\n\nצה\"ל פוצץ הבוקר עשרות בתים בעיתא אל-שעב.\nموقع \"واللا\" عن مصادر: الجيش الإسرائيلي فجر صباح اليوم عشرات المنازل في عيتا الشعب","lat":null,"lon":null},{"id":"HZ-K8","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/דרום לבנון/יאטיר/פעולה צבאית\n\nתקיפה על העיירה יאטיר בדרום לבנון.","lat":null,"lon":null},{"id":"HZ-T5","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון/דרום לבנון / חזבאללה/ישראל מצמצמת את יעדיה מול חיזבאללה, אך סוגיית האזור החיץ וחזרת התושבים נותרת מוקד עימות מרכזי\n\nإن إقرار \"الجيش الإسرائيلي\" بأن نزع سلاح حزب الله في ظل الظروف الحالية هو أمر غير ممكن، وانه ولم يعد هدف الحرب، هو تراجع جوهري نوعي، فرضته جهوزية حزب الله للحرب، وهذا نتاج الفعل الميداني.\nلكن الأهم، الاشارة إلى أن \"المطلوب هو ابعاد الحزب عن الحدود بعمق حوالي 4 كلم\"، فهو تراجع أيضا، عن إبعاده إلى ما بعد الليطاني.\nأما محاولة ترسيخ منطقة عازلة، خالية من السكان، ومنع عودتهم، فهي التحدي الكبير الذي سيواجه في لبنان حتما، لأن عنوان فتح الجبهة واستباق الهجمة الإسرائيلية هو ضرورة انسحاب \"إسرائيل\" وعودة الأهالي إلى قراهم.\nהעובדה שצה\"ל מודה שפירוק חיזבאללה מנשקו בנסיבות הנוכחיות הוא לא אפשרי, ושזה כבר לא המטרה של המלחמה, זה נסיגה משמעותית שנכפתה בגלל ההיערכות של חיזבאללה למלחמה, וזה תוצאה של הפעילות בשטח. אבל הכי חשוב, ההערה ש\"המטרה היא להרחיק את הארגון מהגבול לעומק של כ-4 ק\"מ\", זו גם נסיגה, לעומת הדרישה להרחיק אותו מעבר לליטני. הניסיון ליצור אזור חיץ ריק מתושבים ולמנוע את חזרתם, הוא האתגר הגדול שיתמודד איתו בלבנון בטוח, כי הסיבה לפתיחת החזית והתגובה המוקדמת מול ההתקפה של ישראל היא הדרישה שישראל תיסוג והאזרחים יחזרו לכפרים שלהם.\n\nהערה: ישראל מצמצמת את יעדיה מול חיזבאללה, אך סוגיית האזור החיץ וחזרת התושבים נותרת מוקד עימות מרכזי إن إقرار \"الجيش الإسرائيلي\" بأن نزع سلاح حزب الله في ظل الظروف الحالية هو أمر غير ممكن، وانه ولم يعد هدف الحرب، هو تراجع جوهري نوعي، فرضته جهوزية حزب الله للحرب، وهذا نتاج الفعل الميداني. لكن الأهم، الاشارة إلى أن \"المطلوب هو ابعاد الحزب عن الحدود بعمق حوالي 4 كلم\"، فهو تراجع أيضا، عن إبعاده إلى ما بعد الليطاني. أما محاولة ترسيخ منطقة عازلة، خالية من السكان، ومنع عودتهم، فهي التحدي الكبير الذي سيواجه في لبنان حتما، لأن عنوان فتح الجبهة واستباق الهجمة الإسرائيلية هو ضرورة انسحاب \"إسرائيل\" وعودة الأهالي إلى قراهم.","lat":33.103,"lon":35.193},{"id":"HZ-K9","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/צריפא/פעילות צה\"ל / רבע תקיפות רצופות בצריפא: מבנים וחנויות נהרסו\n\nמבזק: ארבע התקיפות האוויריות של צה\"ל ברצף על סריפא גרמו להריסת חוסיניה, בניין של ארבע קומות וחנויות מסחריות.","lat":null,"lon":null},{"id":"HZ-K10","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/אל-ביאצ׳ה/שגרת חיים/לקיחת אחריות/תקיפת אתר רדאר בדרום לבנון באמצעות כטב”ם\n\nהודעה מצידה של ההתנגדות האסלאמית (22):\nדִּפְעָה לִלְבָּנָן וְעַמּוֹ, לוחמי ההתנגדות האסלאמית תקפו בשעה 15:05 ביום שבת, 28/03/2026, את אתר הרדאר בכפר אלביאצ׳ה באמצעות רחפן תקיפה.\n#מערכת_העופל_האכול #הגנה_על_לבנון_ועמה #הסברה_מלחמתית\nبيان صادر عن المقاومة الإسلامية (22):‏ بِسْمِ اللَّـهِ الرحمن الرَّحِيمِ ‏﴿أُذِنَ لِلَّذِينَ يُقَاتَلُونَ بِأَنَّهُمْ ظُلِمُوا وَإِنَّ اللَّهَ عَلَىٰ نَصْرِهِمْ لَقَدِيرٌ﴾‏ صَدَقَ اللهُ العَلِيّ العَظِيم دفاعًا عن لبنان وشعبه، استهدف مجاهدو المُقاومة الإسلاميّة عند الساعة 15:05 السبت 28/03/2026 موقع الرادار في بلدة البيّاضة بمحلّقة انقضاضيّة. ﴿وَمَا النَّصْرُ إِلاَّ مِنْ عِندِ اللّهِ الْعَزِيزِ الْحَكِيم﴾‏ السبت 28-03-2026‏ 8 شوال 1447 هـ #معركة_العصف_المأكول #دفاعا_عن_لبنان_وشعبه #الإعلام_الحربي","lat":null,"lon":null},{"id":"HZ-K11","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/הערכת מלחמה/הסברה/סרט וידיו/ההתפתחויות האחרונות בגזרה הדרומית בלבנון – אזור נבטיה\n\n📹 דיווחים מצולמים | ההתפתחויות האחרונות בגזרה הדרומית של לבנון ובמיוחד באזור נבטיה\n📹 تقارير مصورة | آخر تطورات الجبهة الجنوبية للبنان وتحديدًا منطقة النبطية\n‎[03/04/2026, 18:05:15] דביר בן אבי: *לבנון / צריפא / BDA / לגיטימציה / תמונת אמבולנס שנפגע בתקיפה כביכול\nשני אמבולנסים השייכים לרשות הבריאות האסלאמית ו\"כשאפה אל-רסאלה\" האסלאמיים בעיירה סריפה ניזוקו כתוצאה מחידוש התקיפות האוויריות בזמן שצוותי אמבולנסים בדקו את הנזק שנגרם מהפשיטות הראשוניות.\n\nהערה: כשאפה אל-רסאלה (צופים) ארגון שייתכן ונתמך ע\"י חזבאללה Two ambulances belonging to the Islamic Health Society and the Islamic Risala Scouts were damaged in the town of Srifa following renewed airstrikes, while rescue teams were inspecting the damage from the initial strikes האוסינט המטכ\"לי* ‎image omitted","lat":null,"lon":null},{"id":"HZ-K12","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/עיירת צריפא/פעילות צה\"ל / תיעוד מהשטח: תוצאות תקיפה קשה בעיירה צריפא\n\nכתבת ליטאני ניוז מתוך האירוע: מתעדת את תוצאות התקיפה האכזרית על עיירת סרייפא לפני זמן קצר.\nלהצטרפות לשירות חדשות ליטאני ניוז בווטסאפ, הצטרפו דרך הקישור (2):\nمراسلة الليطاني نيوز من قلب الحدث : توثق آثار الاعتداء الهمجي على بلدة صريفا منذ قليل 🛑للإشتراك بخدمة أخبار ليطاني نيوز عبر (واتساب) نرجو الانضمام عبر","lat":null,"lon":null},{"id":"HZ-K13","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/צבא לבנון/  הודעת צבא לבנון: פיצוץ יזום של תחמושת באזור דכואנה\n\nמבזק: צבא לבנון מודיע שיחידה של הצבא תבצע פיצוץ של תחמושת שלא התפוצצה באזור דקוונה - אלמתן בתאריך 3.4.2026 בין השעות 13:30 ל-14:30.\nالجيش اللبناني: ستقوم وحدة من الجيش بتفجير ذخائر غير منفجرة في منطقة الدكوانة - المتن بتاريخ 3 /4 /2026 ما بين الساعة 13:30 والساعة 14:30","lat":null,"lon":null},{"id":"HZ-K14","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / אלח'יאם / אלערקוב / הערכות צבאית / ראיית כוחותינו / ניתוח תמונת מצב בגזרה המזרחית לפי ערוץ אלמנאר\n\nכתב העיתונאי בערוץ אלמנאר, סאמר חג' עלי: מצב השטח בגזרה המזרחית: בציר אלח'יאם, למרות מטריית האש מהארטילריה ומהמטוסים, העימותים נמשכים וההתנגדות מתעמתת עם צה\"ל באופן רציף בשכונות המזרחיות והמערביות שלה, ובאזור שבין מרכז העיר לכיכר.\nביום חמישי במהלך העימותים הושמד טנק מרכבה ליד בית המעצר אלח'יאם, והותקפו עמדות של צה\"ל המובילות אל העיר.\nבאזור אלערקוב: המצב נשאר בעינו, צה\"ל מבצע פעולות מיוחדות שם, כולל חדירה לנקודות שונות בכפרים הצמודים לגבול לצורך סריקות וחטיפה וכיוצא בזה. *צה\"ל הקים סוללת ארטילריה חדשה בגבול כפרשובא*, כדי לתמוך במאמץ המלחמתי של סוללת אלזעורה בגולן הסורי שבשליטת צה\"ל.\nבציר אלקנתרה - אלטיבה: ההתנגדות ביצעה מספר פעולות בשעות האחרונות, כולל תקיפת עמדות צה\"ל בתחנות יציאה וריכוז, והיא עוקבת אחרי כל ניסיון של צה\"ל להתרחב על מנת להתמודד איתו. צה\"ל לא הצליח להשתלט על העיירות שהקיף, והכוחות שלו לא נכנסו לכל השכונות בכפרים האלה.\n‎[03/04/2026, 18:05:17] דביר בן אבי: *לבנון / סחמר /  אל-בקאע / BDA / דיווח על תקיפה אווירית של קבוצת מתפללים\nתהלוכת המתפללים הותקפה אוויריות ביציאתם מהמסגד בעיירה סחמר שבאל-בקאע המערבית, מה שגרם למותם של כמה מהקבוצה ולפציעתם של 11 בני אדם.\nהאוסינט המטכ\"לי* ‎image omitted\n‎[03/04/2026, 18:05:17] דביר בן אבי: חזבאללה מפרשן למה צהל רוצה להרוס את גשר סחמר הדרום לבנון ‎image omitted","lat":33.27,"lon":35.193},{"id":"HZ-K15","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/דרום לבנון/בנת ג׳ביל/ יעדים / בינת ג’בייל במוקד: ניתוח צבאי מעמיק של זירות הלחימה בדרום לבנון\n\nבינת ג'בייל היא יעד מרכזי... תת-אלוף ת'ניר מספק ניתוח מדויק של צירי הלחימה היבשתית בדרום!\n\nהערה: הכתבה מנתחת את צירי הלחימה בדרום לבנון ומדגישה את החשיבות של בינת ג’בייל","lat":33.115,"lon":35.43},{"id":"HZ-G6","actor":"HEZBOLLAH","domain":"GENERAL","datetime":"2026-04-03 18:05","text":"לבנון/סחמר/BDA/ תקיפת כטב״ם בסחמר: שני הרוגים ו-11 פצועים בקרב מתפללים שיצאו ממסגד\n\nמבזק: כטב\"ם של צה\"ל תקף מתפללים בזמן שיצאו מהמסגד בעיירה סוחמור בבקעע' אל-ע'רבי, מה שהביא למותם של שניים ולפציעתם של 11 נוספים.","lat":null,"lon":null},{"id":"HZ-K16","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / אלח'יאם / פעילות צה\"ל\n\nהמשך העימותים בין חזבאללה וכוחות צה\"ל בשכונות אלח'יאם\n📸 الصورة تعبيرية\n‎[03/04/2026, 18:05:19] דביר בן אבי: *לבנון / דרום לבנון / חזבאללה / אמל\"ח / התפארות בכמות טילים ונשק\nציוץ מתריס מתרברב בכמויות טילים ואמל\"ח בידי החזבאללה.\nבסרטון נטען שיש בידם טילים.\nבטקסט בציוץ:\n\" שפע רב,\nנתניהו אומר שאין נשק,\nהנשק קיים בשפע טובו של אללה\"\nהמלל בסרטון:\n\"בעזרת אללה אנו מנצחים, ומה הלאה? *היום ירינו 'פאדי 2'* ואלו *16 רקטות 'מלאכּ 2',* ומחר *'פאדי 4',* אם ירצה אללה, וכו'\"\n\nהערה: רצ\"ב סרטון ‏رزق كتير האוסינט המטכ\"לי* ‎video omitted","lat":null,"lon":null},{"id":"HZ-K17","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/פעילות צה\"ל /עיירת ג׳מג׳ייה/עיירת אל-חניה/ שתי תקיפות ישראליות בדרום לבנון: יעדים בבינת ג’ביל ובצור\n\nכתב \"לבנון דיבייט\": תקיפה של צה\"ל פגעה בעיירה ג'מג׳יימה שבאזור בנת ג'ביל, ותקיפה נוספת פגעה בעיירה חאניה שבאזור צור.\nمراسل \"ليبانون ديبايت\": غارة إسرائيلية استهدفت بلدة الجميجمة قضاء بنت جبيل وأخرى استهدفت بلدة الحنية قضاء صور","lat":33.115,"lon":35.43},{"id":"HZ-T6","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / ראיית כוחותינו\n\nעדכון כטב\"מים מעל:\nנבטיה והסביבה\nחרבת אל-דווייר\nכפר רמאן\nזוטר אלע'רביב\nנבטיה\nכפר ציר\nג'בשית\nשוקין\nיחמר\nעבא\n---------------------   צידון וכפרי אל-זהרני\nעדלון\nנפת צור :\nדראדגיא\nארזון\nאסוד\nנפת מרג'עיון ובינת ג'ביל\nסלטאניה-בינת ג'בייל\nטיר סמחאת\nדיר אנטאר\nעלמאן-מרג'עיון\nאלח'יאם\nשקרא\nכפרא\nיחמר\nמערב אלבקאע\nזליא\nסחמר\nקליא\nהישמרו והיזהרו 🚨🚨🚨\n🤔⚠️ #تحديث #مسير ## النبطية وجوارها #خربة_الدوير #كفر_رمان #زوطر_الشرقية #النبطية #كفر_صير #جبشيت #شوكين #يحمر #عبا ــــــــــــــــــــــ ## صيدا وقرى الزهراني #عدلون ــــــــــــــــــــــ ## قضاء صور #دردغيا #أرزون #شحور ــــــــــــــــــــــ ## قضاء مرجعيون وبنت جبيل #سلطانية_بنت_جبيل #طير_سمحات #دير_انطار #علمان_مرجعيون #الخيام #شقرا #كفرا #يحمر ــــــــــــــــــــــ ## البقاع الغربي #زلايا #سحمر #قليا حيطة وحذر 🚨🚨🚨 🌐 Red_Alert 🇱🇧 | 🚨 Reporting |📞 WhatsApp","lat":33.115,"lon":35.43},{"id":"HZ-K18","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון/כפר שמע/אל-נאקורה/ראיית כוחותינו / עימותים ממושכים בדרום לבנון: קרבות בשמעא ופיצוץ בנאקורה\n\nכתב אלמנאר: קרבות שמנהלת ההתנגדות כבר למעלה משעה בעיירה שמע נגד צה\"ל, בזמן שהאויב ביצע פיצוץ בעיירה אנאקורה.","lat":33.103,"lon":35.193},{"id":"HZ-K19","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / עין אבל / בית ליף / חאמול / אלנאקורה / אלח'יאם / אל-ביאצ'יה / ראיית כוחותינו\n\nלא נרשמה התקדמות קרקעית של האויב מאזורי אל-ביאצ'ה, א-טיבה, אל-ח'יאם ובית ליף–צרבין, בעוד חאנין נתונה להפגזה ארטילרית כבדה שמטרתה להכין את הקרקע לכיתורה מכיוון עיתא א-שעב, דבל ועין אִבל. מקור בשטח מסר ל״אל-אח׳באר״ כי האויב הצליח להתקדם בכמה צירים, אך לא הצליח להתבסס ולהתמקם בשל תקיפות ההתנגדות נגד כוחותיו באמצעות רקטות.\nבהתאם לכך, אין נוכחות של האויב על הכביש הראשי של א-נאקורה, שכן הוא יהיה חשוף מאזור החוף של צור. לכן הוא מתמקם בשכונות הפנימיות של העיירה ומשתמש באחד המלונות באזור חאמול כמרכז פעילות.\nلم يسجل تقدم ميداني للعدو، من البياضة والطيبة والخيام وبيت ليف - صربين، فيما تتعرض حانين لقصف مدفعي مكثف يمهد لتطويقها من عيتا الشعب ودبل وعين إبل. وأكد مصدر ميداني لـ«الأخبار» أن العدو تمكن من التقدم في بعض المحاور، لكنه عجز عن التثبيت والتموضع بسبب استهداف المقاومة لقواته بالصواريخ.","lat":33.113,"lon":35.137},{"id":"HZ-K20","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דיר אלזהראני / פעילות צה\"ל / BDA\n\nשתי התקיפות על העיירה דיר אל-זהראני (ואדי חמילה) – הטילים לא התפוצצו.\n🌟 🇱🇧🤔الغارتين التي استهدفتا بلدة دير الزهراني (وادي حميلا) الصواريخ لم تنفجر 🤍\n‎[03/04/2026, 18:05:21] דביר בן אבי: ‎image omitted","lat":null,"lon":null},{"id":"HZ-K21","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / רמאדיה / BDA / הרוגים בתקיפה אווירית\n\nכתב חדשות: ארבעה סורים נהרגו ואישה סורית שרדה תקיפה אווירית נגד חוות תרנגולות בפאתי אל-רמאדיה\n‎[03/04/2026, 18:05:21] דביר בן אבי: ‎video omitted","lat":null,"lon":null},{"id":"HZ-T7","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון / פעילות צה\"ל / קרב בינת ג’ביל: תוכנית ההקפה הישראלית נכשלה – הדרום בוער\n\nקרב בינת גביל: איך נשברה התכנית של צה\"ל לבצע כיתור מעיתרון לעינת׳א, ומואדי אלחג'יר עד גבול צור... האדמה בוערת בדרום לבנון! מה קרה בבית ליף, דבל ורשאף? המצב בשטח על המפה עם העיתונאי חסין מרתצ'א ביוטיוב... עקבו אחרי הפרטים:\n#בנתגביר #ואדילהג'יר #דרוםלבנון #חסיןמרתצ'א #המצבשדהמפה\nمعركة بنت جبيل : كيف قُطعت خطة التطويق الاسرائيلية من عيترون إلى عيناتا ، و من وادي الحجير إلى تخوم صور .. الأرض تشتعل في جنوب لبنان ! ماذا حدث في بيت ليف و دبل و رشاف ؟ الميدان بالخارطة مع الاعلامي حسين مرتضى على يوتيوب .. تابعوا التفاصيل : #بنت_جبيل #وادي_الحجير #جنوب_لبنان #حسين_مرتضى #الميدان_بالخارطة","lat":33.115,"lon":35.43},{"id":"HZ-K22","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"2026-04-03 18:05","text":"לבנון / דרום לבנון / פעילות צה\"ל / לקיחת אחריות / טענה שהיממה החולפת עם הישגים רבים לחזבאללה\n\n`אלח'יאם / קנטרה / כפרא / רמאדיה / כפר ציר / בנת ג'ביל / ואדי אל-סלוקי / ראמיה / זבדין`\n> מאמר ב'אל-עדשה' ('העדשה') מסכם את הלחימה ביממה האחרונה בדרום לבנון ומתאר אותה כפגיעה הגדולה ביותר בצה\"ל עד כה כביכול:\n\" ההתנגדות מבצעת 60 התקפות בזק ומכוונת נגד טנקי מרכבה, בעוד שהכיבוש נוקם נגד אזרחים ב-44 ערים לבנוניות.\nיום שישי - 3 באפריל, 2026 - 13:00\nבמה שתואר כיום ההרסני ביותר עבור כוחות הכיבוש וציודם מאז תחילת המתקפה הקרקעית שלהם, דרום לבנון הפכה ל\"שטח קטל\" עבור כוחות האליטה הציוניים.\nחזבאללה ביצע 60 תקיפות מדויקות שכוונו נגד טנקים, מסוקים ובסיסים צבאיים עמוק בתוך הישות הציונית. בתגובה לתבוסה זו בשדה הקרב, צבא הכיבוש שחרר את זעמו על אזרחים ותשתיות, ותקף 44 אזורים אזרחיים בגל הגדול ביותר של הפצצות אוויריות וארטילריות, שהביא לטבח של משפחות לבנוניות.\nזה היה ניסיון נואש להציל את תדמית ה\"הרתעה\" שהתנפצה על ידי טילי ההתנגדות ב\"משולש השחרור\" ובמרכז המעצר חיאם.\n\"ציד כבד\": ההתנגדות מוציאה את הטנקים והמסוקים של \"מרכבה\" משירות-\n24 השעות האחרונות היו עדות למבצעי התנגדות מקצועיים, כולל השמדת שני טנקי מרכבה בקנטרה ובאל-ח'יאם, וירי בדחפור צבאי מדגם D9, המשקף את כישלון השריון הישראלי כנגד טילים מונחים.\nבהתפתחות משמעותית, טיל קרקע-אוויר אילץ מסוק קרב להימלט משמיים מעל עיירת הגבול ראמיה, ושלח מסר ברור כי עליונותו האווירית של הכיבוש מאוימת כעת.\nהתקיפות לא הוגבלו לגבול, אלא כוונו גם לעמדות ארטילריה בח'רבת מאעז ולבסיסים אסטרטגיים כמו דדו (מטה פיקוד הצפון) מצפון לצפת, והציבו את לב הצבא של הכיבוש לחסדי אש ההתנגדות.\nהטבח של \"זבדין ואל-רמאדיה\": הכיבוש נוקם במשפחות לבנוניות-\nכישלונות הכיבוש בשטח תורגמו לטרור מאורגן נגד אזרחים. בעיירה זבדין, תקיפה אווירית ישראלית מחקה משפחה שלמה (חבר מועצת העירייה בלאל ג'ואד, אמו ואחיו) מהמרשם האזרחי.\nשבעה שהידים נהרגו גם בפשיטות בוגדניות על אל-רמאדיה וכפר ציר, והכיבוש הרס קומפלקס מגורים בכפרא, והותיר כמה אנשים פצועים קשה.\nהסלמה זו באלימות נגד אזרחים ב-44 עיירות, מבנת ג'ביל ועד ואדי אל-סלוקי, חושפת את חוסר יכולתו של צבא הכיבוש להתעמת ישירות עם הלוחמים ואת פנייתו למדיניות אדמה חרוכה כדי לעקור את האוכלוסייה ולאכוף מציאות ביטחונית חדשה.\n\"החשכה ציונית\": צנזורה מסתירה את היקף הנכבה ב\"קריית שמונה\"-\nכלי תקשורת בישראל הודו כי שישה חיילים ומתנחלים נפצעו בירי רקטות שכוונו לקרית שמונה, נהריה ומטולה, אך משקיפים טוענים כי מספר הפצועים האמיתי גבוה בהרבה.\nהצנזורה הצבאית הישראלית מטילה הסתרה מוחלטת על תוצאות 1,250 התקיפות שביצעה ההתנגדות מאז תחילת מרץ, ומזהירה את המתנחלים מפני פרסום תמונות של האתרים המכוונים.\nסודיות זו נועדה להסתיר את העובדה שהצפון הכבוש הפך ל\"אזור חיץ\" וירטואלי, שבו טילי ההתנגדות שולטים למעשה בתנועתם של מתנחלים וחיילים כאחד.\nתקציר: \"משוואת הדם והאש\"-\nאירועי יום חמישי מוכיחים כי ההתנגדות הלבנונית עברה מעמדה הגנתית ל\"מתקפת התשה\" מקיפה, והפכה את הדרום לחור שחור שבולע את מנגנון הכיבוש. העובדה שמספר ההרוגים הגיע ל-1,345 מאז מרץ האחרון כתוצאה מתוקפנות ציונית-אמריקאית לא תחליש את נחישותם של הלוחמים, המדגימים מדי יום כי \"הספינה הציונית\" טובעת בביצת הדרום.\nבעוד שטראמפ ונתניהו מהמרים על התנקשויות ותקיפות אוויריות, התגובה מגיעה מ\"משולש השחרור\" ומ\"שער פאטמה\": \"האדמה שייכת לבעליה החוקיים, והכובש נידון לכישלון\".\n‎[03/04/2026, 18:05:22] דביר בן אבי: *לבנון / אלח'יאם / ראיית כוחותינו / תצלום אוירי עדכני של אל-ח'יאם (סרטון)\n\nהערה: רצ\"ב הסרטון סרטון של תצלום אויר של אל-ח'יאם התאריך הרשום 1-4-2026 האוסינט המטכ\"לי* ‎video omitted ‎[03/04/2026, 18:05:23] דביר בן אבי: ‎image omitted ‎[03/04/2026, 18:05:23] דביר בן אבי: ‎image omitted","lat":33.283,"lon":35.515},{"id":"IR-G1","actor":"IRAN","domain":"GENERAL","datetime":"2026-04-03 18:02","text":"איראן / טהראן / עיראק / המפרץ הפרסי / ירדן / דעת יחיד / דר' אל-כביסי: לאיראן יש 5מליון חמושים והיא עלולה לשלח אותם מחוץ לגבולותיה\n\nראשית: קרב קרקעי חלקי עומד להתרחש, ורוב הכוחות הגיעו. נכון לעכשיו, ישנם 50,000 חיילים אמריקאים באזור.\nשנית: סין היא מטרה ארוכת טווח ומושפעת באופן משמעותי ממצרי הורמוז. נזק זה ייקח שלושה חודשים להתבטא בשוק הסיני מכיוון שלסין יש עתודה עצומה שעדיין לא נפגעה, כפי שצפתה את המלחמה.\nשלישית: אמריקה רוצה איראן חלשה מאוד, ואנו ממתינים להחלטה הגדולה והמסוכנת שלה: האם היא תפגע בתשתיות החשמל שלה, בתחנות הכוח וברשתות ההולכה? משמעות הדבר היא שהיא החליטה להחזיר את איראן עשרים שנה אחורה.\nרביעי: לאיראן יש חמישה מיליון חמושים, ואם העימות יתעצם (לאחר שתשתיות החשמל יותקפו), היא תעביר חלק מהם באופן בלתי נמנע למיקום אחר, אולי מחוץ לאיראן. זה כולל את גבולותיה עם עיראק וחלקים מהמפרץ.\nחמישית: לפני ההחלטה הגדולה של השמדת תשתיות ולאחר מכן פתיחת מבצע קרקעי, אמריקה מנסה להקים קואליציה בינלאומית, בדומה למדי למה שקרה בעיראק לפני הפלישה.\nשישית: מדינות המפרץ מנסות להשיג החלטה בינלאומית חדשה לבינלאומיות מיצרי הורמוז. זה יגן על המיצר מפני שליטה של ​​ישות אחת ויכריז את פעולותיה של איראן כבלתי לגיטימיות על פי המשפט הבינלאומי. זהו צעד פוליטי משמעותי בתגובה למה שהם רואים כתוקפנות.\nשביעית: מצבה של עיראק רעוע ביותר מכל הצדדים. ארצות הברית, באמצעות הצהרת שגרירותה, כועסת על הממשלה; מדינות המפרץ כועסות על התקפות שבוצעו מתוך עיראק נגד חלק ממדינותיהן; ואיראן כועסת על שיתוף הפעולה המתמשך עם ארצות הברית. במילים אחרות, אנו עומדים בפני המצב הפוליטי הגרוע ביותר שחווינו אי פעם, והכישלון להקים ממשלה חדשה מחמיר מצב זה.\n\nהערה: דר' אל-כביסי מנתח את המלחמה בזווית ראייה עיראקית ומרבה להקביל מצבים לאלו שקרו במלחמה עיראק","lat":33.103,"lon":35.193},{"id":"IR-K1","actor":"IRAN","domain":"KINETIC","datetime":"2026-04-03 18:02","text":"תימן / איראן / השפעה / אמל\"ח / תיעוד מתוך מחסני החימוש (רחפנים וטילים) במנהרות משה\"מ\n\nטהראן מפרסמת סרטון וידאו שמגלה את גודל הארסנל הצבאי שלה שמאוחסן מתחת לאדמה! בסרטון רואים כלי טיס בלתי מאויש שטס בתוך מנהרות ענקיות מתחת לאדמה, והוא חושף כמויות גדולות של:\n- טילים בליסטיים\n- משגרי שיגור\n- כלי טיס בלתי מאוישים תוקפים\nהצגה איראנית חדשה של הכוח הצבאי המוסתר מתחת לאדמה, במסר ברור שהיכולות של איראן עדיין שלמות ומוכנות למרות המכות שקיבלה.\n\nהערה: סרטון השפעה","lat":null,"lon":null},{"id":"IR-K2","actor":"IRAN","domain":"KINETIC","datetime":"2026-04-03 18:02","text":"איראן / איראן / ראיית צבא ארה\"ב / דעת יחיד / דר' אל-כביסי מנתח את השינויים בפיקוד הבכיר של צבא ארה\"ב\n\nראשית*:\nכולנו שמענו על פיטוריו של ראש המטות המשולבים של ארה\"ב בשיא המלחמה. המפקד המפוטר השתייך לאסכולה זהירה ומקצועית, שנוצרה לאחר ניסיון מר, ובמיוחד במלחמת עיראק ומלחמת אפגניסטן, שם לוחמת הקרקע נבחנה מחדש מבחינת עלות, זמן ואבידות.\nאסכולה זו אינה דומה כלל לקצב, לאישיות ולחשיבתו של דונלד טראמפ, המבוססים על החלטות מהירות: לעשות או לא לעשות, ללא ויכוח ארוך.\nשנית*:\nמה שחשוב יותר הוא לא המפקד שפוטר, אלא יורשו. כאשר אנו מגלים שהמפקד החדש, כריסטופר לניף, בילה שנים בהובלת הדיוויזיה המוטסת ה-82, חוד החנית של פריסה מהירה, התמונה מתבהרת: אנו עדים לשינוי ברור מחשיבה מכוונת ומקצועית לחשיבה מהירה מאוד וביצועית, הנוטה להחלטיות ומתקרבת לקצב של טראמפ: מהיר, משתנה ופתוח לסיכונים מחושבים.\nשלישית*:\nוכאן מתחיל השינוי האמיתי בחשיבה. תפיסת המטות המשולבים החדשים מבוססת על נקודות, ורואה את העולם או את זירת המבצעים כנקודות חדירה מהירה. *היא קובעת*: היכן הכוח? היכן החולשה? כיצד תתבצע הנחיתה? כמה זמן ייקח להבטיח שליטה? בהתבסס על מערכות מודרניות שפותחו לאחר 2010, כולל לוויינים, סיור מדויק ופיקוד דיגיטלי, *הדוקטרינה שלה ברורה: פריסה מהירה וכפיית מציאות חדשה על הקרקע לפני שכל דיון יוכל להתגבש*.\nרביעית*:\nעל פי היגיון זה, *מצר הורמוז לא ייחשב כנושא נפט או פוליטי, אלא כנקודות שליטה צבאיות פוטנציאליות*. באופן דומה, באב אל-מנדב והאיים הסובבים אותו ייחשבו רק כמרכזים מבצעיים שניתן להפעיל במהירות כדי לשנות את מאזן הכוחות, עם הערכה מדויקת של יכולותיה ומוכנותה הצבאית של איראן.\nחמישית*:\nהחלפת הרמטכ\"ל בזמן מלחמה מצביעה על פער בין ההנהגה הפוליטית לצבאית. עם סדרת השינויים המשפיעים על מספר מפקדים, התמונה מתבהרת: אנו עדים לכיול מחדש של הדוקטרינה הצבאית עצמה - מחשיבה איטית ומקצועית לחשיבה מהירה והחלטית, המתמקדת בביצוע ישיר ובהשגת תוצאות בשטח בזמן הקצר ביותר האפשרי.\nמסקנה*: מה שקורה אינו רק חילופי מפקד... אלא שינוי בקצב המלחמה עצמו.\nأولا:\nثانيا:\nثالثا:\nرابعا:\nخامسا:\nتغيير قائد الأركان في وقت الحرب دليل على وجود تباين بين القيادة السياسية والعسكرية. ومع سلسلة التغييرات التي طالت عددا من القيادات، يصبح المشهد أوضح: نحن أمام إعادة ضبط للعقيدة العسكرية نفسها—من عقل مهني بطيء، إلى عقل سريع حاسم، يركز على التنفيذ المباشر وتحقيق نتائج ميدانية في أقصر وقت ممكن.\nالخلاصة:\nما يجري ليس مجرد تغيير قائد… بل تغيير في سرعة الحرب نفسها.\n‎[03/04/2026, 18:02:18] דביר בן אבי: *איראן / קשם / קוהנג'אן / ראיית צבא ארה\"ב / דיווח על הפלת מטוס של צבא ארה\"ב\nהכוחות המזוינים של איראן הודיעו כי הצליחו להפיל מטוס קרב מתקדם של האויב במים שבין איי הנגאם לאיי קשם.\nבהצהרה הודגשה כי המבצע היה בתגובה לטענותיו של נשיא ארה\"ב דונלד טראמפ בנוגע להשמדת מערכות ההגנה האווירית האיראניות.\nהאוסינט המטכ\"לי* ‎image omitted\n‎[03/04/2026, 18:02:18] דביר בן אבי: *איראן / מצר הורמוז / בלתי מזוהה / בכירים / איום בסגירת מצרי הורמוז בפני ישראל וארה\"ב לזמן בלתי מוגבל\nדובר הצבא של איראן אומר שמצרי הורמוז ייסגרו \"בטווח הארוך\" בפני ארה\"ב וישראל.\nטראמפ אמר שהוא \"ייפתח באופן טבעי\" לאחר המלחמה.\nאיראן פשוט אמרה שלא, זה לא ייפתח.\nשתי גרסאות שונות מאוד כיצד זה יסתיים\nמקור: @AJENews\n🚨🇮🇷🇺🇸 ÚLTIMA HORA: El portavoz militar de Irán dice que Ormuz estará cerrado \"a largo plazo\" a Estados Unidos e Israel.\nFuente: @AJENews\nהאוסינט המטכ\"לי* ‎image omitted","lat":33.103,"lon":35.193},{"id":"IR-G2","actor":"IRAN","domain":"GENERAL","datetime":"2026-04-03 18:02","text":"איראן / מצר הורמוז / אירועים מתפרצים / הקלה בסגירת מצרי הורמוז\n\nהודעה מפתיעה מאיראן בנוגע להרמז\nעל פי \"אל-ערבי ניוז\":\nפורסמה הודעה חדשה מאיראן בעניין מצרי הרמז במפרץ הערבי, שמרמזת על *הקלה במשבר תנועת הספינות ומכליות הנפט והגז דרך המצר,* בעקבות האירועים האחרונים.\nالمصدر ( العربي نيوز ) : العربي نيوز:صدر اعلان جديد عن ايران بشأن مضيق هرمز في الخليج العربي، تشي بانفراج لأزمة حركة السفن وناقلات النفط والغاز عبر المضيق، جراء الح 💢 صحافة 24 نت مباشر اولا باول اخر اخبار اليمن الان  أهم اخبار اليمن كل ساعتين","lat":26.5,"lon":56.5},{"id":"IR-K3","actor":"IRAN","domain":"KINETIC","datetime":"2026-04-03 18:02","text":"תימן / איראן / אירועים מתפרצים / תקיפה  משותפת של איראן ותימן כנגד קבוצת הספינות לינקולן\n\nפעולה משותפת של תימן ואיראן כוונה לעבר \"לינקולן\"\n(מקור: '26 ספטמבר'): משמרות המהפכה פרסמו היום הודעה ובה נאמר כי בוצעה פעולה לעבר קבוצת נושאת המטוסים האמריקאית אברהם לינקולן בצפון האוקיינוס ההודי עם 4 טילים.\nعمليات يمنية ايرانية مشتركة تستهدف \"لينكولن\"\nالمصدر ( 26 سبتمبر ) : وقال حرس الثورة الإسلامية في بيان له، اليوم، أن الموجهة استهداف مجموعة حاملة الطائرات الأمريكية أبراهام لينكولن في شمال المحيط الهندي بـ 4 ص 💢 صحافة 24 نت مباشر اولا باول اخر اخبار اليمن الان\n‎[03/04/2026, 18:02:19] דביר בן אבי: *איראן / טהראן / BDA / הלכי רוח / משמרות המהפיכה / בכירים / לגיטימציה / כתבה מצולמת מאזור שהותקף\nהמקום בו אני עומד כעת היה בית. לדברי תושבי השכונה הזו, הבית הזה נעלם לחלוטין. גבר ואישה מבוגרים גרו שם. יש הרוגים במקום הזה. בתים רבים ניזוקו ונהרסו. מספר ההרוגים במקום הזה הוא שישה, בנוסף לכשלושים פצועים, לפי הרשויות האיראניות. זהו אחד האזורים האזרחיים שהותקפו. שאלנו ושוחחנו עם התושבים. שאלנו אותם אם יש מרכז צבאי או מפקדה, או אפילו תחנת משטרה. הם אמרו לנו שאין כזה בכלל באזור הזה.\nהבניין הקרוב ביותר שניתן לתאר כשייך למדינה ולממשלה הוא מרכז לטיפול בבעלי מוגבלויות, וגם הוא ניזוק.\nאם נוכל לקרוא לזה מקום בבעלות המדינה, אז זה אזור מגורים מובהק.\nשישה הרוגים וכשלושים פצועים. כמובן, הרשויות האיראניות תמיד מאשימות את ארצות הברית וישראל בהתקפות אזרחים.\nאזורי מגורים הם מטרה עיקרית עבורן.\nהסהר האדום האיראני\nפרסם אתמול ספירה של\nבתים שנפצעו ברחבי איראן.\nהם אמרו שהמספר הגיע לכ-מאה ושבעים אלף בתים. בתים\nויחידות מגורים ומסחר ברחבי איראן*.\nיותר מארבעים אלף יחידות כאלה בבירה, טהרן, לבדה\nהוא אמר יותר מארבעים אלף יחידות כאלה. הסהר האדום אמר שמספר בתי הספר שנפגעו הוא כיותר משבע מאות וחמישים בתי ספר בתי חולים ומרכזים רפואיים. שלוש מאות בתי חולים ומרכזים רפואיים ועשרות אמבולנסים\nאז נראה.\nכי כעת יש תגובות מצד משמרות המהפכה וצבא איראן\nשכנראה החלו לפגוע\nועקבנו אחריכם על הפרסום לפני זמן מה\nבחיפה ובמקומות אחרים\nאלה אולי תגובות\nלמטרה כזו במרכזים אזרחיים לפני זמן מה*.\nבפרסום הקודם, היינו באחד הגשרים החשובים ואכן, זהו הגשר הגדול והגבוה ביותר באיראן גשר B1, שנפגע\nאתמול.\nמרכז המחקר הרפואי\nשתואר כמרכז המחקר הרפואי הוותיק והיוקרתי ביותר\nבכל איראן ובמזרח התיכון\nנפגע אתמול* וכתוצאה מכך, יש *כעס מצד גורמים איראניים\nוממשמרות המהפכה\nעל העלייה במספרם מיקוד\nשמשפיע על אזרחים איראנים\nוההתמקדות באזורים או אתרים במערב טהרן יותר מאשר באזורים אחרים האם זה גורם?\nמרים, המיקוד מתרחש ברחבי המדינה, לא רק בטהרן, למרות שטהרן היא האזור הממוקד בתדירות הגבוהה ביותר.\nזהו מרכז הכוח, הבירה, אז זה אולי נראה הגיוני, אבל איראן, מצפון לדרום, ממערב למזרח, ממוקדת. כל יום אנחנו מדברים על המקומות הממוקדים, בין אם שכונות מגורים או מה שנקרא תשתיות, תעשייתיות ואפילו צבאיות.\nאבל כרגע אנחנו מדברים על אזורים אלה של שכונות מגורים. דיברנו עם כולם כאן; אין תחנת משטרה אחת, אין משמרות המהפכה או מפקדת צבא. אז למה המקום הזה ממוקד? רבים שואלים, למה?\nכן, מקום כזה מוקדש אתמול. נשיא איראן, בציוץ, שאל איזה מסר אויבינו עשויים לנסות לשלוח לנו על ידי מיקוד במרכז המחקר הרפואי שהוא הזכיר קודם לכן. הוא קרא למוסדות רפואיים ולארגון הבריאות העולמי לפרסם הצהרה ולדון בנושא זה: מדוע מקומות כאלה, המוגנים על פי חוקים ואמנות בינלאומיים, נמצאים תחת הכוונת?\nقتلاء في هذا المكان\nأو حتى مخفر شرطة\nوهو أيضاً تضرر\nبأنها استهدفت\nالمدنيين\nالأحياء السكنية\nهو هدف رئيسي لها\nبالأمس أصدر حصيلة\nللاستهدافات المنازل\nفي عموم إيران\nعدد المنازل\nمئة وسبعين ألف منزل\nقال\nالتي استهدفت تقريباً\nإذن على ما يبدو\nأن هناك\nردود الفعل الآن\nفي حيفا وفي غيرها\nهي ربما ردود\nوالأعلى في إيران\nيوصف بأنه أقدم وأعرق\nمركز الأبحاث الطبية\nالأوسط استهدف بالأمس\nنعم\nنعم أمان\nהאוסינט המטכ\"לי* ‎video omitted","lat":35.689,"lon":51.389},{"id":"IR-T1","actor":"IRAN","domain":"TERRAIN","datetime":"2026-04-03 18:02","text":"לבנון / בירות / איראן / דעת יחיד / ביקורת נגד המשטר / שגריר איראן ללבנון הוא המושל בפעול\n\nראש הנחש והשליט בפועל של לבנון, זה שיוביל את לבנון למלחמה או לשלום, הוא שגריר איראן בלבנון, לא נשיא לבנון. זה כבר הוכח.\nהוא המושל הצבאי, הברמר של לבנון (בדיוק כפי שהאמריקאים היו בעיראק), *שכעת מתגורר במטה הפיקוד האזורי האיראני בלבנון*, סניף של משרד ההגנה האיראני *הממוקם בתוך השגרירות האיראנית.\nבתחילה הוא דחה את ההחלטה לגרש אותו מלבנון שהוציאה המדינה הלבנונית, כולל נשיא, ראש ממשלתה ושר החוץ שלה, ואמר להם במרומז: \"לעזאזל אתם ועם ההחלטה שלכם! לכו תשרו את ההחלטה שלכם ותשתו את המים; זה רק יעזור לכם בתקופות של חרדה, מתח ותסכול. אני זה שנותן את הפקודות כאן, ואני אדרוש מכם דין וחשבון בהמשך על החלטה זו, שמתארגת את סמכותי בהנהגת לבנון.\n\" שנית, בנוגע להיבט הצבאי, הוא קורא להם לעמוד מולו כשליט צבאי באמצעות מפלגת השטן (חזבאללה ע.ע.), ארגון הטרור הפשוע, שהיה חייב למסור את נשקו למדינה הלבנונית \"כדי לחסוך מלבנון את זוועות המלחמה, לשאוף לעצור אותה,  שלבנון תאבד שליש משטחה ורבע מאוכלוסייתה תיהפך לחסרת בית ברחובות ובאוהלים\".\nואכן, פקודותיו אליהם ברורות: קחו את לבנון אל הלא נודע והמשיכו במלחמה, ללא קשר לתוצאות הקטסטרופליות עבור לבנון, גם אם כל לבנון תוקרב למען מנהיגם המוטעה, המטעה והמושחת, חמינאי, ולמען בנו ההומוסקסואל, כפי שייחסו לו כמה מקורות יודעי דבר, ולאבי ההנאה, ההנאה וטמאת התינוקות, מג'תבא, שאין לו שום דמיון לשמו, שכן הוא שנוא, נתעב, משעמם ומכוער כמו אביו.\nלסיכום, אנו שואלים: מתי לבנון תשוחרר באמת וביעילות, לא רק באופן נומינלי? מתי לבנון תהיה חופשית, נשלטת על ידי אנשים חופשיים שמקבלים באומץ את ההחלטות הנכונות, תוך התעלמות מחישובים אישיים ואלקטורליים, כדי לחסוך מלבנון ועמה את הכניעה הכפויה לאיראן ואת כניעתם המשפילה למפלגת השטן?\nשאלה: האם יש מישהו שיכול לענות עליה?\n מואמן מחמד נדים כויפאתי\n\nהערה: מואמן מחמד נדים כויפאתי סורי כביכול שחי בשבדיה ומקטרג את עצמו כפרשן מדיני فهو الحاكم العسكري، بريمر لبنان \" كما كان في العراق من الأمريكي \" والذي يقيم الآن بمقر قيادة الإقليم اللبناني، فرع وزارة الدفاع الإيرانية بالسفارة الإيرانية وثانيًا، عن الشق العسكري وهو يتحداهم أن يقفوا أمامه  كحاكم عسكري من خلال حزب الشيطان التنظيم الإرهابي المجرم من أن يسلم سلاحه للدولة اللبنانية \"لتجنيب لبنان ويلات الحرب، للسعي بإيقافها، خشية أن يفقد لبنان ثلث مساحته وأن يصبح ربع سكانه بلا مأوى في الشوارع والخيام\"،","lat":33.27,"lon":35.193},{"id":"IR-K4","actor":"IRAN","domain":"KINETIC","datetime":"2026-04-03 18:02","text":"איראן / חוזסתאן / ראיית צבא ארה\"ב / משמרות המהפיכה\n\nחדשות: מסוקים אמריקאים עורכים פעולות חיפוש אחר טייס אמריקאי שמטוסו הופל על ידי משמרות המהפכה האיראניים באיראן, על רקע עימותים ישירים בין כוחות אמריקאים למשמרות המהפכה באזור הגבול בין *ח'וזסתאן למחוזות כהכילויה* ובוייר-אחמד. הטלוויזיה הממלכתית האיראנית הודיעה כי הכוחות המזוינים קוראים לאזרחים ולשבטים חמושים לסייע בלכידת הטייס האמריקאי, ומציעים פרס לכל מי שיצליח ללכוד אותו.\n#عاجل مروحيات أمريكية تجري عمليات بحث عن طيار أمريكي أسقط الحرس الثوري طائرته في إيران، وسط اشتباكات مباشرة بين القوات الأمريكية والحرس الثوري في المنطقة الحدودية بين محافظتي خوزستان وكهكيلويه وبوير أحمد. التلفزيون الإيراني أعلن أن القوات المسلحة تدعو المواطنين والعشائر المسلحة للمساعدة في القبض على الطيار الأمريكي، مع تقديم مكافأة لأي شخص يتمكن من القبض عليه.","lat":null,"lon":null},{"id":"IR-K5","actor":"IRAN","domain":"KINETIC","datetime":"2026-04-03 18:02","text":"איראן / צ'הארמהאל ובח'תיארי / ראיית צבא ארה\"ב / דיווחים על סריקות שמתבצעות לאחר יירוט המטוס האמריקאי\n\nדיווח על מבצע \"סריקה\" בדרום-מערב איראן; מסוקי סיור באזור\nעל פי דיווחים מקומיים, במחוזות צ'הארמחאל ובאכתיארי וכוהגילויה ובויראחמד בדרום-מערב איראן מתבצעות פעולות תחת הכותרת \"סריקה\". על פי מקורות מקומיים, במקביל לתנועות אלו, מסוקים מבצעים סיורים באזור והפעילות האווירית עלתה באופן משמעותי. לא פורסמו פרטים מדויקים על מהות המבצעים, מטרותיהם או הכוחות המעורבים, וגם ממקורות רשמיים לא ניתנה לכך הבהרה. הדיווחים לא אושרו באופן עצמאי.\nگزارش از پاکسازی در جنوب‌غرب ایران؛ گشت‌زنی هلیکوپترها در منطقه گزارش‌های محلی حاکی از آن است که در استان‌های چهارمحال‌وبختیاری و کهگیلویه‌وبویراحمد در جنوب‌غرب ایران، عملیات‌هایی تحت عنوان «پاکسازی» در حال انجام است. به گفته منابع محلی، همزمان با این تحرکات، هلیکوپترها در آسمان منطقه در حال گشت‌زنی هستند و فعالیت‌های هوایی به‌طور محسوسی افزایش یافته است. جزئیات دقیقی از ماهیت این عملیات، اهداف آن یا نیروهای درگیر منتشر نشده و منابع رسمی نیز تاکنون توضیح شفافی ارائه نکرده‌اند. این گزارش‌ها همچنان به‌صورت مستقل تأیید نشده‌اند. Mellig.net\n‎[03/04/2026, 18:02:21] דביר בן אבי: ‎video omitted","lat":33.103,"lon":35.193},{"id":"IR-S1","actor":"IRAN","domain":"SOCIAL","datetime":"2026-04-03 18:02","text":"איראן / כללי / ראיית צבא ארה\"ב / תמונות של כיסא המפלט של הטייס האמריקאי\n\nנאמר שגם כיסא הפליטה של המטוס נראה. עדיין אין תמונה של המטוס עצמו.\n❓ گفته شده صندلی eject هواپیما هم دیده شده. عکسی از خود هواپیما هنوز نیست. @mamlekate\n‎[03/04/2026, 18:02:22] דביר בן אבי: ‎image omitted\n‎[03/04/2026, 18:02:22] דביר בן אבי: ‎image omitted\n‎[03/04/2026, 18:02:22] דביר בן אבי: ‎image omitted\n‎[03/04/2026, 18:02:23] דביר בן אבי: ‎image omitted\n‎[03/04/2026, 18:02:23] דביר בן אבי: ‎image omitted","lat":null,"lon":null},{"id":"IR-T2","actor":"IRAN","domain":"TERRAIN","datetime":"2026-04-03 18:05","text":"לבנון / בירות / איראן / דעת יחיד / ביקורת נגד המשטר / שגריר איראן ללבנון הוא המושל בפעול\n\nראש הנחש והשליט בפועל של לבנון, זה שיוביל את לבנון למלחמה או לשלום, הוא שגריר איראן בלבנון, לא נשיא לבנון. זה כבר הוכח.\nהוא המושל הצבאי, הברמר של לבנון (בדיוק כפי שהאמריקאים היו בעיראק), *שכעת מתגורר במטה הפיקוד האזורי האיראני בלבנון*, סניף של משרד ההגנה האיראני *הממוקם בתוך השגרירות האיראנית.\nבתחילה הוא דחה את ההחלטה לגרש אותו מלבנון שהוציאה המדינה הלבנונית, כולל נשיא, ראש ממשלתה ושר החוץ שלה, ואמר להם במרומז: \"לעזאזל אתם ועם ההחלטה שלכם! לכו תשרו את ההחלטה שלכם ותשתו את המים; זה רק יעזור לכם בתקופות של חרדה, מתח ותסכול. אני זה שנותן את הפקודות כאן, ואני אדרוש מכם דין וחשבון בהמשך על החלטה זו, שמתארגת את סמכותי בהנהגת לבנון.\n\" שנית, בנוגע להיבט הצבאי, הוא קורא להם לעמוד מולו כשליט צבאי באמצעות מפלגת השטן (חזבאללה ע.ע.), ארגון הטרור הפשוע, שהיה חייב למסור את נשקו למדינה הלבנונית \"כדי לחסוך מלבנון את זוועות המלחמה, לשאוף לעצור אותה,  שלבנון תאבד שליש משטחה ורבע מאוכלוסייתה תיהפך לחסרת בית ברחובות ובאוהלים\".\nואכן, פקודותיו אליהם ברורות: קחו את לבנון אל הלא נודע והמשיכו במלחמה, ללא קשר לתוצאות הקטסטרופליות עבור לבנון, גם אם כל לבנון תוקרב למען מנהיגם המוטעה, המטעה והמושחת, חמינאי, ולמען בנו ההומוסקסואל, כפי שייחסו לו כמה מקורות יודעי דבר, ולאבי ההנאה, ההנאה וטמאת התינוקות, מג'תבא, שאין לו שום דמיון לשמו, שכן הוא שנוא, נתעב, משעמם ומכוער כמו אביו.\nלסיכום, אנו שואלים: מתי לבנון תשוחרר באמת וביעילות, לא רק באופן נומינלי? מתי לבנון תהיה חופשית, נשלטת על ידי אנשים חופשיים שמקבלים באומץ את ההחלטות הנכונות, תוך התעלמות מחישובים אישיים ואלקטורליים, כדי לחסוך מלבנון ועמה את הכניעה הכפויה לאיראן ואת כניעתם המשפילה למפלגת השטן?\nשאלה: האם יש מישהו שיכול לענות עליה?\n מואמן מחמד נדים כויפאתי\n\nהערה: מואמן מחמד נדים כויפאתי סורי כביכול שחי בשבדיה ומקטרג את עצמו כפרשן מדיני فهو الحاكم العسكري، بريمر لبنان \" كما كان في العراق من الأمريكي \" والذي يقيم الآن بمقر قيادة الإقليم اللبناني، فرع وزارة الدفاع الإيرانية بالسفارة الإيرانية وثانيًا، عن الشق العسكري وهو يتحداهم أن يقفوا أمامه  كحاكم عسكري من خلال حزب الشيطان التنظيم الإرهابي المجرم من أن يسلم سلاحه للدولة اللبنانية \"لتجنيب لبنان ويلات الحرب، للسعي بإيقافها، خشية أن يفقد لبنان ثلث مساحته وأن يصبح ربع سكانه بلا مأوى في الشوارع والخيام\"،","lat":33.27,"lon":35.193}];
+
+const ACTOR_COLOR = {
+  HAMAS:'#dc2626', HEZBOLLAH:'#ea580c', IRAN:'#7c3aed', OTHERS:'#16a34a'
+};
+const ACTOR_HEB = {
+  HAMAS:'חמאס', HEZBOLLAH:'חיזבאללה', IRAN:'איראן', OTHERS:'אחרים'
+};
+const DOMAIN_HEB = {
+  KINETIC:'קינטי', TERRAIN:'שטח', SOCIAL:'חברתי', CYBER:'סייבר', GENERAL:'כללי'
+};
+
+// ── Actor tabs ────────────────────────────────────────────────────────────────
+document.querySelectorAll('.actor-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const panel = document.getElementById('panel-' + tab.dataset.actor);
+    if (panel) panel.classList.add('active');
+    applyDomain(currentDomain);
+  });
+});
+
+// ── Sector cards → activate tab + scroll ─────────────────────────────────────
+document.querySelectorAll('.sector-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const actor = card.dataset.actor;
+    document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
+    const tab = document.querySelector('.actor-tab[data-actor="' + actor + '"]');
+    if (tab) tab.classList.add('active');
+    const panel = document.getElementById('panel-' + actor);
+    if (panel) panel.classList.add('active');
+    card.classList.add('active');
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
+    currentDomain = 'ALL';
+    applyDomain('ALL');
+    document.querySelector('.content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── Domain filter ─────────────────────────────────────────────────────────────
+let currentDomain = 'ALL';
+
+function applyDomain(domain) {
+  currentDomain = domain;
+  const panel = document.querySelector('.actor-panel.active');
+  if (!panel) return;
+  panel.querySelectorAll('.item-card').forEach(card => {
+    card.classList.toggle('hidden', domain !== 'ALL' && card.dataset.domain !== domain);
+  });
+}
+
+document.querySelectorAll('.domain-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyDomain(btn.dataset.domain);
+  });
+});
+
+// ── Map pin buttons (📍 on each item card) ────────────────────────────────────
+document.querySelectorAll('.map-pin-btn:not(.no-location)').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const itemId = btn.dataset.itemId;
+    const ms = document.getElementById('map-section');
+    const mb = document.getElementById('map-btn');
+    if (!ms.classList.contains('open')) {
+      ms.classList.add('open');
+      mb && mb.classList.add('active');
+      ms.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => loadLeaflet(() => initMap(itemId)), 350);
+    } else {
+      flyToItem(itemId);
+      ms.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ── Highlight item card ───────────────────────────────────────────────────────
+function highlightItem(itemId) {
+  const card = document.querySelector('.item-card[data-id="' + itemId + '"]');
+  if (!card) return;
+  const actor = card.dataset.actor;
+  // Activate tab
+  document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+  const tab = document.querySelector('.actor-tab[data-actor="' + actor + '"]');
+  if (tab) tab.classList.add('active');
+  const panel = document.getElementById('panel-' + actor);
+  if (panel) panel.classList.add('active');
+  // Reset domain
+  document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
+  applyDomain('ALL');
+  // Highlight animation
+  document.querySelectorAll('.item-card.map-highlight').forEach(c => c.classList.remove('map-highlight'));
+  card.classList.add('map-highlight');
+  setTimeout(() => card.classList.remove('map-highlight'), 3200);
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
+}
+
+// ── Called from Leaflet popup button ─────────────────────────────────────────
+function handleMapItemClick(itemId) {
+  if (leafletMap) leafletMap.closePopup();
+  highlightItem(itemId);
+}
+
+// ── Leaflet lazy-load + map init ──────────────────────────────────────────────
+let mapReady = false;
+let leafletMap = null;
+let markersMap = {};
+
+function loadLeaflet(cb) {
+  if (window.L) { cb(); return; }
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  document.head.appendChild(css);
+  const js = document.createElement('script');
+  js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  js.onload = cb;
+  document.head.appendChild(js);
+}
+
+function initMap(focusItemId) {
+  if (mapReady) {
+    leafletMap && leafletMap.invalidateSize();
+    if (focusItemId) flyToItem(focusItemId);
+    return;
+  }
+  mapReady = true;
+
+  const valid = MAP_ITEMS.filter(i => i.lat && i.lon);
+  let center = [32.0, 35.2], zoom = 8;
+  if (valid.length === 1) { center = [valid[0].lat, valid[0].lon]; zoom = 12; }
+  else if (valid.length > 1) {
+    const lat = valid.reduce((s,i) => s + i.lat, 0) / valid.length;
+    const lon = valid.reduce((s,i) => s + i.lon, 0) / valid.length;
+    center = [lat, lon];
+    zoom = 9;
+  }
+
+  leafletMap = L.map('tactical-map', { zoomControl: true, attributionControl: false })
+               .setView(center, zoom);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 })
+   .addTo(leafletMap);
+  L.control.attribution({ prefix: '© OpenStreetMap' }).addTo(leafletMap);
+
+  valid.forEach(item => {
+    const color  = ACTOR_COLOR[item.actor] || '#94a3b8';
+    const aHeb   = ACTOR_HEB[item.actor]   || item.actor;
+    const dHeb   = DOMAIN_HEB[item.domain] || item.domain;
+    const snippet = item.text.length > 110 ? item.text.substring(0, 110) + '…' : item.text;
+
+    const popup = `
+      <div style="min-width:240px;max-width:300px;line-height:1.55;font-family:Heebo,sans-serif;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;">
+          <span style="background:${color}22;color:${color};border:1.5px solid ${color};border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;">${item.id}</span>
+          <span style="font-size:11px;color:#64748b;">${aHeb} · ${dHeb}</span>
+        </div>
+        ${item.datetime ? '<div style="font-size:11px;color:#94a3b8;margin-bottom:7px;">' + item.datetime + '</div>' : ''}
+        <div style="font-size:13px;color:#1e293b;line-height:1.6;margin-bottom:12px;">${snippet}</div>
+        <button onclick="handleMapItemClick('${item.id}')"
+          style="width:100%;background:${color};color:#fff;border:none;border-radius:7px;padding:8px 12px;font-weight:700;font-size:13px;cursor:pointer;font-family:Heebo,sans-serif;">
+          עבור לידיעה ↓
+        </button>
+      </div>`;
+
+    const marker = L.circleMarker([item.lat, item.lon], {
+      radius: 14,
+      fillColor: color,
+      color: '#fff',
+      weight: 2.5,
+      opacity: 1,
+      fillOpacity: 0.85,
+    }).addTo(leafletMap)
+      .bindPopup(popup, { maxWidth: 320, className: 'tactical-popup' })
+      .bindTooltip('<b>' + item.id + '</b> ' + snippet.substring(0, 40), { direction: 'top', sticky: true });
+
+    markersMap[item.id] = marker;
+  });
+
+  if (focusItemId) setTimeout(() => flyToItem(focusItemId), 200);
+}
+
+function flyToItem(itemId) {
+  const marker = markersMap[itemId];
+  if (!marker) return;
+  leafletMap.flyTo(marker.getLatLng(), 13, { duration: 0.8 });
+  setTimeout(() => marker.openPopup(), 900);
+}
+
+// ── Map open / close ──────────────────────────────────────────────────────────
+const mapBtn = document.getElementById('map-btn');
+const mapSection = document.getElementById('map-section');
+
+mapBtn && mapBtn.addEventListener('click', () => {
+  const isOpen = mapSection.classList.toggle('open');
+  mapBtn.classList.toggle('active', isOpen);
+  if (isOpen) {
+    mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => loadLeaflet(() => initMap(null)), 350);
+  }
+});
+
+// Click bar to close
+document.getElementById('map-bar') && document.getElementById('map-bar').addEventListener('click', () => {
+  mapSection.classList.remove('open');
+  mapBtn && mapBtn.classList.remove('active');
+});
+</script>
+</body>
+</html>
