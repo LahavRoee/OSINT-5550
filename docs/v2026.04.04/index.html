@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSINT יל"ק 5550 — v2026.04.04</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #070d1a;
+    --surface: #0d1a30;
+    --surface2: #162240;
+    --gold: #c9a84c;
+    --gold-dim: #a08838;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #475569;
+    --border: #1e293b;
+    --c-hamas: #dc2626;
+    --c-hizb: #ea580c;
+    --c-iran: #7c3aed;
+    --c-others: #16a34a;
+  }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    direction: rtl;
+    min-height: 100vh;
+  }
+
+  /* Sticky Header */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .sticky-header .logo {
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .sticky-header .meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .pdf-link {
+    background: var(--gold);
+    color: var(--bg);
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .pdf-link:hover { background: var(--gold-dim); }
+
+  /* Threat Badge */
+  .threat-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  .threat-LOW { background: #166534; color: #bbf7d0; }
+  .threat-MEDIUM { background: #854d0e; color: #fef08a; }
+  .threat-HIGH { background: #991b1b; color: #fecaca; }
+  .threat-CRITICAL { background: #dc2626; color: #fff; animation: pulse 1.5s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Hero */
+  .hero {
+    padding: 40px 20px 30px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .hero .situation {
+    font-size: 15px;
+    color: var(--text);
+    background: var(--surface);
+    border-right: 4px solid var(--gold);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    text-align: right;
+    margin-bottom: 20px;
+  }
+
+  .takeaways {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .takeaway {
+    background: var(--surface);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: right;
+  }
+
+  .takeaway::before {
+    content: '\25C6 ';
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* Content */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* Actor Tabs */
+  .actor-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .actor-tab {
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .actor-tab:hover { background: var(--surface2); }
+  .actor-tab.active { border-color: var(--gold); color: var(--text); }
+  .actor-tab[data-actor="HAMAS"] .dot { background: var(--c-hamas); }
+  .actor-tab[data-actor="HEZBOLLAH"] .dot { background: var(--c-hizb); }
+  .actor-tab[data-actor="IRAN"] .dot { background: var(--c-iran); }
+  .actor-tab[data-actor="OTHERS"] .dot { background: var(--c-others); }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .tab-count {
+    background: var(--surface2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  /* Domain Filter */
+  .domain-filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .domain-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    min-height: 36px;
+    transition: all 0.2s;
+  }
+
+  .domain-btn:hover { background: var(--surface2); }
+  .domain-btn.active { border-color: var(--gold); color: var(--gold); }
+
+  /* Actor Panels */
+  .actor-panel { display: none; }
+  .actor-panel.active { display: block; }
+
+  /* Item Cards */
+  .item-card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    border-right: 4px solid var(--border);
+    transition: transform 0.1s;
+  }
+
+  .item-card:active { transform: scale(0.99); }
+
+  .item-card[data-actor="HAMAS"] { border-right-color: var(--c-hamas); }
+  .item-card[data-actor="HEZBOLLAH"] { border-right-color: var(--c-hizb); }
+  .item-card[data-actor="IRAN"] { border-right-color: var(--c-iran); }
+  .item-card[data-actor="OTHERS"] { border-right-color: var(--c-others); }
+
+  .item-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  .item-id {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .item-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .domain-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text-dim);
+  }
+
+  .confidence {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .confidence-HIGH { background: #166534; color: #bbf7d0; }
+  .confidence-MEDIUM { background: #854d0e; color: #fef08a; }
+  .confidence-LOW { background: #78350f; color: #fed7aa; }
+
+  .item-fields {
+    display: grid;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .field-label {
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
+  .item-action {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: #16653422;
+    border-radius: 6px;
+    color: #86efac;
+    font-weight: 500;
+    font-size: 13px;
+  }
+
+  /* Alerts */
+  .alerts-section {
+    margin-top: 30px;
+  }
+
+  .alerts-section h2 {
+    color: var(--gold);
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .alert-item {
+    background: var(--surface);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border-right: 3px solid #dc2626;
+    font-size: 13px;
+  }
+
+  .opsec-item { border-right-color: #f59e0b; }
+
+  /* Commander Note */
+  .commander-note {
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+  }
+
+  .commander-note h2 {
+    color: var(--gold);
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .sticky-header { padding: 10px 14px; }
+    .sticky-header .logo { font-size: 14px; }
+    .hero { padding: 24px 14px 20px; }
+    .hero h1 { font-size: 20px; }
+    .content { padding: 0 14px 40px; }
+    .actor-tab { padding: 8px 14px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sticky-header">
+  <span class="logo">OSINT 5550</span>
+  <div class="meta">
+    <span>{{VERSION}}</span>
+    <span class="threat-badge threat-HIGH">HIGH</span>
+    <a href="digest.pdf" class="pdf-link" download>PDF</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>יממה אינטנסיבית בשתי זירות עיקריות: בגזרת לבנון — עימותים כבדים בדרום, בדגש על צ</h1>
+  <div class="situation">יממה אינטנסיבית בשתי זירות עיקריות: בגזרת לבנון — עימותים כבדים בדרום, בדגש על ציר בינת ג'ביל ואלח'יאם, עם דיווחים על 60 תקיפות חזבאללה כנגד שריון ובסיסי צה"ל. בזירה האיראנית — הסלמה אסטרטגית סביב מצרי הורמוז, תקיפות משותפות איראן-תימן, ושינויים בפיקוד הצבאי האמריקאי המרמזים על מעבר לדוקטרינת פעולה מהירה.</div>
+  <div class="takeaways"><div class="takeaway">חזבאללה מדווח על 60 תקיפות ביממה כולל השמדת שני טנקי מרכבה ואיום על מסוק קרב — מתקפת התשה שיטתית בדרום לבנון</div><div class="takeaway">איראן מאיימת בסגירת מצרי הורמוז 'לטווח ארוך' לארה"ב וישראל, במקביל לחשיפת מנהרות נשק תת-קרקעיות — הצגת כוח והרתעה</div><div class="takeaway">החלפת רמטכ"ל ארה"ב בזמן מלחמה — מעבר מדוקטרינה זהירה לדוקטרינת פריסה מהירה, רלוונטי להורמוז ובאב אל-מנדב</div></div>
+</div>
+
+<div class="content">
+  <div class="actor-tabs"><button class="actor-tab" data-actor="HAMAS">
+    <span class="dot"></span>
+    🔴 חמאס
+    <span class="tab-count">0</span>
+  </button><button class="actor-tab" data-actor="HEZBOLLAH" class="actor-tab active">
+    <span class="dot"></span>
+    🟠 חיזבאללה
+    <span class="tab-count">11</span>
+  </button><button class="actor-tab" data-actor="IRAN">
+    <span class="dot"></span>
+    🟣 איראן
+    <span class="tab-count">8</span>
+  </button><button class="actor-tab" data-actor="OTHERS">
+    <span class="dot"></span>
+    ⚫ אחרים
+    <span class="tab-count">0</span>
+  </button></div>
+  <div class="domain-filters">
+    <button class="domain-btn active" data-domain="ALL">הכל</button>
+    <button class="domain-btn" data-domain="KINETIC">KINETIC</button>
+    <button class="domain-btn" data-domain="TERRAIN">TERRAIN</button>
+    <button class="domain-btn" data-domain="SOCIAL">SOCIAL</button>
+    <button class="domain-btn" data-domain="CYBER">CYBER</button>
+    <button class="domain-btn" data-domain="GENERAL">GENERAL</button>
+  </div>
+
+  <div class="actor-panel" id="panel-HAMAS"><p style="color:var(--text-dim);padding:20px;text-align:center;">אין פריטים</p></div><div class="actor-panel" id="panel-HEZBOLLAH" class="actor-panel active">
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">L-K1</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">60 תקיפות חזבאללה ביממה — השמדת שריון ואיום על מסוק</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>חזבאללה ביצע 60 תקיפות מדויקות כנגד טנקים, מסוקים ובסיסים צבאיים. שני טנקי מרכבה הושמדו בקנטרה ובאלח'יאם, דחפור D9 נפגע, וטיל קרקע-אוויר אילץ מסוק קרב לסגת מעל ראמיה.</div>
+        <div><span class="field-label">איפה: </span>דרום לבנון — קנטרה, אלח'יאם, ראמיה, ח'רבת מאעז, בסיס דדו (פיקוד צפון)</div>
+        <div><span class="field-label">משמעות: </span>עליונות השריון והאוויר של צה"ל מאותגרת. חזבאללה מפגין יכולת נ"ט ונ"מ שמאיימת על חופש פעולה בגזרה.</div>
+      </div>
+      <div class="item-action">פעולה: לוודא נהלי הגנה על שריון בגזרת אלח'יאם. להזהיר מפעילות מסוקים בנמוך מעל ראמיה.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">L-K2</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">קרב בינת ג'ביל — תוכנית כיתור צה"ל נתקלת בהתנגדות</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>צה"ל ניסה כיתור מעיתרון לעינאתא ומוואדי אלחג'יר לצור. לפי מקורות לבנוניים, צה"ל הצליח להתקדם בצירים מסוימים אך לא הצליח להתבסס בשל ירי רקטות.</div>
+        <div><span class="field-label">איפה: </span>בינת ג'ביל, עיתרון, עינאתא, בית ליף, דבל, רשאף</div>
+        <div><span class="field-label">משמעות: </span>בינת ג'ביל נותרת מוקד לחימה מרכזי. כישלון ההתבססות מצביע על עוצמת הגנת חזבאללה באזור.</div>
+      </div>
+      <div class="item-action">פעולה: לעקוב אחר התקדמות בצירים. בינת ג'ביל נקודת כובד למבצע.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">L-K3</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">עימותים ממושכים בשמע ואלנאקורה</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>קרבות של למעלה משעה בעיירת שמע. צה"ל ביצע פיצוץ בנאקורה. אין נוכחות צה"לית על הכביש הראשי של נאקורה — משתמש במלון באזור חאמול כמרכז פעילות.</div>
+        <div><span class="field-label">איפה: </span>שמע, אלנאקורה, חאמול</div>
+        <div><span class="field-label">משמעות: </span>צה"ל מתמקם בנקודות פנימיות ולא על צירים ראשיים — מרמז על חשיפה לאש.</div>
+      </div>
+      <div class="item-action">פעולה: מודעות לפגיעות על צירים פתוחים. מלון חאמול — יעד מודיעיני.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN">
+      <div class="item-top">
+        <span class="item-id">L-T1</span>
+        <span class="domain-tag">TERRAIN</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">סוללת ארטילריה חדשה של צה"ל בגבול כפרשובא</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>צה"ל הקים סוללת ארטילריה חדשה בגבול כפרשובא לתמיכה בסוללת אלזעורה בגולן הסורי.</div>
+        <div><span class="field-label">איפה: </span>כפרשובא, גולן</div>
+        <div><span class="field-label">משמעות: </span>חיזוק כוח אש בגזרה המזרחית. מגביר יכולת תמיכה באש למבצע באלח'יאם.</div>
+      </div>
+      <div class="item-action">פעולה: לעקוב אחר פריסת ארטילריה נוספת בגזרה.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN">
+      <div class="item-top">
+        <span class="item-id">L-T2</span>
+        <span class="domain-tag">TERRAIN</span>
+        <span class="confidence confidence-HIGH">HIGH</span>
+      </div>
+      <div class="item-title">כטב"מים מעל עשרות יישובים בדרום לבנון</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>פעילות כטב"מית נרחבת מעל נבטיה, צידון, צור, מרג'עיון, בינת ג'ביל, אלח'יאם, שקרא, כפרא, בקעע אלע'רבי.</div>
+        <div><span class="field-label">איפה: </span>דרום לבנון ובקעע המערבי — עשרות יישובים</div>
+        <div><span class="field-label">משמעות: </span>היקף הכטב"מים מצביע על סיקור פעיל רחב. רלוונטי ל-OPSEC של אוכלוסייה וכוחות.</div>
+      </div>
+      <div class="item-action">פעולה: אזהרת OPSEC — הימנעות מתנועה חשופה באזורים מנוטרים.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">L-K4</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-HIGH">HIGH</span>
+      </div>
+      <div class="item-title">תקיפות צה"ל בצריפא, ג'מג'ייה, חניה, דיר אלזהראני</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>ארבע תקיפות רצופות בצריפא עם פגיעה במבנים ותשתיות. תקיפות בג'מג'ייה ובחניה. בדיר אלזהראני — טילים לא התפוצצו.</div>
+        <div><span class="field-label">איפה: </span>צריפא, ג'מג'ייה (בינת ג'ביל), חניה (צור), דיר אלזהראני</div>
+        <div><span class="field-label">משמעות: </span>היקף תקיפות רחב מצביע על מאמץ להכין את הקרקע. כשל בדיר אלזהראני — בעיית אמינות תחמושת.</div>
+      </div>
+      <div class="item-action">פעולה: לתעד כשלי חימוש. לעקוב אחר דפוס תקיפות הכנה.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">L-K5</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-LOW">LOW</span>
+      </div>
+      <div class="item-title">חזבאללה מתרברב בכמויות טילים — פאדי 2, מלאכ 2, פאדי 4</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>סרטון תעמולה של חזבאללה מציג שפע נשק וטילים. נטען ירי של 'פאדי 2' (16 רקטות 'מלאכ 2') ואיום ב'פאדי 4'.</div>
+        <div><span class="field-label">איפה: </span>לא ידוע — סרטון השפעה</div>
+        <div><span class="field-label">משמעות: </span>הצגת יכולת שיגור מרובה. פאדי 4 = טווח ארוך יותר. מסר הרתעה.</div>
+      </div>
+      <div class="item-action">פעולה: להעריך יכולת פאדי 4. לעקוב אחר תדירות שיגורים.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">L-K6</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-HIGH">HIGH</span>
+      </div>
+      <div class="item-title">תקיפת כטב"מ בסחמר — 2 הרוגים ו-11 פצועים מבין מתפללים</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>כטב"מ צה"לי תקף קבוצת מתפללים ביציאה ממסגד בסחמר, בקעע אלע'רבי. 2 הרוגים, 11 פצועים.</div>
+        <div><span class="field-label">איפה: </span>סחמר, בקעע המערבי</div>
+        <div><span class="field-label">משמעות: </span>פגיעה באזרחים — השלכות תקשורתיות ומשפטיות. חזבאללה ינצל לתעמולה.</div>
+      </div>
+      <div class="item-action">פעולה: מודעות לרגישות תקיפות באזורי אוכלוסייה אזרחית.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL">
+      <div class="item-top">
+        <span class="item-id">L-G1</span>
+        <span class="domain-tag">GENERAL</span>
+        <span class="confidence confidence-HIGH">HIGH</span>
+      </div>
+      <div class="item-title">צה"ל קורא לפינוי שכונות בדרום ביירות</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>צה"ל הוציא קריאה לפינוי מיידי של שכונות בדרום ביירות.</div>
+        <div><span class="field-label">איפה: </span>דרום ביירות (דאחיה)</div>
+        <div><span class="field-label">משמעות: </span>עשוי לסמן תקיפות נוספות בעומק. הסלמה מול מרכזי אוכלוסייה.</div>
+      </div>
+      <div class="item-action">פעולה: לעקוב אחר תקיפות בביירות בשעות הקרובות.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL">
+      <div class="item-top">
+        <span class="item-id">L-G2</span>
+        <span class="domain-tag">GENERAL</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">הוותיקן נכנס למשבר — מסר תקיף על לבנון</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>הוותיקן פרסם מסר תקיף בנוגע למשבר בלבנון, עם דגש על הקהילה הנוצרית.</div>
+        <div><span class="field-label">איפה: </span>וותיקן, לבנון</div>
+        <div><span class="field-label">משמעות: </span>מעורבות בינלאומית-דתית. עשוי להשפיע על לחץ דיפלומטי.</div>
+      </div>
+      <div class="item-action">פעולה: לעקוב אחר תגובות בינלאומיות ודתיות.</div>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN">
+      <div class="item-top">
+        <span class="item-id">L-T3</span>
+        <span class="domain-tag">TERRAIN</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">ישראל מצמצמת יעדים — מתמקדת בבינת ג'ביל ואלח'יאם</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>לפי ניתוח לבנוני, צה"ל מצמצם את פריסת היעדים ומתרכז בבינת ג'ביל ואלח'יאם כנקודות כובד.</div>
+        <div><span class="field-label">איפה: </span>בינת ג'ביל, אלח'יאם</div>
+        <div><span class="field-label">משמעות: </span>מיקוד מאמץ צה"לי — רלוונטי לתכנון הגנתי של חזבאללה ולזיהוי צירי התקדמות.</div>
+      </div>
+      <div class="item-action">פעולה: לאמת מול מידע ישראלי. ציר בינת ג'ביל-אלח'יאם = עדיפות.</div>
+    </div></div><div class="actor-panel" id="panel-IRAN">
+    <div class="item-card" data-actor="IRAN" data-domain="GENERAL">
+      <div class="item-top">
+        <span class="item-id">I-G1</span>
+        <span class="domain-tag">GENERAL</span>
+        <span class="confidence confidence-LOW">LOW</span>
+      </div>
+      <div class="item-title">ניתוח: לאיראן 5 מיליון חמושים — עלולים לפעול מחוץ לגבולות</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>דר' אל-כביסי מנתח: 50,000 חיילים אמריקאים באזור. אם תשתיות חשמל יותקפו, איראן עלולה לשלוח חלק מ-5 מיליון חמושיה לעיראק והמפרץ. ארה"ב מנסה לבנות קואליציה בינלאומית.</div>
+        <div><span class="field-label">איפה: </span>איראן, עיראק, המפרץ הפרסי</div>
+        <div><span class="field-label">משמעות: </span>תרחיש הסלמה: תקיפת תשתיות → הפצת מיליציות מחוץ לאיראן. רלוונטי להערכת איום אזורי.</div>
+      </div>
+      <div class="item-action">פעולה: לעקוב אחר ריכוזי כוחות אמריקאיים ותרגילים משותפים.</div>
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">I-K1</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-LOW">LOW</span>
+      </div>
+      <div class="item-title">איראן מציגה מנהרות נשק תת-קרקעיות — טילים בליסטיים וכטב"מים</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>טהראן פרסמה סרטון מנהרות ענקיות תת-קרקעיות המכילות טילים בליסטיים, משגרים וכטב"מים תוקפים.</div>
+        <div><span class="field-label">איפה: </span>איראן — מנהרות תת-קרקעיות</div>
+        <div><span class="field-label">משמעות: </span>מסר הרתעה: יכולות איראן שלמות למרות תקיפות. תשתית מוגנת מפני מכות אוויריות.</div>
+      </div>
+      <div class="item-action">פעולה: להעריך יכולת חדירה למנהרות. סרטון השפעה — לא ניתן לאמת מיקום.</div>
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="GENERAL">
+      <div class="item-top">
+        <span class="item-id">I-G2</span>
+        <span class="domain-tag">GENERAL</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">החלפת רמטכ"ל ארה"ב — מעבר לדוקטרינת פריסה מהירה</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>רמטכ"ל ארה"ב הוחלף בזמן מלחמה. המפקד החדש כריסטופר לניף — רקע בדיוויזיה 82 המוטסת. ניתוח: מעבר מחשיבה מקצועית-זהירה לדוקטרינת 'נקודות חדירה מהירה'.</div>
+        <div><span class="field-label">איפה: </span>ארה"ב, רלוונטי להורמוז ובאב אל-מנדב</div>
+        <div><span class="field-label">משמעות: </span>שינוי דוקטרינה אמריקאית — הורמוז ובאב אל-מנדב כנקודות שליטה צבאית, לא עניין נפטי. מהירות פעולה גוברת.</div>
+      </div>
+      <div class="item-action">פעולה: לעקוב אחר פריסה אמריקאית בהורמוז. שינוי בקצב ייתכן בימים הקרובים.</div>
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">I-K2</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-LOW">LOW</span>
+      </div>
+      <div class="item-title">איראן טוענת להפלת מטוס קרב אמריקאי ליד קשם</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>הכוחות המזוינים של איראן הודיעו על הפלת מטוס קרב מתקדם של ארה"ב במים שבין הנגאם לקשם. נטען כתגובה לטענות טראמפ על השמדת הגנה אווירית איראנית.</div>
+        <div><span class="field-label">איפה: </span>מצרי הורמוז — בין איי הנגאם וקשם</div>
+        <div><span class="field-label">משמעות: </span>אם אמת — יכולת נ"מ איראנית פעילה בהורמוז. סביר יותר: תעמולה כתגובה לטענות טראמפ.</div>
+      </div>
+      <div class="item-action">פעולה: לחפש אישור ממקורות מערביים. לעקוב אחר תגובה אמריקאית.</div>
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="GENERAL">
+      <div class="item-top">
+        <span class="item-id">I-G3</span>
+        <span class="domain-tag">GENERAL</span>
+        <span class="confidence confidence-HIGH">HIGH</span>
+      </div>
+      <div class="item-title">מצרי הורמוז — איראן מאיימת בסגירה ארוכת טווח, רמזים להקלה</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>דובר הצבא האיראני: הורמוז ייסגר 'לטווח ארוך' לארה"ב וישראל. טראמפ טען שייפתח לאחר המלחמה. בנוסף — דיווח על הקלה אפשרית בסגירה.</div>
+        <div><span class="field-label">איפה: </span>מצרי הורמוז</div>
+        <div><span class="field-label">משמעות: </span>סתירה בין הצהרות — ייתכן משא ומתן מאחורי הקלעים. סגירת הורמוז = משבר נפט עולמי.</div>
+      </div>
+      <div class="item-action">פעולה: לנטר תנועת ספינות בהורמוז. לעקוב אחר הצהרות דיפלומטיות.</div>
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">I-K3</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-MEDIUM">MEDIUM</span>
+      </div>
+      <div class="item-title">תקיפה משותפת איראן-תימן נגד נושאת מטוסים וספינות ארה"ב</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>תקיפה משותפת של משמרות המהפיכה וכוחות תימן נגד נושאת מטוסים וספינות מלחמה אמריקאיות. חות'ים: טילים בליסטיים וכטב"מים נגד USS Truman.</div>
+        <div><span class="field-label">איפה: </span>ים סוף / מפרץ עדן</div>
+        <div><span class="field-label">משמעות: </span>שיתוף פעולה מבצעי איראן-תימן. איום ישיר על נכסי ספינות ארה"ב. הסלמה ימית.</div>
+      </div>
+      <div class="item-action">פעולה: לעקוב אחר תגובה אמריקאית ומצב נושאות מטוסים.</div>
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
+      <div class="item-top">
+        <span class="item-id">I-K4</span>
+        <span class="domain-tag">KINETIC</span>
+        <span class="confidence confidence-LOW">LOW</span>
+      </div>
+      <div class="item-title">דיווחים על סדקים ונזק לסכרים באיראן לאחר תקיפות</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>דיווחים על סדקים בסכר כארון 3 בצ'הארמהאל ובח'תיארי, ופגיעה בסכר גוטואנד בחוזסתאן עם נזילת מים. משמרות המהפיכה גויסו לסייע.</div>
+        <div><span class="field-label">איפה: </span>חוזסתאן, צ'הארמהאל ובח'תיארי — סכרים</div>
+        <div><span class="field-label">משמעות: </span>אם מדובר בתוצאת תקיפה — פגיעה בתשתית מים/חשמל קריטית. שיטפונות אפשריים.</div>
+      </div>
+      <div class="item-action">פעולה: לנטר מצב סכרים באיראן. רלוונטי להערכת נזק תשתיתי.</div>
+    </div>
+    <div class="item-card" data-actor="IRAN" data-domain="SOCIAL">
+      <div class="item-top">
+        <span class="item-id">I-S1</span>
+        <span class="domain-tag">SOCIAL</span>
+        <span class="confidence confidence-LOW">LOW</span>
+      </div>
+      <div class="item-title">תמונות כיסא מפלט טייס F-18 מופצות ברשת</div>
+      <div class="item-fields">
+        <div><span class="field-label">מה: </span>תמונות המתיימרות להציג כיסא מפלט של טייס F-18 אמריקאי מופצות ברשתות. לא ברור אם אותנטיות.</div>
+        <div><span class="field-label">איפה: </span>רשתות חברתיות איראניות</div>
+        <div><span class="field-label">משמעות: </span>ניסיון לחזק נרטיב של הפלת מטוס. אם אמיתי — ראיה ליכולת נ"מ.</div>
+      </div>
+      <div class="item-action">פעולה: לבדוק אותנטיות מול מקורות מערביים.</div>
+    </div></div><div class="actor-panel" id="panel-OTHERS"><p style="color:var(--text-dim);padding:20px;text-align:center;">אין פריטים</p></div>
+
+  <div class="alerts-section"><h2>דפוסי איום חוזרים</h2><div class="alert-item">חזבאללה מפגין שיטתיות בתקיפות נ"ט — כל יממה דיווח על פגיעה בשריון. דפוס קבוע של טילים מונחים נגד מרכבה.</div><div class="alert-item">שיתוף פעולה מבצעי איראן-תימן מתהדק — תקיפות משותפות נגד ספינות ארה"ב. ציר הורמוז-באב אל-מנדב פעיל.</div><div class="alert-item">דפוס השפעה: כל פעולה צבאית מלווה בסרטון תעמולה תוך שעות — מנהרות, ירי, 'הפלת מטוס'. מלחמת תודעה מתואמת.</div></div>
+  <div class="alerts-section"><h2>התראות OPSEC</h2><div class="alert-item opsec-item">כטב"מים פעילים מעל עשרות יישובים בדרום לבנון — כל תנועה חשופה לסיקור. נדרשת הקפדה על הסוואה ותנועה.</div><div class="alert-item opsec-item">חזבאללה מציין את בסיס דדו (פיקוד צפון) כיעד — מודעות לאיום על מתקנים אסטרטגיים בעומק.</div><div class="alert-item opsec-item">דיווחים על שימוש צה"ל במלון בחאמול כמרכז פעילות — ייתכן שמיקום נחשף. לבחון חלופות.</div></div>
+
+  <div class="commander-note">
+    <h2>הערה למפקד</h2>
+    <div>יממה מסוכנת בשתי זירות. בלבנון — חזבאללה מדגים יכולת התשה משמעותית בדגש על נ"ט ונ"מ, עם 60 תקיפות מדווחות. בזירת איראן — הסלמה אסטרטגית סביב הורמוז עם סתירות שמרמזות על מו"מ סמוי. החלפת רמטכ"ל ארה"ב בזמן מלחמה היא אירוע חריג שעשוי לסמן שינוי בקצב הפעולה. עדיפות: הגנה על שריון בגזרת אלח'יאם ומעקב אחר הורמוז.</div>
+  </div>
+</div>
+
+<div class="footer">
+  יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד
+</div>
+
+<script>
+// Actor tabs
+document.querySelectorAll('.actor-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const actor = tab.dataset.actor;
+    document.getElementById('panel-' + actor).classList.add('active');
+    // Reset domain filter
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
+    filterDomain('ALL');
+  });
+});
+
+// Domain filters
+document.querySelectorAll('.domain-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterDomain(btn.dataset.domain);
+  });
+});
+
+function filterDomain(domain) {
+  const activePanel = document.querySelector('.actor-panel.active');
+  if (!activePanel) return;
+  activePanel.querySelectorAll('.item-card').forEach(card => {
+    if (domain === 'ALL' || card.dataset.domain === domain) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

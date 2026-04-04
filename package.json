@@ -1,0 +1,19 @@
+{
+  "name": "osint-5550",
+  "version": "1.0.0",
+  "description": "OSINT intelligence processing — יל\"ק 5550 יסוד האש",
+  "private": true,
+  "scripts": {
+    "ingest": "node scripts/ingest-test.js",
+    "ingest:wa": "node scripts/ingest-whatsapp.js",
+    "digest": "node scripts/run-digest.js",
+    "preview": "npx serve docs -p 3000",
+    "push": "git add docs/ && git commit -m \"digest: v$(date +%Y.%m.%d)\" && git push"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "sql.js": "^1.11.0",
+    "dotenv": "^16.4.7",
+    "puppeteer": "^24.2.0"
+  }
+}
