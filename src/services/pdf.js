@@ -126,7 +126,7 @@ async function generate(data, version) {
     ">
       <div style="display:flex;align-items:center;gap:8px;">
         ${logoBase64
-          ? `<img src="${logoBase64}" style="height:18px;filter:brightness(0) invert(1) drop-shadow(0 0 4px rgba(201,168,76,.6));">`
+          ? `<img src="${logoBase64}" style="height:18px;filter:invert(1) sepia(0.3) saturate(1.4);mix-blend-mode:screen;">`
           : ''}
         <span style="font-size:9px;font-weight:700;color:#c9a84c;letter-spacing:1px;">יל"ק 5550 — יסוד האש</span>
       </div>
