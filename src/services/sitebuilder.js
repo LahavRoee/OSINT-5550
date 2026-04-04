@@ -88,48 +88,58 @@ function resolveItemCoords(item) {
   return { lat: null, lon: null };
 }
 
-// ─── Item card — verbatim translation + source link + map pin ─────────────────
+// ─── Item card — Military Sitrep format ───────────────────────────────────────
 
 function buildItemCard(item) {
-  const sourceLink = item.source_url
-    ? `<a href="${item.source_url}" target="_blank" rel="noopener" class="item-source-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        מקור
-      </a>`
-    : '';
-
-  const datetime = item.datetime
-    ? `<span class="item-datetime">${item.datetime}</span>`
-    : '';
-
   const domainLabel = DOMAIN_HEB[item.domain] || item.domain;
 
-  // Map pin button — enabled only when we have coords
+  // Extract time only (HH:MM) from datetime
+  const timeStr = item.datetime
+    ? item.datetime.replace(/^\d{2}\/\d{2}\/\d{4}\s/, '').substring(0, 5)
+    : '';
+
+  const sourceLink = item.source_url
+    ? `<a href="${item.source_url}" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>`
+    : '';
+
   const { lat, lon } = resolveItemCoords(item);
   const hasLocation = lat !== null;
   const mapPin = `<button class="map-pin-btn${hasLocation ? '' : ' no-location'}"
     data-item-id="${item.id}"
     title="${hasLocation ? 'הצג על המפה' : 'מיקום לא ידוע'}">📍</button>`;
 
-  // Collapsible original
+  const text = item.translated_text || item.original_text || '';
+
+  // Show expand button only for long text (>180 chars or >3 lines)
+  const isLong = text.length > 180 || text.split('\n').length > 3;
+  const expandBtn = isLong
+    ? `<button class="item-expand-btn">▼ קרא עוד</button>`
+    : '';
+
+  // Collapsible original if different from translation
   const showOriginal = item.original_text && item.original_text !== item.translated_text;
   const originalBlock = showOriginal
     ? `<details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">${item.original_text}</div>
       </details>`
     : '';
 
   return `
     <div class="item-card" data-actor="${item.actor}" data-domain="${item.domain}" data-id="${item.id}">
-      <div class="item-top">
+      <div class="item-header">
+        ${timeStr ? `<span class="item-time">${timeStr}</span>` : ''}
         <span class="item-id">${item.id}</span>
         <span class="domain-tag">${domainLabel}</span>
-        ${datetime}
-        ${mapPin}
-        ${sourceLink}
+        <div class="item-header-actions">
+          ${mapPin}
+          ${sourceLink}
+        </div>
       </div>
-      <div class="item-translated">${item.translated_text || item.original_text || ''}</div>
+      <div class="item-body">
+        <div class="item-translated">${text}</div>
+      </div>
+      ${expandBtn}
       ${originalBlock}
     </div>`;
 }
@@ -209,8 +219,9 @@ function buildVersionPage(data) {
   // Count how many items have coordinates
   const mappedCount = JSON.parse(mapItemsJson).filter(i => i.lat).length;
 
-  // First actor with items → active by default
-  const firstActive = actorOrder.find(k => (data.actors[k]?.items || []).length > 0) || 'HAMAS';
+  // Default tab: prefer HEZBOLLAH (Lebanon field ops), then first with items
+  const preferOrder = ['HEZBOLLAH', 'HAMAS', 'IRAN', 'OTHERS'];
+  const firstActive = preferOrder.find(k => (data.actors[k]?.items || []).length > 0) || 'HEZBOLLAH';
 
   html = html
     .replace(/\{\{VERSION\}\}/g,        data.meta.version)

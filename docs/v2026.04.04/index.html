@@ -352,78 +352,93 @@
   .actor-panel { display: none; }
   .actor-panel.active { display: block; }
 
-  /* ══ Item Card ═══════════════════════════════════════════════ */
+  /* ══ Item Card — Military Sitrep Format ═══════════════════════ */
   .item-card {
     background: var(--surface);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    border-right: 4px solid var(--border);
-    transition: border-right-color 0.2s, box-shadow 0.35s;
+    border-radius: 8px;
+    padding: 0;
+    margin-bottom: 6px;
+    border-right: 3px solid var(--border);
+    transition: box-shadow 0.3s;
+    overflow: hidden;
   }
   .item-card[data-actor="HAMAS"]     { border-right-color: var(--c-hamas); }
   .item-card[data-actor="HEZBOLLAH"] { border-right-color: var(--c-hizb); }
   .item-card[data-actor="IRAN"]      { border-right-color: var(--c-iran); }
   .item-card[data-actor="OTHERS"]    { border-right-color: var(--c-others); }
 
-  /* Glow on map-click */
   .item-card.map-highlight {
-    box-shadow: 0 0 0 2px var(--gold), 0 4px 28px rgba(201,168,76,.35);
+    box-shadow: 0 0 0 2px var(--gold), 0 4px 20px rgba(201,168,76,.3);
     animation: pulse-gold 0.7s ease-out;
   }
   @keyframes pulse-gold {
     0%   { box-shadow: 0 0 0 8px rgba(201,168,76,.5); }
-    100% { box-shadow: 0 0 0 2px var(--gold), 0 4px 28px rgba(201,168,76,.35); }
+    100% { box-shadow: 0 0 0 2px var(--gold), 0 4px 20px rgba(201,168,76,.3); }
   }
-
   .item-card.hidden { display: none; }
 
-  .item-top {
+  /* ── Header row: time + id + actions ── */
+  .item-header {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
+    gap: 8px;
+    padding: 7px 10px 6px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,.15);
+  }
+
+  .item-time {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .03em;
+    flex-shrink: 0;
   }
 
   .item-id {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     color: var(--text-muted);
     background: var(--bg);
-    padding: 2px 6px;
-    border-radius: 4px;
+    padding: 1px 5px;
+    border-radius: 3px;
     font-family: monospace;
-    letter-spacing: .03em;
+    letter-spacing: .04em;
+    flex-shrink: 0;
   }
 
   .domain-tag {
     font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 4px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
     background: rgba(201,168,76,.1);
-    border: 1px solid rgba(201,168,76,.25);
-    color: var(--gold);
+    color: var(--gold-dim);
+    flex-shrink: 0;
   }
 
-  .item-datetime { font-size: 11px; color: var(--text-muted); margin-right: auto; }
+  .item-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: auto;
+  }
 
   .item-source-link {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 3px 9px;
-    border-radius: 6px;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 4px;
     background: rgba(59,130,246,.1);
     color: #60a5fa;
     text-decoration: none;
     font-size: 11px;
     font-weight: 600;
-    border: 1px solid rgba(59,130,246,.25);
-    transition: background 0.15s;
-    min-height: 28px;
+    border: 1px solid rgba(59,130,246,.2);
     white-space: nowrap;
+    min-height: 24px;
   }
   .item-source-link:hover { background: rgba(59,130,246,.2); }
 
@@ -431,49 +446,79 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(99,102,241,.12);
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(99,102,241,.1);
     color: #a5b4fc;
-    font-size: 12px;
-    border: 1px solid rgba(99,102,241,.3);
+    font-size: 11px;
+    border: 1px solid rgba(99,102,241,.2);
     cursor: pointer;
-    min-height: 28px;
+    min-height: 24px;
     transition: background 0.15s;
     font-family: 'Heebo', sans-serif;
   }
-  .map-pin-btn:hover { background: rgba(99,102,241,.28); }
-  .map-pin-btn.no-location { opacity: 0.25; cursor: default; pointer-events: none; }
+  .map-pin-btn:hover { background: rgba(99,102,241,.25); }
+  .map-pin-btn.no-location { opacity: 0.2; cursor: default; pointer-events: none; }
+
+  /* ── Body: clamped text + expand ── */
+  .item-body {
+    padding: 8px 12px 4px;
+    position: relative;
+  }
 
   .item-translated {
-    font-size: 14px;
-    line-height: 1.75;
+    font-size: 13px;
+    line-height: 1.65;
     color: var(--text);
     white-space: pre-wrap;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .item-translated.expanded {
+    -webkit-line-clamp: unset;
+    display: block;
   }
 
+  .item-expand-btn {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'Heebo', sans-serif;
+    cursor: pointer;
+    text-align: right;
+    transition: color 0.15s, background 0.15s;
+  }
+  .item-expand-btn:hover { color: var(--gold); background: rgba(201,168,76,.04); }
+
+  /* Original text (Arabic source) */
   .item-original {
     border-top: 1px solid var(--border);
-    padding-top: 8px;
-    margin-top: 10px;
+    padding: 6px 12px 8px;
   }
   .item-original summary {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-muted);
     cursor: pointer;
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     user-select: none;
   }
-  .item-original summary::before { content: '▶'; font-size: 9px; }
+  .item-original summary::before { content: '▶'; font-size: 8px; }
   details[open] .item-original summary::before { content: '▼'; }
   .item-original-text {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top: 8px;
-    line-height: 1.6;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.55;
     direction: auto;
     white-space: pre-wrap;
   }
@@ -528,7 +573,7 @@
 <!-- ── Tactical Map (lazy, collapsible) ──────────────────────────────────── -->
 <div class="map-section" id="map-section">
   <div class="map-section-bar" id="map-bar">
-    <div class="map-section-title">🗺 מפה מודיעינית — לחץ על ידיעה</div>
+    <div class="map-section-title">🗺 מפה מודיעינית — כל הגזרות</div>
     <span class="map-section-meta">6 ידיעות ממופות · לחץ לסגירה ✕</span>
   </div>
   <div id="tactical-map"></div>
@@ -537,7 +582,7 @@
     <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-hizb)"></span>חיזבאללה</div>
     <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-iran)"></span>איראן</div>
     <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-others)"></span>אחרים</div>
-    <span class="map-hint">לחץ על מרקר → עבור לידיעה</span>
+    <span class="map-hint">לחץ מרקר → עבור לידיעה · כל הגזרות על המפה</span>
   </div>
 </div>
 
@@ -545,9 +590,6 @@
 <section class="hero">
   <div class="hero-dates">יום שבת, 4 אפריל 2026 | י״ז ניסן תשפ״ו</div>
   <h1>04-APRIL-2026</h1>
-  <div class="notice-banner">
-    ℹ️ <strong>עיקרון פרשנות אפס:</strong> הידיעות מוצגות תרגום מילה במילה מהמקור. אין סיכום, אין פרשנות, אין המלצות. הקישור למקור מופיע בכל ידיעה.
-  </div>
 </section>
 
 <!-- ── Sector quick-nav ───────────────────────────────────────────────────── -->
@@ -575,11 +617,11 @@
 <!-- ── Main content ──────────────────────────────────────────────────────── -->
 <main class="content">
 
-  <div class="actor-tabs"><button class="actor-tab active" data-actor="HAMAS">
+  <div class="actor-tabs"><button class="actor-tab" data-actor="HAMAS">
     <span class="dot"></span>
     חמאס
     <span class="tab-count">3</span>
-  </button><button class="actor-tab" data-actor="HEZBOLLAH">
+  </button><button class="actor-tab active" data-actor="HEZBOLLAH">
     <span class="dot"></span>
     חיזבאללה
     <span class="tab-count">2</span>
@@ -602,128 +644,151 @@
     <button class="domain-btn" data-domain="GENERAL">כללי</button>
   </div>
 
-  <div class="actor-panel" id="panel-HAMAS" class="actor-panel active">
+  <div class="actor-panel" id="panel-HAMAS">
     <div class="item-card" data-actor="HAMAS" data-domain="KINETIC" data-id="H-K1">
-      <div class="item-top">
+      <div class="item-header">
+        <span class="item-time">06:14</span>
         <span class="item-id">H-K1</span>
         <span class="domain-tag">קינטי</span>
-        <span class="item-datetime">04/04/2026 06:14</span>
-        <button class="map-pin-btn"
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
     data-item-id="H-K1"
     title="הצג על המפה">📍</button>
-        <a href="https://t.me/qassam1brigades/12345" target="_blank" rel="noopener" class="item-source-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        מקור
-      </a>
+          <a href="https://t.me/qassam1brigades/12345" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
       </div>
-      <div class="item-translated">שהידי אל-קסאם: תקפנו ריכוז חיילי כיבוש בירי חי צפון מחנה אל-נוסיירט, ואושרו פגיעות בשורותיהם.</div>
+      <div class="item-body">
+        <div class="item-translated">שהידי אל-קסאם: תקפנו ריכוז חיילי כיבוש בירי חי צפון מחנה אל-נוסיירט, ואושרו פגיעות בשורותיהם.</div>
+      </div>
+      
       <details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">شهداء القسام: استهدفنا تجمعًا لجنود الاحتلال بالرصاص الحي شمال مخيم النصيرات، وتأكد وقوع إصابات في صفوفهم.</div>
       </details>
     </div>
     <div class="item-card" data-actor="HAMAS" data-domain="KINETIC" data-id="H-K2">
-      <div class="item-top">
+      <div class="item-header">
+        <span class="item-time">08:52</span>
         <span class="item-id">H-K2</span>
         <span class="domain-tag">קינטי</span>
-        <span class="item-datetime">04/04/2026 08:52</span>
-        <button class="map-pin-btn"
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
     data-item-id="H-K2"
     title="הצג על המפה">📍</button>
-        <a href="https://t.me/qassam1brigades/12346" target="_blank" rel="noopener" class="item-source-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        מקור
-      </a>
+          <a href="https://t.me/qassam1brigades/12346" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
       </div>
-      <div class="item-translated">גדודי אל-קסאם: ירי 3 פגזי מרגמה לעבר כלי רכב של הכיבוש המרוכזים על ציר נצרים.</div>
+      <div class="item-body">
+        <div class="item-translated">גדודי אל-קסאם: ירי 3 פגזי מרגמה לעבר כלי רכב של הכיבוש המרוכזים על ציר נצרים.</div>
+      </div>
+      
       <details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">كتائب القسام: إطلاق 3 قذائف هاون صوب آليات الاحتلال المتمركزة على محور نتساريم.</div>
       </details>
     </div>
     <div class="item-card" data-actor="HAMAS" data-domain="SOCIAL" data-id="H-S1">
-      <div class="item-top">
+      <div class="item-header">
+        <span class="item-time">10:30</span>
         <span class="item-id">H-S1</span>
         <span class="domain-tag">חברתי</span>
-        <span class="item-datetime">04/04/2026 10:30</span>
-        <button class="map-pin-btn"
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
     data-item-id="H-S1"
     title="הצג על המפה">📍</button>
-        
+          
+        </div>
       </div>
-      <div class="item-translated">המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.</div>
+      <div class="item-body">
+        <div class="item-translated">המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.</div>
+      </div>
+      
       <details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">المكتب الإعلامي لحركة حماس: نؤكد أن المقاومة ستواصل عملياتها حتى انسحاب كامل قوات الاحتلال من القطاع.</div>
       </details>
-    </div></div><div class="actor-panel" id="panel-HEZBOLLAH">
+    </div></div><div class="actor-panel" id="panel-HEZBOLLAH" class="actor-panel active">
     <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K1">
-      <div class="item-top">
+      <div class="item-header">
+        <span class="item-time">07:20</span>
         <span class="item-id">HZ-K1</span>
         <span class="domain-tag">קינטי</span>
-        <span class="item-datetime">04/04/2026 07:20</span>
-        <button class="map-pin-btn"
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
     data-item-id="HZ-K1"
     title="הצג על המפה">📍</button>
-        <a href="https://t.me/moqawama/9871" target="_blank" rel="noopener" class="item-source-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        מקור
-      </a>
+          <a href="https://t.me/moqawama/9871" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
       </div>
-      <div class="item-translated">ההתנגדות האסלאמית בלבנון: תקפנו את עמדת מירון בשני טילי בורקן ואושרה הפגיעה.</div>
+      <div class="item-body">
+        <div class="item-translated">ההתנגדות האסלאמית בלבנון: תקפנו את עמדת מירון בשני טילי בורקן ואושרה הפגיעה.</div>
+      </div>
+      
       <details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">المقاومة الإسلامية في لبنان: استهدفنا موقع ميرون بصاروخَي بركان وأُكّدت الإصابة.</div>
       </details>
     </div>
     <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T1">
-      <div class="item-top">
+      <div class="item-header">
+        <span class="item-time">11:05</span>
         <span class="item-id">HZ-T1</span>
         <span class="domain-tag">שטח</span>
-        <span class="item-datetime">04/04/2026 11:05</span>
-        <button class="map-pin-btn"
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
     data-item-id="HZ-T1"
     title="הצג על המפה">📍</button>
-        
+          
+        </div>
       </div>
-      <div class="item-translated">נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.</div>
+      <div class="item-body">
+        <div class="item-translated">נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.</div>
+      </div>
+      
       <details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">رصد تعزيزات عسكرية إسرائيلية على طول الشريط الحدودي من رأس الناقورة حتى المطلة.</div>
       </details>
     </div></div><div class="actor-panel" id="panel-IRAN">
     <div class="item-card" data-actor="IRAN" data-domain="SOCIAL" data-id="IR-S1">
-      <div class="item-top">
+      <div class="item-header">
+        <span class="item-time">09:00</span>
         <span class="item-id">IR-S1</span>
         <span class="domain-tag">חברתי</span>
-        <span class="item-datetime">04/04/2026 09:00</span>
-        <button class="map-pin-btn no-location"
+        <div class="item-header-actions">
+          <button class="map-pin-btn no-location"
     data-item-id="IR-S1"
     title="מיקום לא ידוע">📍</button>
-        <a href="https://www.tasnimnews.com/fa/news/2026/04/04/123456" target="_blank" rel="noopener" class="item-source-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        מקור
-      </a>
+          <a href="https://www.tasnimnews.com/fa/news/2026/04/04/123456" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
       </div>
-      <div class="item-translated">סוכנות תסנים: דובר משמרות המהפכה מאשר המשך תמיכת איראן בהתנגדות בפלסטין ולבנון.</div>
+      <div class="item-body">
+        <div class="item-translated">סוכנות תסנים: דובר משמרות המהפכה מאשר המשך תמיכת איראן בהתנגדות בפלסטין ולבנון.</div>
+      </div>
+      
       <details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">وكالة تسنيم: المتحدث باسم الحرس الثوري يؤكد استمرار دعم إيران للمقاومة في فلسطين ولبنان.</div>
       </details>
     </div></div><div class="actor-panel" id="panel-OTHERS">
     <div class="item-card" data-actor="OTHERS" data-domain="KINETIC" data-id="O-K1">
-      <div class="item-top">
+      <div class="item-header">
+        <span class="item-time">13:15</span>
         <span class="item-id">O-K1</span>
         <span class="domain-tag">קינטי</span>
-        <span class="item-datetime">04/04/2026 13:15</span>
-        <button class="map-pin-btn"
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
     data-item-id="O-K1"
     title="הצג על המפה">📍</button>
-        
+          
+        </div>
       </div>
-      <div class="item-translated">גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.</div>
+      <div class="item-body">
+        <div class="item-translated">גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.</div>
+      </div>
+      
       <details class="item-original">
-        <summary>טקסט מקורי</summary>
+        <summary>מקור ערבי</summary>
         <div class="item-original-text">كتائب شهداء الأقصى: إطلاق نار على قوة إسرائيلية في منطقة جنين — لا إصابات معلنة.</div>
       </details>
     </div></div>
@@ -801,6 +866,15 @@ document.querySelectorAll('.domain-btn').forEach(btn => {
     document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     applyDomain(btn.dataset.domain);
+  });
+});
+
+// ── Expand / collapse item text ───────────────────────────────────────────────
+document.querySelectorAll('.item-expand-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = btn.closest('.item-card').querySelector('.item-translated');
+    const expanded = body.classList.toggle('expanded');
+    btn.textContent = expanded ? '▲ פחות' : '▼ קרא עוד';
   });
 });
 
