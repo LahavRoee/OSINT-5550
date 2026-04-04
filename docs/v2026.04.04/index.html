@@ -373,24 +373,117 @@
 
   .opsec-item { border-right-color: #f59e0b; }
 
-  /* --- Commander Note --- */
-  .commander-note {
+  /* --- Commander Summary (TOP) --- */
+  .commander-summary {
     background: var(--surface);
     border: 1px solid var(--gold);
     border-radius: var(--radius);
     padding: 18px;
-    margin-top: 28px;
+    margin: 0 auto 24px;
+    max-width: 720px;
   }
 
-  .commander-note h2 {
+  .commander-summary h2 {
     color: var(--gold);
     font-size: 15px;
     margin-bottom: 8px;
   }
 
-  .commander-note div {
+  .commander-summary .note-text {
     font-size: 14px;
     line-height: 1.7;
+  }
+
+  /* --- Sector Nav --- */
+  .sector-nav {
+    max-width: 720px;
+    margin: 0 auto 28px;
+    padding: 0 16px;
+  }
+
+  .sector-nav-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .sector-nav-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .sector-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+  }
+
+  .sector-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 14px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+    text-align: center;
+    min-height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  .sector-card:active { transform: scale(0.97); }
+
+  .sector-card .sector-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .sector-card .sector-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .sector-card .sector-count {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .sector-card .sector-level {
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .sector-card[data-actor="HAMAS"] .sector-dot { background: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"] .sector-dot { background: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"] .sector-dot { background: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"] .sector-dot { background: var(--c-others); }
+
+  .sector-card[data-actor="HAMAS"]:hover, .sector-card[data-actor="HAMAS"].active { border-color: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"]:hover, .sector-card[data-actor="HEZBOLLAH"].active { border-color: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"]:hover, .sector-card[data-actor="IRAN"].active { border-color: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"]:hover, .sector-card[data-actor="OTHERS"].active { border-color: var(--c-others); }
+
+  /* --- Commander Note (bottom, smaller) --- */
+  .commander-note {
+    background: var(--surface);
+    border-right: 3px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 16px;
+    margin-top: 28px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-dim);
   }
 
   /* --- Cross-Reference Sidebar --- */
@@ -572,16 +665,40 @@
 <section class="hero">
   <div class="hero-dates">יום שבת, 4 אפריל 2026 | י״ז ניסן תשפ״ו</div>
   <h1>יממה אינטנסיבית בשתי זירות עיקריות: בגזרת לבנון — עימותים כבדים בדרום, בדגש על צ</h1>
+
+  <!-- Commander summary — first thing the commander sees -->
+  <div class="commander-summary">
+    <h2>סיכום למפקד</h2>
+    <div class="note-text">יממה מסוכנת בשתי זירות. בלבנון — חזבאללה מדגים יכולת התשה משמעותית בדגש על נ"ט ונ"מ, עם 60 תקיפות מדווחות. בזירת איראן — הסלמה אסטרטגית סביב הורמוז עם סתירות שמרמזות על מו"מ סמוי. החלפת רמטכ"ל ארה"ב בזמן מלחמה היא אירוע חריג שעשוי לסמן שינוי בקצב הפעולה. עדיפות: הגנה על שריון בגזרת אלח'יאם ומעקב אחר הורמוז.</div>
+  </div>
+
   <div class="situation-box">יממה אינטנסיבית בשתי זירות עיקריות: בגזרת לבנון — עימותים כבדים בדרום, בדגש על ציר בינת ג'ביל ואלח'יאם, עם דיווחים על 60 תקיפות חזבאללה כנגד שריון ובסיסי צה"ל. בזירה האיראנית — הסלמה אסטרטגית סביב מצרי הורמוז, תקיפות משותפות איראן-תימן, ושינויים בפיקוד הצבאי האמריקאי המרמזים על מעבר לדוקטרינת פעולה מהירה.</div>
   <div class="takeaways"><div class="takeaway">חזבאללה מדווח על 60 תקיפות ביממה כולל השמדת שני טנקי מרכבה ואיום על מסוק קרב — מתקפת התשה שיטתית בדרום לבנון</div><div class="takeaway">איראן מאיימת בסגירת מצרי הורמוז 'לטווח ארוך' לארה"ב וישראל, במקביל לחשיפת מנהרות נשק תת-קרקעיות — הצגת כוח והרתעה</div><div class="takeaway">החלפת רמטכ"ל ארה"ב בזמן מלחמה — מעבר מדוקטרינה זהירה לדוקטרינת פריסה מהירה, רלוונטי להורמוז ובאב אל-מנדב</div></div>
 </section>
+
+<!-- Sector quick-nav -->
+<div class="sector-nav">
+  <div class="sector-nav-title">בחר גזרה</div>
+  <div class="sector-nav-hint">לחץ על גזרה כדי לסנן את הדוח ולהתמקד רק בפריטי המודיעין הרלוונטיים לה. כל גזרה מציגה את רמת האיום, מספר הפריטים, ומקורות ההצלבה שלה.</div>
+  <div class="sector-cards"><div class="sector-card" data-actor="HEZBOLLAH" class="actor-tab active">
+      <span class="sector-dot"></span>
+      <span class="sector-name">חיזבאללה</span>
+      <span class="sector-count">11 פריטים</span>
+      <span class="sector-level threat-badge threat-HIGH">HIGH</span>
+    </div><div class="sector-card" data-actor="IRAN">
+      <span class="sector-dot"></span>
+      <span class="sector-name">איראן</span>
+      <span class="sector-count">8 פריטים</span>
+      <span class="sector-level threat-badge threat-HIGH">HIGH</span>
+    </div></div>
+</div>
 
 <main class="content">
   <div class="actor-tabs"><button class="actor-tab" data-actor="HAMAS">
     <span class="dot"></span>
     🔴 חמאס
     <span class="tab-count">0</span>
-  </button><button class="actor-tab" data-actor="HEZBOLLAH" class="actor-tab active">
+  </button><button class="actor-tab" data-actor="HEZBOLLAH">
     <span class="dot"></span>
     🟠 חיזבאללה
     <span class="tab-count">11</span>
@@ -875,8 +992,7 @@
   <div class="alerts-section"><h2>התראות OPSEC</h2><div class="alert-item opsec-item">כטב"מים פעילים מעל עשרות יישובים בדרום לבנון — כל תנועה חשופה לסיקור. נדרשת הקפדה על הסוואה ותנועה.</div><div class="alert-item opsec-item">חזבאללה מציין את בסיס דדו (פיקוד צפון) כיעד — מודעות לאיום על מתקנים אסטרטגיים בעומק.</div><div class="alert-item opsec-item">דיווחים על שימוש צה"ל במלון בחאמול כמרכז פעילות — ייתכן שמיקום נחשף. לבחון חלופות.</div></div>
 
   <div class="commander-note">
-    <h2>הערה למפקד</h2>
-    <div>יממה מסוכנת בשתי זירות. בלבנון — חזבאללה מדגים יכולת התשה משמעותית בדגש על נ"ט ונ"מ, עם 60 תקיפות מדווחות. בזירת איראן — הסלמה אסטרטגית סביב הורמוז עם סתירות שמרמזות על מו"מ סמוי. החלפת רמטכ"ל ארה"ב בזמן מלחמה היא אירוע חריג שעשוי לסמן שינוי בקצב הפעולה. עדיפות: הגנה על שריון בגזרת אלח'יאם ומעקב אחר הורמוז.</div>
+    {{COMMANDER_NOTE}}
   </div>
 </main>
 
@@ -920,6 +1036,29 @@ function filterDomain(domain) {
     card.style.display = (domain === 'ALL' || card.dataset.domain === domain) ? '' : 'none';
   });
 }
+
+// Sector cards → scroll to content and activate actor tab
+document.querySelectorAll('.sector-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const actor = card.dataset.actor;
+    // Activate the matching actor tab
+    document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+    const tab = document.querySelector('.actor-tab[data-actor="' + actor + '"]');
+    if (tab) tab.classList.add('active');
+    const panel = document.getElementById('panel-' + actor);
+    if (panel) panel.classList.add('active');
+    // Reset domain filter
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
+    filterDomain('ALL');
+    // Highlight sector card
+    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    // Scroll to content
+    document.querySelector('.content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 
 // Cross-ref sidebar
 const sidebar = document.querySelector('.crossref-sidebar');

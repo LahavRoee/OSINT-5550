@@ -77,6 +77,19 @@ function buildVersionPage(data) {
 
   const dates = getBothDates(data.meta.date);
 
+  // Build sector nav cards
+  const sectorCards = actorOrder.map(k => {
+    const actor = data.actors[k] || { items: [], threat_level: 'LOW' };
+    const count = (actor.items || []).length;
+    if (count === 0) return '';
+    return `<div class="sector-card" data-actor="${k}">
+      <span class="sector-dot"></span>
+      <span class="sector-name">${ACTOR_NAMES[k]}</span>
+      <span class="sector-count">${count} פריטים</span>
+      <span class="sector-level threat-badge threat-${actor.threat_level}">${actor.threat_level}</span>
+    </div>`;
+  }).filter(Boolean).join('');
+
   html = html
     .replace(/\{\{VERSION\}\}/g, data.meta.version)
     .replace(/\{\{THREAT_LEVEL\}\}/g, data.meta.threat_level)
@@ -89,7 +102,8 @@ function buildVersionPage(data) {
     .replace('{{OPSEC_ALERTS}}', opsecAlerts)
     .replace('{{COMMANDER_NOTE}}', data.commander_note || '')
     .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
-    .replace(/\{\{HEBREW_DATE\}\}/g, dates.hebrew);
+    .replace(/\{\{HEBREW_DATE\}\}/g, dates.hebrew)
+    .replace('{{SECTOR_CARDS}}', sectorCards);
 
   // Cross-reference sidebar
   const crossRefs = generateCrossRefs(data);
