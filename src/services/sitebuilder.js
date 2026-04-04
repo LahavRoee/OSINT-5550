@@ -81,7 +81,10 @@ const LOCATION_COORDS = {
 function resolveItemCoords(item) {
   const text = (item.translated_text || item.original_text || '').toLowerCase();
   for (const [name, coords] of Object.entries(LOCATION_COORDS)) {
-    if (text.includes(name.toLowerCase())) {
+    // Whole-word match only — prevent e.g. 'צור' hitting 'בצורה', 'שמע' hitting 'ישמע'
+    const escaped = name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(`(?<![א-תa-z\\d])${escaped}(?![א-תa-z\\d])`, 'u');
+    if (re.test(text)) {
       return { lat: coords[0], lon: coords[1] };
     }
   }

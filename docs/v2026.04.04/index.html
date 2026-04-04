@@ -579,7 +579,7 @@
 <div class="map-section" id="map-section">
   <div class="map-section-bar" id="map-bar">
     <div class="map-section-title">🗺 מפה מודיעינית — כל הגזרות</div>
-    <span class="map-section-meta">6 ידיעות ממופות · לחץ לסגירה ✕</span>
+    <span class="map-section-meta">5 ידיעות ממופות · לחץ לסגירה ✕</span>
   </div>
   <div id="tactical-map"></div>
   <div class="map-legend">
@@ -701,9 +701,9 @@
         <span class="item-id">H-S1</span>
         <span class="domain-tag">חברתי</span>
         <div class="item-header-actions">
-          <button class="map-pin-btn"
+          <button class="map-pin-btn no-location"
     data-item-id="H-S1"
-    title="הצג על המפה">📍</button>
+    title="מיקום לא ידוע">📍</button>
           
         </div>
       </div>
@@ -813,7 +813,7 @@
 
 <script>
 // ── Map items injected by sitebuilder ────────────────────────────────────────
-const MAP_ITEMS = [{"id":"H-K1","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 06:14","text":"שהידי אל-קסאם: תקפנו ריכוז חיילי כיבוש בירי חי צפון מחנה אל-נוסיירט, ואושרו פגיעות בשורותיהם.","lat":31.426,"lon":34.395},{"id":"H-K2","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 08:52","text":"גדודי אל-קסאם: ירי 3 פגזי מרגמה לעבר כלי רכב של הכיבוש המרוכזים על ציר נצרים.","lat":31.389,"lon":34.337},{"id":"H-S1","actor":"HAMAS","domain":"SOCIAL","datetime":"04/04/2026 10:30","text":"המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.","lat":31.5,"lon":34.467},{"id":"HZ-K1","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"04/04/2026 07:20","text":"ההתנגדות האסלאמית בלבנון: תקפנו את עמדת מירון בשני טילי בורקן ואושרה הפגיעה.","lat":32.997,"lon":35.421},{"id":"HZ-T1","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"04/04/2026 11:05","text":"נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.","lat":33.113,"lon":35.137},{"id":"IR-S1","actor":"IRAN","domain":"SOCIAL","datetime":"04/04/2026 09:00","text":"סוכנות תסנים: דובר משמרות המהפכה מאשר המשך תמיכת איראן בהתנגדות בפלסטין ולבנון.","lat":null,"lon":null},{"id":"O-K1","actor":"OTHERS","domain":"KINETIC","datetime":"04/04/2026 13:15","text":"גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.","lat":32.46,"lon":35.3}];
+const MAP_ITEMS = [{"id":"H-K1","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 06:14","text":"שהידי אל-קסאם: תקפנו ריכוז חיילי כיבוש בירי חי צפון מחנה אל-נוסיירט, ואושרו פגיעות בשורותיהם.","lat":31.426,"lon":34.395},{"id":"H-K2","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 08:52","text":"גדודי אל-קסאם: ירי 3 פגזי מרגמה לעבר כלי רכב של הכיבוש המרוכזים על ציר נצרים.","lat":31.389,"lon":34.337},{"id":"H-S1","actor":"HAMAS","domain":"SOCIAL","datetime":"04/04/2026 10:30","text":"המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.","lat":null,"lon":null},{"id":"HZ-K1","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"04/04/2026 07:20","text":"ההתנגדות האסלאמית בלבנון: תקפנו את עמדת מירון בשני טילי בורקן ואושרה הפגיעה.","lat":32.997,"lon":35.421},{"id":"HZ-T1","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"04/04/2026 11:05","text":"נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.","lat":33.113,"lon":35.137},{"id":"IR-S1","actor":"IRAN","domain":"SOCIAL","datetime":"04/04/2026 09:00","text":"סוכנות תסנים: דובר משמרות המהפכה מאשר המשך תמיכת איראן בהתנגדות בפלסטין ולבנון.","lat":null,"lon":null},{"id":"O-K1","actor":"OTHERS","domain":"KINETIC","datetime":"04/04/2026 13:15","text":"גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.","lat":32.46,"lon":35.3}];
 
 const ACTOR_COLOR = {
   HAMAS:'#dc2626', HEZBOLLAH:'#ea580c', IRAN:'#7c3aed', OTHERS:'#16a34a'
