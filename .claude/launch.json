@@ -4,7 +4,7 @@
     {
       "name": "osint-site",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "docs", "-p", "3000"],
+      "runtimeArgs": ["http-server", "docs", "-p", "3000", "--cors", "-c-1"],
       "port": 3000
     }
   ]
