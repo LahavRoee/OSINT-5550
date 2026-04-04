@@ -17,6 +17,7 @@ const builder = require('../src/services/sitebuilder');
 const sheldon = require('../src/services/sheldon');
 const digest = require('../src/services/digest');
 const { sendAlert } = require('../src/services/sheldon');
+const napkin = require('../src/services/napkin');
 const { getDisplayDateString } = require('../src/utils/hebrew-date');
 
 // ─── Israel timezone helpers ──────────────────────────────────────────────────
@@ -117,6 +118,10 @@ async function run() {
 
     // Mark today's updates as processed
     await db.markProcessed(todayUpdates.map(u => u.id), digestId);
+
+    // Save to napkin intel vault (non-blocking)
+    console.log('📚 שומר בnapkin intel vault...');
+    await napkin.saveDigest(synthesisData);
 
     // 4. Auto-push to GitHub Pages
     console.log('📤 דוחף לGitHub Pages...');
