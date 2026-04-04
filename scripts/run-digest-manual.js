@@ -13,9 +13,12 @@ const sheldon = require('../src/services/sheldon');
 const config = require('../src/config');
 
 async function run() {
-  const jsonFile = process.argv[2];
+  const args = process.argv.slice(2);
+  const rebuildOnly = args.includes('--rebuild');
+  const jsonFile = args.find(a => !a.startsWith('--'));
+
   if (!jsonFile || !fs.existsSync(jsonFile)) {
-    console.error('Usage: node scripts/run-digest-manual.js <synthesis.json>');
+    console.error('Usage: node scripts/run-digest-manual.js <synthesis.json> [--rebuild]');
     process.exit(1);
   }
 
@@ -23,18 +26,21 @@ async function run() {
   const version = synthesisData.meta.version;
   const today = synthesisData.meta.date.split('/').reverse().join('-'); // DD/MM/YYYY → YYYY-MM-DD
 
-  console.log(`\n\uD83D\uDE80 מפיק תחקיר ${version} (ידני)...\n`);
+  console.log(`\n\uD83D\uDE80 מפיק תחקיר ${version} (ידני)${rebuildOnly ? ' — rebuild only' : ''}...\n`);
 
-  // Save digest to DB
-  const digestId = await db.createDigest({
-    version,
-    date: today,
-    threatLevel: synthesisData.meta.threat_level,
-    headline: synthesisData.situational_picture,
-    newCount: synthesisData.meta.new_items,
-    historicalCount: synthesisData.meta.historical_items,
-    synthesisJson: synthesisData,
-  });
+  let digestId = 1;
+  if (!rebuildOnly) {
+    // Save digest to DB
+    digestId = await db.createDigest({
+      version,
+      date: today,
+      threatLevel: synthesisData.meta.threat_level,
+      headline: synthesisData.situational_picture,
+      newCount: synthesisData.meta.new_items,
+      historicalCount: synthesisData.meta.historical_items,
+      synthesisJson: synthesisData,
+    });
+  }
   synthesisData.digestId = digestId;
 
   // PDF
@@ -47,18 +53,20 @@ async function run() {
   const docsPath = await builder.buildVersion(synthesisData, version);
   console.log(`   \u2192 ${docsPath}`);
 
-  // Update digest
-  await db.updateDigest(digestId, { pdf_path: pdfPath, docs_path: docsPath });
+  if (!rebuildOnly) {
+    // Update digest
+    await db.updateDigest(digestId, { pdf_path: pdfPath, docs_path: docsPath });
 
-  // Mark updates as processed
-  const updates = await db.getUnprocessed();
-  if (updates.length > 0) {
-    await db.markProcessed(updates.map(u => u.id), digestId);
+    // Mark updates as processed
+    const updates = await db.getUnprocessed();
+    if (updates.length > 0) {
+      await db.markProcessed(updates.map(u => u.id), digestId);
+    }
+
+    // Sheldon
+    console.log('\uD83D\uDCF1 שולח לרועי דרך שלדון...');
+    await sheldon.sendDigestViaSheldon(synthesisData);
   }
-
-  // Sheldon
-  console.log('\uD83D\uDCF1 שולח לרועי דרך שלדון...');
-  await sheldon.sendDigestViaSheldon(synthesisData);
 
   console.log(`\n\u2705 הושלם!`);
   console.log(`   PDF: ${pdfPath}`);

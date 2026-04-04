@@ -2,6 +2,11 @@
  * Hebrew date utilities for OSINT reports
  */
 
+const EN_MONTHS = [
+  '', 'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+  'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER',
+];
+
 const HEBREW_MONTHS = [
   '', 'ניסן', 'אייר', 'סיוון', 'תמוז', 'אב', 'אלול',
   'תשרי', 'חשוון', 'כסלו', 'טבת', 'שבט', 'אדר', 'אדר ב׳'
@@ -128,11 +133,24 @@ function getGregorianDateString(dateStr) {
   return `יום ${dayName}, ${day} ${monthNames[month]} ${year}`;
 }
 
+function getDisplayDateString(dateStr) {
+  // Returns "04-APRIL-2026"
+  let year, month, day;
+  if (dateStr.includes('-')) {
+    [year, month, day] = dateStr.split('-').map(Number);
+  } else {
+    [day, month, year] = dateStr.split('/').map(Number);
+  }
+  const dd = String(day).padStart(2, '0');
+  return `${dd}-${EN_MONTHS[month]}-${year}`;
+}
+
 function getBothDates(dateStr) {
   return {
     gregorian: getGregorianDateString(dateStr),
     hebrew: getHebrewDateString(dateStr),
+    display: getDisplayDateString(dateStr),
   };
 }
 
-module.exports = { getHebrewDateString, getGregorianDateString, getBothDates };
+module.exports = { getHebrewDateString, getGregorianDateString, getDisplayDateString, getBothDates };

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
 const config = require('../config');
-const { getBothDates } = require('../utils/hebrew-date');
+const { getBothDates, getDisplayDateString } = require('../utils/hebrew-date');
 
 const ACTOR_NAMES = {
   HAMAS: 'חמאס',
@@ -121,6 +121,7 @@ function renderHtml(data, opts) {
     .replace('{{COMMANDER_NOTE}}', filteredData.commander_note || '')
     .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
     .replace(/\{\{HEBREW_DATE\}\}/g, dates.hebrew)
+    .replace(/\{\{DISPLAY_DATE\}\}/g, dates.display)
     .replace('{{LOGO_PATH}}', 'file:///' + logoPath)
     .replace('{{SECTOR_TITLE}}', sectorTitle);
 
@@ -140,12 +141,13 @@ async function generate(data, version, sectorOpts) {
     fs.mkdirSync(config.paths.digests, { recursive: true });
   }
 
-  // Build filename with sector suffix
+  // Build filename: OSINT-5550_04-APRIL-2026[-sector].pdf
+  const displayDate = getDisplayDateString(data.meta.date);
   let suffix = '';
   if (sectorOpts?.actor) suffix = `-${sectorOpts.actor.toLowerCase()}`;
   if (sectorOpts?.domain) suffix = `-${sectorOpts.domain.toLowerCase()}`;
 
-  const pdfPath = path.join(config.paths.digests, `${version}${suffix}.pdf`);
+  const pdfPath = path.join(config.paths.digests, `OSINT-5550_${displayDate}${suffix}.pdf`);
 
   const browser = await puppeteer.launch({
     headless: true,

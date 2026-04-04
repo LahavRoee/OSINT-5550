@@ -361,6 +361,26 @@
     line-height: 1.5;
   }
 
+  .item-source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: auto;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    transition: background 0.15s;
+    min-height: 28px;
+    white-space: nowrap;
+  }
+  .item-source-link:active { background: rgba(59, 130, 246, 0.25); }
+  .item-source-link svg { flex-shrink: 0; }
+
   /* --- Alerts --- */
   .alerts-section {
     margin-top: 28px;
@@ -674,8 +694,8 @@
 </header>
 
 <section class="hero">
-  <div class="hero-dates">{{GREGORIAN_DATE}} | {{HEBREW_DATE}}</div>
-  <h1>{{HEADLINE}}</h1>
+  <div class="hero-dates">{{HEBREW_DATE}} | {{GREGORIAN_DATE}}</div>
+  <h1>{{DISPLAY_DATE}}</h1>
 
   <!-- Commander summary — first thing the commander sees -->
   <div class="commander-summary">

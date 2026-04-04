@@ -62,6 +62,7 @@ ${histSection}
           "action": "<המלצה לפעולה>",
           "confidence": "HIGH|MEDIUM|LOW",
           "confidence_reason": "<למה רמת ביטחון זו>",
+          "source_url": "<URL של ציוץ/פוסט מקורי, או null אם אין>",
           "is_persistent": false,
           "keep_until": "YYYY-MM-DD"
         }

@@ -20,12 +20,19 @@ const ACTOR_EMOJIS = {
 };
 
 function buildItemCard(item) {
+  const sourceLink = item.source_url
+    ? `<a href="${item.source_url}" target="_blank" rel="noopener" class="item-source-link" title="פתח מקור מקורי">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        מקור
+      </a>`
+    : '';
   return `
     <div class="item-card" data-actor="${item.actor}" data-domain="${item.domain}">
       <div class="item-top">
         <span class="item-id">${item.id}</span>
         <span class="domain-tag">${item.domain}</span>
         <span class="confidence confidence-${item.confidence}">${item.confidence}</span>
+        ${sourceLink}
       </div>
       <div class="item-title">${item.title}</div>
       <div class="item-fields">
@@ -93,6 +100,7 @@ function buildVersionPage(data) {
   html = html
     .replace(/\{\{VERSION\}\}/g, data.meta.version)
     .replace(/\{\{THREAT_LEVEL\}\}/g, data.meta.threat_level)
+    .replace(/\{\{DISPLAY_DATE\}\}/g, dates.display)
     .replace(/\{\{HEADLINE\}\}/g, data.situational_picture.substring(0, 80))
     .replace(/\{\{SITUATIONAL_PICTURE\}\}/g, data.situational_picture)
     .replace('{{TAKEAWAYS}}', takeaways)
