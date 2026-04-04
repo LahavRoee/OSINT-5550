@@ -241,8 +241,8 @@ function buildVersionPage(data) {
     `class="actor-tab active" data-actor="${firstActive}">`
   );
   html = html.replace(
-    `id="panel-${firstActive}"`,
-    `id="panel-${firstActive}" class="actor-panel active"`
+    `class="actor-panel" id="panel-${firstActive}"`,
+    `class="actor-panel active" id="panel-${firstActive}"`
   );
 
   return html;
