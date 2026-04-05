@@ -311,7 +311,16 @@ async function buildVersion(data, version) {
   const versionHtml = buildVersionPage(data);
   fs.writeFileSync(path.join(versionDir, 'index.html'), versionHtml, 'utf-8');
 
-  const pdfSrc = path.join(config.paths.digests, `${version}.pdf`);
+  // PDF may be named by display date (OSINT-5550_DD-MONTH-YYYY.pdf) or by version
+  const { getDisplayDateString } = require('../utils/hebrew-date');
+  const todayIL = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+  }).format(new Date());
+  const displayDate = getDisplayDateString(todayIL);
+  const pdfByDate = path.join(config.paths.digests, `OSINT-5550_${displayDate}.pdf`);
+  const pdfByVersion = path.join(config.paths.digests, `${version}.pdf`);
+  const pdfSrc = fs.existsSync(pdfByDate) ? pdfByDate : pdfByVersion;
   if (fs.existsSync(pdfSrc)) {
     fs.copyFileSync(pdfSrc, path.join(versionDir, 'digest.pdf'));
   }
