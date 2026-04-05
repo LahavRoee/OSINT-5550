@@ -127,11 +127,11 @@ async function run() {
     console.log('📤 דוחף לGitHub Pages...');
     pushToGitHub(today.version, today.display);
 
-    // 5. Send digest to Roee via Sheldon
-    console.log('📱 שולח לרועי דרך שלדון...');
-    await sheldon.sendDigestViaSheldon(synthesisData);
+    // 5. Send REVIEW REQUEST to group — wait for "אשר" before sending PDF
+    console.log('📱 שולח בקשת סקירה לקבוצה דרך שלדון...');
+    await sheldon.sendReviewRequest(synthesisData, pdfPath);
 
-    console.log(`\n✅ תחקיר ${today.version} הופק ונשלח בהצלחה!`);
+    console.log(`\n✅ תחקיר ${today.version} הופק ונשלח לסקירה!`);
     console.log(`   PDF: ${pdfPath}`);
     console.log(`   אתר: https://${process.env.GITHUB_USERNAME || 'LahavRoee'}.github.io/OSINT-5550/${today.version}/`);
 

@@ -1,6 +1,7 @@
 const initSqlJs = require('sql.js');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const config = require('./config');
 
 let db = null;
@@ -9,6 +10,7 @@ const SCHEMA = `
 CREATE TABLE IF NOT EXISTS updates (
   id                INTEGER PRIMARY KEY AUTOINCREMENT,
   raw_text          TEXT    NOT NULL,
+  content_hash      TEXT,
   source_number     TEXT,
   source_name       TEXT,
   received_at       TEXT    DEFAULT (datetime('now','localtime')),
@@ -19,6 +21,17 @@ CREATE TABLE IF NOT EXISTS updates (
   relevance_score   INTEGER DEFAULT 5,
   still_relevant    INTEGER DEFAULT 1,
   expires_at        TEXT
+);
+
+CREATE TABLE IF NOT EXISTS pending_review (
+  id          INTEGER PRIMARY KEY,
+  digest_id   INTEGER NOT NULL,
+  version     TEXT    NOT NULL,
+  pdf_path    TEXT,
+  web_url     TEXT,
+  maps_json   TEXT,
+  created_at  TEXT    DEFAULT (datetime('now','localtime')),
+  expires_at  TEXT
 );
 
 CREATE TABLE IF NOT EXISTS digests (
@@ -80,14 +93,39 @@ function save() {
   fs.writeFileSync(config.paths.db, buffer);
 }
 
+// --- Deduplication helper ---
+
+function hashText(text) {
+  // Normalize: trim, lowercase, collapse whitespace → stable 16-char hex fingerprint
+  const normalized = text.trim().toLowerCase().replace(/\s+/g, ' ');
+  return crypto.createHash('sha256').update(normalized).digest('hex').substring(0, 16);
+}
+
+async function isDuplicate(hash) {
+  const d = await getDb();
+  const result = d.exec(
+    `SELECT id FROM updates WHERE content_hash = ? LIMIT 1`,
+    [hash]
+  );
+  return result.length > 0 && result[0].values.length > 0;
+}
+
 // --- Updates ---
 
 async function insertUpdate({ rawText, sourceNumber, sourceName, actor, domain }) {
   const d = await getDb();
+  const hash = hashText(rawText);
+
+  // Deduplication: skip if identical content already exists
+  if (await isDuplicate(hash)) {
+    console.log(`  [dedup] Skipping duplicate message (hash: ${hash})`);
+    return null; // null = duplicate, not inserted
+  }
+
   d.run(
-    `INSERT INTO updates (raw_text, source_number, source_name, actor, domain)
-     VALUES (?, ?, ?, ?, ?)`,
-    [rawText, sourceNumber || null, sourceName || null, actor || null, domain || null]
+    `INSERT INTO updates (raw_text, content_hash, source_number, source_name, actor, domain)
+     VALUES (?, ?, ?, ?, ?, ?)`,
+    [rawText, hash, sourceNumber || null, sourceName || null, actor || null, domain || null]
   );
   const stmt = d.prepare('SELECT last_insert_rowid() as id');
   stmt.step();
@@ -187,6 +225,42 @@ async function getDigests() {
   return rowsToObjects(result);
 }
 
+// --- Pending Review ---
+
+async function setPendingReview({ digestId, version, pdfPath, webUrl, mapsJson, timeoutMinutes }) {
+  const d = await getDb();
+  const mins = timeoutMinutes || 120;
+  // Clear any existing pending review first
+  d.run('DELETE FROM pending_review');
+  d.run(
+    `INSERT INTO pending_review (digest_id, version, pdf_path, web_url, maps_json, expires_at)
+     VALUES (?, ?, ?, ?, ?, datetime('now', '+${mins} minutes', 'localtime'))`,
+    [digestId, version, pdfPath || null, webUrl || null,
+     typeof mapsJson === 'string' ? mapsJson : JSON.stringify(mapsJson || {})]
+  );
+  save();
+}
+
+async function getPendingReview() {
+  const d = await getDb();
+  const result = d.exec(
+    `SELECT * FROM pending_review
+     WHERE expires_at > datetime('now','localtime')
+     LIMIT 1`
+  );
+  const rows = rowsToObjects(result);
+  if (!rows.length) return null;
+  const row = rows[0];
+  try { row.maps = JSON.parse(row.maps_json || '{}'); } catch { row.maps = {}; }
+  return row;
+}
+
+async function clearPendingReview() {
+  const d = await getDb();
+  d.run('DELETE FROM pending_review');
+  save();
+}
+
 // --- Helpers ---
 
 function rowsToObjects(result) {
@@ -200,7 +274,9 @@ function rowsToObjects(result) {
 }
 
 module.exports = {
-  getDb, save, insertUpdate, getUnprocessed, getUpdatesForDate, markProcessed,
+  getDb, save, hashText, isDuplicate,
+  insertUpdate, getUnprocessed, getUpdatesForDate, markProcessed,
   getPersistentIntel, upsertPersistentIntel,
   createDigest, updateDigest, getDigests,
+  setPendingReview, getPendingReview, clearPendingReview,
 };

@@ -11,12 +11,36 @@
 const http = require('http');
 const db = require('../database');
 const { classifyUpdate } = require('../services/ingest');
+const config = require('../config');
 
 const PORT = process.env.WEBHOOK_PORT || 8099;
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET || '';
 
 // Source group name — only process messages from this group
 const OSINT_GROUP_NAME = 'דיווחי OSINT - דביר ורועי 🫡';
+
+// Keywords that trigger digest approval
+const APPROVE_KEYWORDS = ['אשר', 'approve', '✅', 'approved', 'אישור', 'ok', 'אוקיי'];
+const REJECT_KEYWORDS  = ['בטל', 'reject', '❌', 'cancel', 'ביטול', 'דחה'];
+
+function isApproval(text) {
+  const t = text.trim().toLowerCase();
+  return APPROVE_KEYWORDS.some(kw => t === kw.toLowerCase() || t.startsWith(kw.toLowerCase()));
+}
+function isRejection(text) {
+  const t = text.trim().toLowerCase();
+  return REJECT_KEYWORDS.some(kw => t === kw.toLowerCase() || t.startsWith(kw.toLowerCase()));
+}
+
+// Authorized approvers — Roee and Dvir's numbers
+function isAuthorizedApprover(senderNumber) {
+  const authorized = [
+    config.sheldon.roeeNumber,
+    config.sheldon.dvirNumber,
+  ].filter(Boolean).map(n => n.replace(/\D/g, ''));
+  const sender = (senderNumber || '').replace(/\D/g, '');
+  return authorized.some(n => sender.endsWith(n) || n.endsWith(sender));
+}
 
 function parseBody(req) {
   return new Promise((resolve, reject) => {
@@ -80,6 +104,45 @@ const server = http.createServer(async (req, res) => {
 
     // Skip very short messages (system notifications, stickers, etc.)
     if (message.trim().length < 20) {
+      // BUT first check if it's an approval/rejection keyword (these are intentionally short)
+      if (isApproval(message) && isAuthorizedApprover(sender)) {
+        // Handle approval
+        const pending = await db.getPendingReview();
+        if (pending) {
+          console.log(`[webhook] ✅ APPROVAL received from ${name || sender} — sending digest ${pending.version}`);
+          await db.clearPendingReview();
+          // Trigger PDF send asynchronously
+          setImmediate(async () => {
+            try {
+              const sheldon = require('../services/sheldon');
+              await sheldon.sendApprovedDigest(pending);
+            } catch (e) {
+              console.error('[webhook] Failed to send approved digest:', e.message);
+            }
+          });
+          sendJson(res, 200, { status: 'approved', version: pending.version });
+        } else {
+          console.log(`[webhook] ℹ️  Approval received but no pending review found`);
+          sendJson(res, 200, { status: 'no_pending' });
+        }
+        return;
+      }
+
+      if (isRejection(message) && isAuthorizedApprover(sender)) {
+        const pending = await db.getPendingReview();
+        if (pending) {
+          console.log(`[webhook] ❌ REJECTION received from ${name || sender} — cancelling digest ${pending.version}`);
+          await db.clearPendingReview();
+          const sheldon = require('../services/sheldon');
+          await sheldon.sendViaSheldon(
+            `❌ *תחקיר ${pending.version} בוטל*\nהתחקיר לא נשלח לקבוצה.\nניתן להפיק מחדש באופן ידני.`,
+            sender
+          );
+        }
+        sendJson(res, 200, { status: 'rejected' });
+        return;
+      }
+
       sendJson(res, 200, { status: 'ignored', reason: 'too short' });
       return;
     }
@@ -94,6 +157,13 @@ const server = http.createServer(async (req, res) => {
       actor: classification.actor,
       domain: classification.domain,
     });
+
+    // id === null means duplicate
+    if (id === null) {
+      console.log(`[webhook] ⚠️  Duplicate message ignored from ${name || sender || 'unknown'}`);
+      sendJson(res, 200, { status: 'duplicate' });
+      return;
+    }
 
     console.log(`[webhook] ✅ Saved update #${id} (${classification.actor}/${classification.domain}) from ${name || sender || 'unknown'}`);
     sendJson(res, 200, { status: 'ok', id, actor: classification.actor, domain: classification.domain });

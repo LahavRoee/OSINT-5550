@@ -72,6 +72,54 @@ function buildActorSection(actorKey, actorData) {
     </div>`;
 }
 
+// ─── Build summary section (Lebanon first) ───────────────────────────────────
+
+function buildSummarySection(data, mapsLinks) {
+  const actorOrder = ['HEZBOLLAH', 'HAMAS', 'IRAN', 'OTHERS'];
+  const ACTOR_NAMES_HEB = { HEZBOLLAH:'חיזבאללה / לבנון', HAMAS:'חמאס / עזה', IRAN:'איראן', OTHERS:'אחרים' };
+  const DOMAIN_ORDER = ['KINETIC','TERRAIN','SOCIAL','CYBER','GENERAL'];
+
+  const rows = actorOrder.map(key => {
+    const items = data.actors?.[key]?.items || [];
+    if (!items.length) return '';
+
+    // Domain breakdown
+    const domainCounts = {};
+    for (const item of items) {
+      domainCounts[item.domain] = (domainCounts[item.domain] || 0) + 1;
+    }
+    const domainStr = DOMAIN_ORDER
+      .filter(d => domainCounts[d])
+      .map(d => `${DOMAIN_HEB[d]}: ${domainCounts[d]}`)
+      .join(' · ');
+
+    const mapLink = mapsLinks?.[key]
+      ? `<a class="maps-link" href="${mapsLinks[key].url}">🗺 מפה (${mapsLinks[key].count} מיקומים)</a>`
+      : '';
+
+    return `<tr class="summary-row-${key}">
+      <td>${ACTOR_NAMES_HEB[key]}</td>
+      <td class="summary-count">${items.length}</td>
+      <td>${domainStr}</td>
+      <td>${mapLink}</td>
+    </tr>`;
+  }).filter(Boolean).join('');
+
+  return `
+    <div class="summary-title">סיכום מצב — לבנון ראשון</div>
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>גזרה</th>
+          <th>ידיעות</th>
+          <th>תחומים</th>
+          <th>מפה</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
 // ─── Render HTML ──────────────────────────────────────────────────────────────
 
 function renderHtml(data) {
@@ -83,6 +131,11 @@ function renderHtml(data) {
     .map(key => buildActorSection(key, data.actors[key] || { items: [] }))
     .join('');
 
+  // Build maps links for summary
+  const sheldon = require('./sheldon');
+  const mapsLinks = sheldon.buildMapsLinks(data.actors || {});
+  const summarySection = buildSummarySection(data, mapsLinks);
+
   const totalItems = actorOrder.reduce((n, k) => n + (data.actors[k]?.items?.length || 0), 0);
 
   const dateStr = data.meta.date;
@@ -91,13 +144,14 @@ function renderHtml(data) {
   const logoBase64 = getLogoBase64();
 
   html = html
-    .replace(/\{\{VERSION\}\}/g,        data.meta.version)
-    .replace(/\{\{ITEM_COUNT\}\}/g,     String(totalItems))
+    .replace(/\{\{VERSION\}\}/g,         data.meta.version)
+    .replace(/\{\{ITEM_COUNT\}\}/g,      String(totalItems))
     .replace(/\{\{ACTORS_SECTIONS\}\}/g, actorsSections)
-    .replace(/\{\{GREGORIAN_DATE\}\}/g, dates.gregorian)
-    .replace(/\{\{HEBREW_DATE\}\}/g,    dates.hebrew)
-    .replace(/\{\{DISPLAY_DATE\}\}/g,   dates.display)
-    .replace('{{LOGO_BASE64}}',          logoBase64);
+    .replace(/\{\{SUMMARY_SECTION\}\}/g, summarySection)
+    .replace(/\{\{GREGORIAN_DATE\}\}/g,  dates.gregorian)
+    .replace(/\{\{HEBREW_DATE\}\}/g,     dates.hebrew)
+    .replace(/\{\{DISPLAY_DATE\}\}/g,    dates.display)
+    .replace('{{LOGO_BASE64}}',           logoBase64);
 
   return html;
 }
