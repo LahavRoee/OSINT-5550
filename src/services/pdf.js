@@ -114,6 +114,9 @@ async function generate(data, version) {
   const displayDate = getDisplayDateString(data.meta.date);
   const pdfPath = path.join(config.paths.digests, `OSINT-5550_${displayDate}.pdf`);
 
+  // Remove existing file to avoid Windows file-lock errors on overwrite
+  try { if (fs.existsSync(pdfPath)) fs.unlinkSync(pdfPath); } catch (_) {}
+
   const logoBase64 = getLogoBase64();
 
   // Puppeteer header shown on every page
@@ -140,7 +143,7 @@ async function generate(data, version) {
       border-top:1px solid #1e293b; background:#070d1a;
       text-align:center; font-size:8px; color:#334155;
       font-family:Arial,sans-serif;
-    ">OSINT יל"ק 5550 | מידע פתוח בלבד | ${data.meta.version}</div>`;
+    ">OSINT יל"ק 5550 — יסוד האש &nbsp;|&nbsp; הופק ע"י רועי להב (רס"ן, סמג"ד ב') &nbsp;|&nbsp; מידע פתוח בלבד &nbsp;|&nbsp; ${data.meta.version}</div>`;
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -150,8 +153,8 @@ async function generate(data, version) {
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'networkidle0' });
 
-  await page.pdf({
-    path: pdfPath,
+  // Generate to buffer first to avoid Windows file-lock errors on overwrite
+  const pdfBuffer = await page.pdf({
     format: 'A4',
     printBackground: true,
     displayHeaderFooter: true,
@@ -161,6 +164,19 @@ async function generate(data, version) {
   });
 
   await browser.close();
+
+  // Write to temp file first, then rename — avoids Windows file-lock on overwrite
+  const tmpPath = pdfPath + '.tmp';
+  fs.writeFileSync(tmpPath, pdfBuffer);
+  try {
+    if (fs.existsSync(pdfPath)) fs.unlinkSync(pdfPath);
+  } catch (_) {} // ignore if still locked; rename may still work
+  try {
+    fs.renameSync(tmpPath, pdfPath);
+  } catch (_) {
+    // If rename fails (e.g. locked), keep .tmp as the result
+    return tmpPath;
+  }
   return pdfPath;
 }
 
