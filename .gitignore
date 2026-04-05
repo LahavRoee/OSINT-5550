@@ -4,3 +4,6 @@ data/
 digests/
 *.db
 .DS_Store
+# Preview artifacts
+pdf_*.png
+pdf_preview*.png

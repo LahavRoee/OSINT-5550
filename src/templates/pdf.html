@@ -11,260 +11,257 @@
     font-family: 'Heebo', sans-serif;
     background: #070d1a;
     color: #e2e8f0;
-    padding: 40px;
-    font-size: 13px;
+    padding: 0 0 30px;
+    font-size: 12px;
     line-height: 1.6;
     direction: rtl;
   }
 
-  .header {
+  /* ── Cover / Title page ── */
+  .cover {
     text-align: center;
+    padding: 40px 40px 32px;
     border-bottom: 2px solid #c9a84c;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
   }
 
-  .header h1 {
-    font-size: 28px;
+  .cover-emblem {
+    margin-bottom: 18px;
+  }
+
+  .cover-emblem img {
+    height: 110px;
+    filter: invert(1) sepia(0.35) saturate(1.5) drop-shadow(0 0 20px rgba(201,168,76,.6));
+    mix-blend-mode: screen;
+  }
+
+  .cover-unit {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #a08838;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .cover-title {
+    font-size: 22px;
     font-weight: 900;
     color: #c9a84c;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 
-  .header .sub {
-    font-size: 14px;
+  .cover-subtitle {
+    font-size: 13px;
     color: #94a3b8;
+    margin-bottom: 16px;
   }
 
-  .meta-bar {
+  .cover-meta {
     display: flex;
     justify-content: center;
-    gap: 24px;
-    margin: 16px 0;
-    font-size: 13px;
+    gap: 20px;
+    font-size: 12px;
     color: #94a3b8;
   }
 
-  .threat-badge {
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 14px;
+  .cover-meta span { white-space: nowrap; }
+  .cover-meta .count { color: #c9a84c; font-weight: 700; }
+
+  .cover-credit {
+    margin-top: 14px;
+    font-size: 10px;
+    color: #475569;
+    letter-spacing: 0.5px;
   }
+  .cover-credit strong { color: #a08838; }
 
-  .threat-LOW { background: #166534; color: #bbf7d0; }
-  .threat-MEDIUM { background: #854d0e; color: #fef08a; }
-  .threat-HIGH { background: #991b1b; color: #fecaca; }
-  .threat-CRITICAL { background: #dc2626; color: #fff; }
+  /* ── Section body ── */
+  .body { padding: 0 40px; }
 
-  .situation {
-    background: #0d1a30;
-    border-right: 4px solid #c9a84c;
-    padding: 16px 20px;
-    margin-bottom: 24px;
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-  }
-
-  .takeaways {
-    margin-bottom: 30px;
-  }
-
-  .takeaways h2 {
-    color: #c9a84c;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-
-  .takeaways ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .takeaways li {
-    padding: 6px 12px;
-    margin-bottom: 6px;
-    background: #0d1a30;
-    border-radius: 6px;
+  /* ── Summary table ── */
+  .summary-title {
     font-size: 13px;
-  }
-
-  .takeaways li::before {
-    content: '\\25C6 ';
+    font-weight: 700;
     color: #c9a84c;
+    border-bottom: 1px solid #c9a84c;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
   }
 
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 11px;
+  }
+
+  .summary-table th {
+    background: #0d1a30;
+    color: #94a3b8;
+    font-weight: 700;
+    padding: 6px 10px;
+    text-align: right;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .summary-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #1e293b;
+    color: #e2e8f0;
+  }
+
+  .summary-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+  .summary-count { font-weight: 900; color: #c9a84c; }
+
+  .summary-row-HEZBOLLAH td:first-child { border-right: 3px solid #ea580c; }
+  .summary-row-HAMAS     td:first-child { border-right: 3px solid #dc2626; }
+  .summary-row-IRAN      td:first-child { border-right: 3px solid #7c3aed; }
+  .summary-row-OTHERS    td:first-child { border-right: 3px solid #16a34a; }
+
+  .maps-link {
+    font-size: 10px;
+    color: #60a5fa;
+    text-decoration: none;
+  }
+
+  /* ── Actor section ── */
   .actor-section {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
     page-break-inside: avoid;
   }
 
   .actor-header {
-    font-size: 18px;
+    font-size: 13px;
     font-weight: 700;
-    padding: 8px 16px;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 7px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
   }
 
-  .actor-HAMAS .actor-header { background: #991b1b22; border-right: 4px solid #dc2626; color: #fca5a5; }
-  .actor-HEZBOLLAH .actor-header { background: #9a341222; border-right: 4px solid #ea580c; color: #fdba74; }
-  .actor-IRAN .actor-header { background: #5b21b622; border-right: 4px solid #7c3aed; color: #c4b5fd; }
-  .actor-OTHERS .actor-header { background: #16653422; border-right: 4px solid #16a34a; color: #86efac; }
+  .actor-header.actor-HEZBOLLAH { background: #9a341222; border-right: 4px solid #ea580c; color: #fdba74; }
+  .actor-header.actor-HAMAS     { background: #991b1b22; border-right: 4px solid #dc2626; color: #fca5a5; }
+  .actor-header.actor-IRAN      { background: #5b21b622; border-right: 4px solid #7c3aed; color: #c4b5fd; }
+  .actor-header.actor-OTHERS    { background: #16653422; border-right: 4px solid #16a34a; color: #86efac; }
 
+  /* ── Item card — sitrep format ── */
   .item-card {
     background: #0d1a30;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 10px;
-    border-right: 3px solid #334155;
+    border-radius: 6px;
+    margin-bottom: 7px;
+    overflow: hidden;
     page-break-inside: avoid;
   }
 
-  .item-card .item-id {
-    font-weight: 700;
-    font-size: 11px;
-    color: #94a3b8;
-    margin-left: 8px;
+  .item-card.item-HEZBOLLAH { border-right: 3px solid #ea580c; }
+  .item-card.item-HAMAS     { border-right: 3px solid #dc2626; }
+  .item-card.item-IRAN      { border-right: 3px solid #7c3aed; }
+  .item-card.item-OTHERS    { border-right: 3px solid #16a34a; }
+
+  .item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    border-bottom: 1px solid #1e293b;
+    background: rgba(0,0,0,.2);
   }
 
-  .item-card .item-title {
-    font-weight: 700;
-    font-size: 14px;
-    color: #f1f5f9;
-    margin-bottom: 8px;
-  }
-
-  .item-card .field {
-    margin-bottom: 4px;
+  .item-time {
     font-size: 12px;
+    font-weight: 900;
+    color: #c9a84c;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
   }
 
-  .item-card .field-label {
+  .item-id {
+    font-size: 9px;
     font-weight: 700;
-    color: #94a3b8;
-    display: inline;
+    color: #475569;
+    background: #070d1a;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+    flex-shrink: 0;
   }
-
-  .item-card .action {
-    margin-top: 8px;
-    padding: 6px 12px;
-    background: #16653433;
-    border-radius: 6px;
-    color: #86efac;
-    font-weight: 500;
-    font-size: 12px;
-  }
-
-  .confidence {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  .confidence-HIGH { background: #166534; color: #bbf7d0; }
-  .confidence-MEDIUM { background: #854d0e; color: #fef08a; }
-  .confidence-LOW { background: #78350f; color: #fed7aa; }
 
   .domain-tag {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(201,168,76,.1);
+    color: #a08838;
+  }
+
+  .item-body {
+    padding: 7px 12px 8px;
     font-size: 11px;
-    font-weight: 500;
-    background: #1e293b;
-    color: #94a3b8;
-    margin-left: 6px;
+    line-height: 1.65;
+    color: #e2e8f0;
   }
 
-  .alerts-section {
-    margin-bottom: 24px;
+  .item-body-with-map {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
   }
 
-  .alerts-section h2 {
-    color: #c9a84c;
-    font-size: 16px;
-    margin-bottom: 10px;
+  .item-text {
+    flex: 1;
+    white-space: pre-wrap;
+    min-width: 0;
   }
 
-  .alert-item {
-    background: #0d1a30;
-    padding: 10px 14px;
-    margin-bottom: 6px;
-    border-radius: 6px;
-    border-right: 3px solid #dc2626;
-    font-size: 12px;
+  .item-mini-map {
+    flex-shrink: 0;
+    width: 130px;
+    height: 85px;
+    border-radius: 4px;
+    border: 1px solid #1e3a5f;
+    object-fit: cover;
+    opacity: 0.9;
   }
 
-  .opsec-item {
-    border-right-color: #f59e0b;
-  }
-
-  .commander-note {
-    background: #0d1a30;
-    border: 1px solid #c9a84c;
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-top: 24px;
-    font-size: 14px;
-  }
-
-  .commander-note h2 {
-    color: #c9a84c;
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-
-  .footer {
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 16px;
-    border-top: 1px solid #1e293b;
-    color: #475569;
+  /* ── Exec summary table rows ── */
+  .exec-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid #1e293b;
     font-size: 11px;
   }
 </style>
 </head>
 <body>
-  <div class="header">
-    <img src="{{LOGO_PATH}}" alt="לוגו יסוד האש" style="height:60px;margin-bottom:10px;filter:invert(1) brightness(0.85);">
-    <h1>OSINT יל"ק 5550 — יסוד האש</h1>
-    <div class="sub">תחקיר מודיעין יומי{{SECTOR_TITLE}}</div>
-    <div class="meta-bar">
-      <span style="font-weight:900;font-size:16px;color:#c9a84c;letter-spacing:1px;">{{DISPLAY_DATE}}</span>
-      <span>{{HEBREW_DATE}}</span>
-      <span class="threat-badge threat-{{THREAT_LEVEL}}">{{THREAT_LEVEL}}</span>
-      <span>{{NEW_ITEMS}} פריטים חדשים</span>
-    </div>
+
+<!-- Cover -->
+<div class="cover">
+  <div class="cover-emblem">
+    <img src="{{LOGO_BASE64}}" alt="לוגו" onerror="this.style.display='none'">
   </div>
-
-  <div class="situation">{{SITUATIONAL_PICTURE}}</div>
-
-  <div class="takeaways">
-    <h2>עיקרי היום</h2>
-    <ul>{{TAKEAWAYS}}</ul>
+  <div class="cover-unit">יל"ק 5550 — יסוד האש</div>
+  <div class="cover-title">OSINT {{VERSION}}</div>
+  <div class="cover-subtitle">ידיעות מתורגמות ומסווגות — מידע פתוח בלבד</div>
+  <div class="cover-meta">
+    <span class="count">{{ITEM_COUNT}} ידיעות</span>
+    <span>{{DISPLAY_DATE}}</span>
+    <span>{{HEBREW_DATE}}</span>
   </div>
+  <div class="cover-credit">
+    הופק ע"י <strong>רועי להב</strong> (רס"ן, סמג"ד ב') &nbsp;|&nbsp; <strong>יל"ק 5550 — יסוד האש</strong>
+  </div>
+</div>
 
+<!-- Summary page -->
+<div class="body">
+  {{SUMMARY_SECTION}}
+</div>
+
+<!-- Items -->
+<div class="body">
   {{ACTORS_SECTIONS}}
+</div>
 
-  {{RED_PATTERNS}}
-
-  {{OPSEC_ALERTS}}
-
-  <div class="commander-note">
-    <h2>הערה למפקד</h2>
-    <div>{{COMMANDER_NOTE}}</div>
-  </div>
-
-  <div class="footer">
-    יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד<br>
-    {{GREGORIAN_DATE}} | {{HEBREW_DATE}}
-  </div>
 </body>
 </html>

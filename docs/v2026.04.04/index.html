@@ -6,17 +6,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>OSINT יל"ק 5550 — v2026.04.04</title>
-<!-- Open Graph / WhatsApp preview -->
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://lahavroee.github.io/OSINT-5550/v2026.04.04/">
-<meta property="og:title" content="OSINT יל&quot;ק 5550 | 04-APRIL-2026 | HIGH">
-<meta property="og:description" content="יממה אינטנסיבית בשתי זירות עיקריות: בגזרת לבנון — עימותים כבדים בדרום, בדגש על ציר בינת ג'ביל ואלח'יאם, עם דיווחים על 60 תקיפות חזבאללה כנגד שריון ובסיסי צה"ל. בזירה האיראנית — הסלמה אסטרטגית סביב מצרי הורמוז, תקיפות משותפות איראן-תימן, ושינויים בפיקוד הצבאי האמריקאי המרמזים על מעבר לדוקטרינת פעולה מהירה.">
+<meta property="og:title" content="OSINT יל&quot;ק 5550 | 04-APRIL-2026 | 7 ידיעות">
+<meta property="og:description" content="ידיעות OSINT מתורגמות ומסווגות — 04-APRIL-2026">
 <meta property="og:image" content="https://lahavroee.github.io/OSINT-5550/assets/logo.png">
-<meta property="og:image:width" content="512">
-<meta property="og:image:height" content="512">
 <meta property="og:locale" content="he_IL">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://lahavroee.github.io/OSINT-5550/assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -32,10 +27,10 @@
     --text-dim: #94a3b8;
     --text-muted: #475569;
     --border: #1e293b;
-    --c-hamas: #dc2626;
-    --c-hizb: #ea580c;
-    --c-iran: #7c3aed;
-    --c-others: #16a34a;
+    --c-hamas:    #dc2626;
+    --c-hizb:     #ea580c;
+    --c-iran:     #7c3aed;
+    --c-others:   #16a34a;
     --radius: 12px;
   }
 
@@ -51,14 +46,14 @@
     line-height: 1.6;
   }
 
-  /* --- Sticky Header --- */
+  /* ══ Sticky Header ══════════════════════════════════════════ */
   .sticky-header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(7, 13, 26, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(7,13,26,0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
     padding: 10px 16px;
     display: flex;
@@ -75,8 +70,9 @@
   }
 
   .header-logo {
-    height: 28px;
-    filter: invert(1) brightness(0.85);
+    height: 34px;
+    filter: invert(1) sepia(0.3) saturate(1.4) drop-shadow(0 0 5px rgba(201,168,76,.45));
+    mix-blend-mode: screen;
     flex-shrink: 0;
   }
 
@@ -87,6 +83,12 @@
     white-space: nowrap;
   }
 
+  .header-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    display: none;
+  }
+
   .header-left {
     display: flex;
     align-items: center;
@@ -94,15 +96,16 @@
     flex-shrink: 0;
   }
 
-  .header-version {
+  .header-version { font-size: 11px; color: var(--text-muted); }
+
+  .header-count {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 10px;
     font-size: 12px;
     color: var(--text-dim);
-  }
-
-  .header-date {
-    font-size: 11px;
-    color: var(--text-muted);
-    display: none;
+    font-weight: 600;
   }
 
   .pdf-link {
@@ -118,888 +121,8 @@
     display: flex;
     align-items: center;
   }
-
   .pdf-link:active { background: var(--gold-dim); }
 
-  /* --- Threat Badge --- */
-  .threat-badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 11px;
-    flex-shrink: 0;
-  }
-
-  .threat-LOW { background: #166534; color: #bbf7d0; }
-  .threat-MEDIUM { background: #854d0e; color: #fef08a; }
-  .threat-HIGH { background: #991b1b; color: #fecaca; }
-  .threat-CRITICAL { background: #dc2626; color: #fff; }
-
-  /* --- Hero --- */
-  .hero {
-    padding: 28px 16px 24px;
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .hero-dates {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-  }
-
-  .hero h1 {
-    font-size: clamp(18px, 4.5vw, 24px);
-    font-weight: 900;
-    color: var(--gold);
-    margin-bottom: 16px;
-    line-height: 1.4;
-  }
-
-  .situation-box {
-    background: var(--surface);
-    border-right: 3px solid var(--gold);
-    padding: 14px 16px;
-    border-radius: 0 var(--radius) var(--radius) 0;
-    text-align: right;
-    font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 20px;
-  }
-
-  .takeaways {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .takeaway {
-    background: var(--surface);
-    padding: 12px 14px;
-    border-radius: var(--radius);
-    font-size: 13px;
-    text-align: right;
-    line-height: 1.6;
-  }
-
-  .takeaway::before {
-    content: '\25C6 ';
-    color: var(--gold);
-    font-weight: 700;
-  }
-
-  /* --- Content --- */
-  .content {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 16px 40px;
-  }
-
-  /* --- Actor Tabs --- */
-  .actor-tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 16px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding: 2px 0;
-  }
-
-  .actor-tabs::-webkit-scrollbar { display: none; }
-
-  .actor-tab {
-    padding: 10px 16px;
-    border-radius: 10px;
-    background: var(--surface);
-    border: 2px solid transparent;
-    cursor: pointer;
-    font-family: 'Heebo', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--text-dim);
-    white-space: nowrap;
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: border-color 0.2s;
-    flex-shrink: 0;
-  }
-
-  .actor-tab:active { transform: scale(0.97); }
-  .actor-tab.active { border-color: var(--gold); color: var(--text); }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .actor-tab[data-actor="HAMAS"] .dot { background: var(--c-hamas); }
-  .actor-tab[data-actor="HEZBOLLAH"] .dot { background: var(--c-hizb); }
-  .actor-tab[data-actor="IRAN"] .dot { background: var(--c-iran); }
-  .actor-tab[data-actor="OTHERS"] .dot { background: var(--c-others); }
-
-  .tab-count {
-    background: var(--surface2);
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-size: 11px;
-  }
-
-  /* --- Domain Filter --- */
-  .domain-filters {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-
-  .domain-btn {
-    padding: 6px 12px;
-    border-radius: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    cursor: pointer;
-    font-family: 'Heebo', sans-serif;
-    font-size: 12px;
-    color: var(--text-dim);
-    min-height: 36px;
-    transition: all 0.15s;
-  }
-
-  .domain-btn:active { transform: scale(0.95); }
-  .domain-btn.active { border-color: var(--gold); color: var(--gold); }
-
-  /* --- Actor Panels --- */
-  .actor-panel { display: none; }
-  .actor-panel.active { display: block; }
-
-  /* --- Item Cards --- */
-  .item-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 10px;
-    border-right: 4px solid var(--border);
-  }
-
-  .item-card:active { transform: scale(0.995); }
-  .item-card[data-actor="HAMAS"] { border-right-color: var(--c-hamas); }
-  .item-card[data-actor="HEZBOLLAH"] { border-right-color: var(--c-hizb); }
-  .item-card[data-actor="IRAN"] { border-right-color: var(--c-iran); }
-  .item-card[data-actor="OTHERS"] { border-right-color: var(--c-others); }
-
-  .item-top {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 6px;
-    flex-wrap: wrap;
-  }
-
-  .item-id {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-muted);
-    background: var(--bg);
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-
-  .item-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  .domain-tag {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: var(--bg);
-    color: var(--text-dim);
-  }
-
-  .confidence {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: 700;
-  }
-
-  .confidence-HIGH { background: #166534; color: #bbf7d0; }
-  .confidence-MEDIUM { background: #854d0e; color: #fef08a; }
-  .confidence-LOW { background: #78350f; color: #fed7aa; }
-
-  .item-fields {
-    display: grid;
-    gap: 4px;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .field-label {
-    font-weight: 700;
-    color: var(--text-dim);
-  }
-
-  .item-action {
-    margin-top: 10px;
-    padding: 10px 12px;
-    background: rgba(22, 101, 52, 0.15);
-    border-radius: 8px;
-    color: #86efac;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-
-  .item-source-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-right: auto;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(59, 130, 246, 0.12);
-    color: #60a5fa;
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 600;
-    border: 1px solid rgba(59, 130, 246, 0.25);
-    transition: background 0.15s;
-    min-height: 28px;
-    white-space: nowrap;
-  }
-  .item-source-link:active { background: rgba(59, 130, 246, 0.25); }
-  .item-source-link svg { flex-shrink: 0; }
-
-  /* --- Alerts --- */
-  .alerts-section {
-    margin-top: 28px;
-  }
-
-  .alerts-section h2 {
-    color: var(--gold);
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-
-  .alert-item {
-    background: var(--surface);
-    padding: 12px 14px;
-    margin-bottom: 8px;
-    border-radius: var(--radius);
-    border-right: 3px solid #dc2626;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .opsec-item { border-right-color: #f59e0b; }
-
-  /* --- Commander Summary (TOP) --- */
-  .commander-summary {
-    background: var(--surface);
-    border: 1px solid var(--gold);
-    border-radius: var(--radius);
-    padding: 18px;
-    margin: 0 auto 24px;
-    max-width: 720px;
-  }
-
-  .commander-summary h2 {
-    color: var(--gold);
-    font-size: 15px;
-    margin-bottom: 8px;
-  }
-
-  .commander-summary .note-text {
-    font-size: 14px;
-    line-height: 1.7;
-  }
-
-  /* --- Sector Nav --- */
-  .sector-nav {
-    max-width: 720px;
-    margin: 0 auto 28px;
-    padding: 0 16px;
-  }
-
-  .sector-nav-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 6px;
-    text-align: center;
-  }
-
-  .sector-nav-hint {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-align: center;
-    margin-bottom: 14px;
-    line-height: 1.6;
-  }
-
-  .sector-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 8px;
-  }
-
-  .sector-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 14px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.2s;
-    text-align: center;
-    min-height: 48px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    font-family: 'Heebo', sans-serif;
-  }
-
-  .sector-card:active { transform: scale(0.97); }
-
-  .sector-card .sector-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-
-  .sector-card .sector-name {
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--text);
-  }
-
-  .sector-card .sector-count {
-    font-size: 12px;
-    color: var(--text-dim);
-  }
-
-  .sector-card .sector-level {
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  .sector-card[data-actor="HAMAS"] .sector-dot { background: var(--c-hamas); }
-  .sector-card[data-actor="HEZBOLLAH"] .sector-dot { background: var(--c-hizb); }
-  .sector-card[data-actor="IRAN"] .sector-dot { background: var(--c-iran); }
-  .sector-card[data-actor="OTHERS"] .sector-dot { background: var(--c-others); }
-
-  .sector-card[data-actor="HAMAS"]:hover, .sector-card[data-actor="HAMAS"].active { border-color: var(--c-hamas); }
-  .sector-card[data-actor="HEZBOLLAH"]:hover, .sector-card[data-actor="HEZBOLLAH"].active { border-color: var(--c-hizb); }
-  .sector-card[data-actor="IRAN"]:hover, .sector-card[data-actor="IRAN"].active { border-color: var(--c-iran); }
-  .sector-card[data-actor="OTHERS"]:hover, .sector-card[data-actor="OTHERS"].active { border-color: var(--c-others); }
-
-  /* --- Commander Note (bottom, smaller) --- */
-  .commander-note {
-    background: var(--surface);
-    border-right: 3px solid var(--gold);
-    border-radius: 0 var(--radius) var(--radius) 0;
-    padding: 14px 16px;
-    margin-top: 28px;
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--text-dim);
-  }
-
-  /* --- Cross-Reference Sidebar --- */
-  .crossref-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 280px;
-    height: 100dvh;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    overflow-y: auto;
-    padding: 60px 14px 24px;
-    z-index: 110;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .crossref-sidebar.open { transform: translateX(0); }
-
-  .crossref-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 105;
-    display: none;
-  }
-
-  .crossref-overlay.open { display: block; }
-
-  .crossref-toggle {
-    position: fixed;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 101;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: none;
-    border-radius: 0 8px 8px 0;
-    padding: 12px 6px;
-    cursor: pointer;
-    color: var(--gold);
-    font-family: 'Heebo', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    min-height: 48px;
-    transition: opacity 0.3s;
-  }
-
-  .crossref-toggle.hidden { opacity: 0; pointer-events: none; }
-
-  .crossref-sidebar h2 {
-    color: var(--gold);
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .crossref-desc {
-    color: var(--text-muted);
-    font-size: 11px;
-    margin-bottom: 14px;
-  }
-
-  .crossref-close {
-    position: absolute;
-    top: 16px;
-    left: 14px;
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 8px;
-    min-height: 44px;
-    min-width: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .crossref-item {
-    background: var(--bg);
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
-  .crossref-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-
-  .crossref-id {
-    font-weight: 700;
-    font-size: 11px;
-    color: var(--text-dim);
-    background: var(--surface2);
-    padding: 2px 6px;
-    border-radius: 4px;
-  }
-
-  .crossref-status { font-size: 11px; font-weight: 500; }
-
-  .crossref-links { display: flex; flex-direction: column; gap: 4px; }
-
-  .crossref-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px;
-    border-radius: 6px;
-    background: var(--surface);
-    text-decoration: none;
-    font-size: 11px;
-    color: var(--text-dim);
-    min-height: 40px;
-  }
-
-  .crossref-link:active { background: var(--surface2); }
-  .crossref-source { font-weight: 700; color: var(--text); min-width: 56px; }
-  .crossref-reason { flex: 1; color: var(--text-dim); }
-  .crossref-reliability { font-size: 14px; }
-
-  /* --- Footer --- */
-  .footer {
-    text-align: center;
-    padding: 28px 16px;
-    color: var(--text-muted);
-    font-size: 12px;
-    border-top: 1px solid var(--border);
-    margin-top: 32px;
-    line-height: 1.8;
-  }
-
-  /* ══════════════════════════════════════════
-     MISSION STATUS BANNER
-  ══════════════════════════════════════════ */
-  :root {
-    --go: #16a34a; --go-bg: #052e16; --go-text: #bbf7d0;
-    --caution: #ca8a04; --caution-bg: #422006; --caution-text: #fef08a;
-    --nogo: #dc2626; --nogo-bg: #450a0a; --nogo-text: #fecaca;
-    --day-accent: #f59e0b; --night-accent: #6366f1;
-  }
-
-  .mission-status-banner {
-    margin: 0 auto 0;
-    padding: 12px 16px 0;
-    max-width: 100%;
-  }
-
-  .mission-status-card {
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    border: 2px solid transparent;
-  }
-
-  .mission-status-card.status-GO    { background: var(--go-bg);     border-color: var(--go);     }
-  .mission-status-card.status-CAUTION { background: var(--caution-bg); border-color: var(--caution); }
-  .mission-status-card.status-NO-GO { background: var(--nogo-bg);   border-color: var(--nogo);   animation: pulse-nogo 2s ease-in-out infinite; }
-
-  @keyframes pulse-nogo {
-    0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
-    50%     { box-shadow: 0 0 0 8px rgba(220,38,38,0); }
-  }
-
-  .mission-status-label {
-    font-size: clamp(28px, 7vw, 44px);
-    font-weight: 900;
-    letter-spacing: 2px;
-    line-height: 1;
-    flex-shrink: 0;
-    font-variant-numeric: tabular-nums;
-  }
-  .status-GO     .mission-status-label { color: var(--go);     }
-  .status-CAUTION .mission-status-label { color: var(--caution); }
-  .status-NO-GO  .mission-status-label { color: var(--nogo);   }
-
-  .mission-status-meta { flex: 1; }
-  .mission-status-sublabel {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    opacity: 0.6;
-    margin-bottom: 4px;
-  }
-  .mission-status-reason {
-    font-size: 14px;
-    line-height: 1.5;
-    font-weight: 500;
-  }
-  .status-GO     .mission-status-reason,
-  .status-GO     .mission-status-sublabel { color: var(--go-text);     }
-  .status-CAUTION .mission-status-reason,
-  .status-CAUTION .mission-status-sublabel { color: var(--caution-text); }
-  .status-NO-GO  .mission-status-reason,
-  .status-NO-GO  .mission-status-sublabel { color: var(--nogo-text);   }
-
-  /* ══════════════════════════════════════════
-     COMMANDER BRIEF
-  ══════════════════════════════════════════ */
-  .commander-brief-section {
-    margin: 18px auto 0;
-    max-width: 720px;
-  }
-
-  .commander-brief-card {
-    background: var(--surface);
-    border: 1px solid var(--gold);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-  }
-
-  .commander-brief-card h2 {
-    color: var(--gold);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .commander-brief-item {
-    padding: 10px 14px;
-    background: var(--bg);
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.6;
-    margin-bottom: 8px;
-    border-right: 3px solid var(--gold);
-    color: var(--text);
-  }
-
-  .commander-brief-item:last-child { margin-bottom: 0; }
-
-  /* ══════════════════════════════════════════
-     NAVIGATOR BRIEF
-  ══════════════════════════════════════════ */
-  .navigator-section {
-    max-width: 720px;
-    margin: 0 auto 24px;
-    padding: 0 16px;
-  }
-
-  .navigator-section > h2 {
-    color: var(--text);
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .navigator-legend {
-    display: flex;
-    gap: 14px;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    color: var(--text-dim);
-    font-weight: 600;
-  }
-
-  .legend-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .axis-cards { display: flex; flex-direction: column; gap: 8px; }
-
-  .axis-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    border-right: 5px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-    min-height: 60px;
-  }
-
-  .axis-card.action-AVOID   { border-right-color: #dc2626; }
-  .axis-card.action-CAUTION { border-right-color: #f59e0b; }
-  .axis-card.action-MONITOR { border-right-color: #16a34a; }
-
-  .axis-main { flex: 1; min-width: 0; }
-
-  .axis-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 5px;
-    flex-wrap: wrap;
-  }
-
-  .axis-name { font-weight: 700; font-size: 15px; color: var(--text); }
-  .axis-area { font-size: 12px; color: var(--text-dim); }
-
-  .axis-threat-type {
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 4px;
-    background: var(--bg);
-    color: var(--text-dim);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
-
-  .axis-detail {
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.55;
-  }
-
-  .axis-badges {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-    flex-shrink: 0;
-  }
-
-  .time-badge {
-    font-size: 11px;
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  .time-DAY   { background: rgba(245,158,11,0.15); color: #fbbf24; }
-  .time-NIGHT { background: rgba(99,102,241,0.18); color: #a5b4fc; }
-  .time-BOTH  { background: rgba(148,163,184,0.12); color: #94a3b8; }
-
-  .action-badge {
-    font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-weight: 700;
-    white-space: nowrap;
-    min-height: 28px;
-    display: flex;
-    align-items: center;
-  }
-  .action-badge.badge-AVOID   { background: #450a0a; color: #fca5a5; border: 1px solid #dc2626; }
-  .action-badge.badge-CAUTION { background: #422006; color: #fde68a; border: 1px solid #f59e0b; }
-  .action-badge.badge-MONITOR { background: #052e16; color: #bbf7d0; border: 1px solid #16a34a; }
-
-  /* ══════════════════════════════════════════
-     DAY / NIGHT MISSIONS
-  ══════════════════════════════════════════ */
-  .daynight-wrapper {
-    margin-bottom: 24px;
-  }
-
-  .daynight-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  @media (max-width: 480px) { .daynight-grid { grid-template-columns: 1fr; } }
-
-  .daynight-col {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 14px;
-    border-top: 3px solid transparent;
-  }
-  .daynight-col.col-day   { border-top-color: var(--day-accent); }
-  .daynight-col.col-night { border-top-color: var(--night-accent); }
-
-  .daynight-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .daynight-icon { font-size: 16px; line-height: 1; }
-
-  .daynight-title {
-    font-size: 14px;
-    font-weight: 700;
-  }
-  .col-day   .daynight-title { color: var(--day-accent);   }
-  .col-night .daynight-title { color: var(--night-accent); }
-
-  .mission-threat-item {
-    padding: 10px 12px;
-    background: var(--bg);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--text);
-  }
-
-  .mission-threat-item:last-child { margin-bottom: 0; }
-  .mission-threat-area   { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-  .mission-threat-action { margin-top: 6px; font-size: 12px; color: #86efac; font-weight: 600; }
-
-  /* ══════════════════════════════════════════
-     LESSONS LEARNED
-  ══════════════════════════════════════════ */
-  .lessons-section { margin-top: 28px; }
-
-  .lessons-section > h2 {
-    color: var(--text);
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .lesson-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    border-right: 4px solid #6366f1;
-  }
-
-  .lesson-what {
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.6;
-    margin-bottom: 10px;
-  }
-
-  .lesson-what-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-muted);
-    display: block;
-    margin-bottom: 3px;
-  }
-
-  .lesson-apply {
-    padding: 10px 12px;
-    background: rgba(99,102,241,0.10);
-    border-radius: 8px;
-    border-right: 2px solid #6366f1;
-  }
-
-  .lesson-apply-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: #a5b4fc;
-    margin-bottom: 4px;
-    display: block;
-  }
-
-  .lesson-apply-text {
-    font-size: 13px;
-    color: var(--text);
-    line-height: 1.6;
-    font-weight: 500;
-  }
-
-  /* ══════════════════════════════════════════
-     MAP BUTTON + MAP SECTION
-  ══════════════════════════════════════════ */
   .map-btn {
     background: rgba(99,102,241,0.15);
     border: 1px solid #6366f1;
@@ -1018,9 +141,11 @@
   }
   .map-btn:active, .map-btn.active { background: rgba(99,102,241,0.35); }
 
+  /* ══ Tactical Map ════════════════════════════════════════════ */
   .map-section {
     display: none;
     border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     background: var(--surface);
   }
   .map-section.open { display: block; }
@@ -1029,15 +154,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 16px;
+    padding: 12px 16px;
     cursor: pointer;
     user-select: none;
   }
-
   .map-section-bar:active { background: var(--surface2); }
 
   .map-section-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--text);
     display: flex;
@@ -1045,17 +169,13 @@
     gap: 8px;
   }
 
-  .map-section-meta {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
+  .map-section-meta { font-size: 12px; color: var(--text-muted); }
 
   #tactical-map {
     height: 420px;
     width: 100%;
     background: #0d1b2a;
   }
-
   @media (min-width: 640px) { #tactical-map { height: 520px; } }
 
   .map-legend {
@@ -1064,681 +184,761 @@
     padding: 10px 16px;
     border-top: 1px solid var(--border);
     flex-wrap: wrap;
-  }
-
-  .map-legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
     font-size: 12px;
     color: var(--text-dim);
     font-weight: 600;
   }
-
+  .map-legend-item { display: flex; align-items: center; gap: 6px; }
   .map-legend-dot {
-    width: 12px;
-    height: 12px;
+    width: 12px; height: 12px;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(255,255,255,.2);
+    flex-shrink: 0;
+  }
+  .map-hint { margin-right: auto; font-size: 11px; color: var(--text-muted); font-weight: 400; }
+
+  .leaflet-popup-content { direction: rtl; font-family: 'Heebo', sans-serif; }
+
+  /* ══ Hero — compact date bar ════════════════════════════════ */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,27,46,0.6);
+  }
+
+  .hero-emblem img {
+    height: 36px;
+    filter: invert(1) sepia(0.3) saturate(1.4) drop-shadow(0 0 8px rgba(201,168,76,.5));
+    mix-blend-mode: screen;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .hero-text { flex: 1; min-width: 0; }
+
+  .hero-unit-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+
+  .hero-dates {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hero-date-badge {
+    margin-right: auto;
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--gold);
+    white-space: nowrap;
     flex-shrink: 0;
   }
 
-  /* Leaflet popup RTL fix */
-  .leaflet-popup-content { direction: rtl; font-family: 'Heebo', sans-serif; }
+  /* ══ Sector strip — horizontal scroll ═══════════════════════ */
+  .sector-nav {
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .sector-nav::-webkit-scrollbar { display: none; }
 
-  /* --- Desktop --- */
-  @media (min-width: 640px) {
-    .header-date { display: inline; }
-    .hero { padding: 36px 24px 28px; }
-    .content { padding: 0 24px 60px; }
-    .crossref-sidebar { width: 300px; padding-top: 70px; }
+  .sector-card {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 5px 13px;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: border-color 0.15s;
+    white-space: nowrap;
+    font-family: 'Heebo', sans-serif;
+    flex-shrink: 0;
+  }
+  .sector-card:active { opacity: 0.8; }
+  .sector-card[data-actor="HAMAS"]:hover,
+  .sector-card[data-actor="HAMAS"].active     { border-color: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"]:hover,
+  .sector-card[data-actor="HEZBOLLAH"].active { border-color: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"]:hover,
+  .sector-card[data-actor="IRAN"].active      { border-color: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"]:hover,
+  .sector-card[data-actor="OTHERS"].active    { border-color: var(--c-others); }
+
+  .sector-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .sector-card[data-actor="HAMAS"]     .sector-dot { background: var(--c-hamas); }
+  .sector-card[data-actor="HEZBOLLAH"] .sector-dot { background: var(--c-hizb); }
+  .sector-card[data-actor="IRAN"]      .sector-dot { background: var(--c-iran); }
+  .sector-card[data-actor="OTHERS"]    .sector-dot { background: var(--c-others); }
+  .sector-name  { font-weight: 700; font-size: 13px; color: var(--text); }
+  .sector-count { font-size: 11px; color: var(--text-dim); }
+
+  /* ══ Main Content ════════════════════════════════════════════ */
+  .content {
+    max-width: 720px;
+    margin: 24px auto 0;
+    padding: 0 16px 60px;
   }
 
-  /* --- Safe areas (iPhone) --- */
+  .actor-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2px 0;
+  }
+  .actor-tabs::-webkit-scrollbar { display: none; }
+
+  .actor-tab {
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.2s;
+    flex-shrink: 0;
+  }
+  .actor-tab:active { transform: scale(0.97); }
+  .actor-tab.active { border-color: var(--gold); color: var(--text); }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .actor-tab[data-actor="HAMAS"]     .dot { background: var(--c-hamas); }
+  .actor-tab[data-actor="HEZBOLLAH"] .dot { background: var(--c-hizb); }
+  .actor-tab[data-actor="IRAN"]      .dot { background: var(--c-iran); }
+  .actor-tab[data-actor="OTHERS"]    .dot { background: var(--c-others); }
+
+  .tab-count { background: var(--surface2); padding: 2px 7px; border-radius: 4px; font-size: 11px; }
+
+  .domain-filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .domain-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    min-height: 34px;
+    transition: all 0.15s;
+  }
+  .domain-btn:active { transform: scale(0.95); }
+  .domain-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,.08); }
+
+  .actor-panel { display: none; }
+  .actor-panel.active { display: block; }
+
+  /* ══ Item Card — Military Sitrep Format ═══════════════════════ */
+  .item-card {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 0;
+    margin-bottom: 6px;
+    border-right: 3px solid var(--border);
+    transition: box-shadow 0.3s;
+    overflow: hidden;
+  }
+  .item-card[data-actor="HAMAS"]     { border-right-color: var(--c-hamas); }
+  .item-card[data-actor="HEZBOLLAH"] { border-right-color: var(--c-hizb); }
+  .item-card[data-actor="IRAN"]      { border-right-color: var(--c-iran); }
+  .item-card[data-actor="OTHERS"]    { border-right-color: var(--c-others); }
+
+  .item-card.map-highlight {
+    box-shadow: 0 0 0 2px var(--gold), 0 4px 20px rgba(201,168,76,.3);
+    animation: pulse-gold 0.7s ease-out;
+  }
+  @keyframes pulse-gold {
+    0%   { box-shadow: 0 0 0 8px rgba(201,168,76,.5); }
+    100% { box-shadow: 0 0 0 2px var(--gold), 0 4px 20px rgba(201,168,76,.3); }
+  }
+  .item-card.hidden { display: none; }
+
+  /* ── Header row: time + id + actions ── */
+  .item-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px 6px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,.15);
+  }
+
+  .item-time {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .03em;
+    flex-shrink: 0;
+  }
+
+  .item-id {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+    letter-spacing: .04em;
+    flex-shrink: 0;
+  }
+
+  .domain-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(201,168,76,.1);
+    color: var(--gold-dim);
+    flex-shrink: 0;
+  }
+
+  .item-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: auto;
+  }
+
+  .item-source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(59,130,246,.1);
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(59,130,246,.2);
+    white-space: nowrap;
+    min-height: 24px;
+  }
+  .item-source-link:hover { background: rgba(59,130,246,.2); }
+
+  .map-pin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(99,102,241,.1);
+    color: #a5b4fc;
+    font-size: 11px;
+    border: 1px solid rgba(99,102,241,.2);
+    cursor: pointer;
+    min-height: 24px;
+    transition: background 0.15s;
+    font-family: 'Heebo', sans-serif;
+  }
+  .map-pin-btn:hover { background: rgba(99,102,241,.25); }
+  .map-pin-btn.no-location { opacity: 0.2; cursor: default; pointer-events: none; }
+
+  /* ── Body: clamped text + expand ── */
+  .item-body {
+    padding: 8px 12px 4px;
+    position: relative;
+  }
+
+  .item-translated {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-wrap;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .item-translated.expanded {
+    -webkit-line-clamp: unset;
+    display: block;
+  }
+
+  .item-expand-btn {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'Heebo', sans-serif;
+    cursor: pointer;
+    text-align: right;
+    transition: color 0.15s, background 0.15s;
+  }
+  .item-expand-btn:hover { color: var(--gold); background: rgba(201,168,76,.04); }
+
+  /* Original text (Arabic source) */
+  .item-original {
+    border-top: 1px solid var(--border);
+    padding: 6px 12px 8px;
+  }
+  .item-original summary {
+    font-size: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    user-select: none;
+  }
+  .item-original summary::before { content: '▶'; font-size: 8px; }
+  details[open] .item-original summary::before { content: '▼'; }
+  .item-original-text {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.55;
+    direction: auto;
+    white-space: pre-wrap;
+  }
+
+  /* ══ Footer ══════════════════════════════════════════════════ */
+  .page-footer {
+    text-align: center;
+    padding: 28px 16px;
+    color: var(--text-muted);
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+    margin-top: 32px;
+    line-height: 1.9;
+  }
+  .page-footer a { color: var(--gold-dim); text-decoration: none; }
+  .footer-logo { font-size: 20px; margin-bottom: 4px; }
+
+  /* ══ Desktop ══════════════════════════════════════════════════ */
+  @media (min-width: 640px) {
+    .header-sub { display: block; }
+    .hero { padding: 30px 24px 20px; }
+    .content { padding: 0 24px 60px; }
+    .item-translated { font-size: 15px; }
+    .sector-nav { padding: 0 24px; }
+  }
+
   @supports (padding: env(safe-area-inset-bottom)) {
     body { padding-bottom: env(safe-area-inset-bottom); }
-    .sticky-header {
-      padding-top: calc(10px + env(safe-area-inset-top));
-      padding-right: calc(16px + env(safe-area-inset-right));
-      padding-left: calc(16px + env(safe-area-inset-left));
-    }
-    .content {
-      padding-right: calc(16px + env(safe-area-inset-right));
-      padding-left: calc(16px + env(safe-area-inset-left));
-    }
+    .sticky-header { padding-top: calc(10px + env(safe-area-inset-top)); }
   }
 </style>
 </head>
 <body>
 
+<!-- ── Sticky Header ─────────────────────────────────────────────────────── -->
 <header class="sticky-header">
   <div class="header-right">
-    <img src="../assets/logo.png" alt="לוגו" class="header-logo">
-    <span class="header-title">OSINT 5550</span>
+    <img src="../assets/logo.png" alt="לוגו" class="header-logo" onerror="this.style.display='none'">
+    <div>
+      <div class="header-title">OSINT יל"ק 5550</div>
+      <div class="header-sub">ידיעות מתורגמות ומסווגות</div>
+    </div>
   </div>
   <div class="header-left">
     <span class="header-version">v2026.04.04</span>
-    <span class="header-date">י״ז ניסן תשפ״ו</span>
-    <span class="threat-badge threat-HIGH">HIGH</span>
-    <a href="digest.pdf" class="pdf-link" download>PDF</a>
-    <button class="map-btn" id="map-btn" title="מפה טקטית">🗺</button>
+    <span class="header-count">7 ידיעות</span>
+    <a href="digest.pdf" class="pdf-link" download>PDF ↓</a>
+    <button class="map-btn" id="map-btn" title="מפה מודיעינית">🗺</button>
   </div>
 </header>
 
-<!-- Mission Status Banner — most prominent element -->
-
-    <div class="mission-status-banner">
-      <div class="mission-status-card status-CAUTION">
-        <div class="mission-status-label">CAUTION</div>
-        <div class="mission-status-meta">
-          <div class="mission-status-sublabel">יציאה בזהירות</div>
-          <div class="mission-status-reason">60 תקיפות חזבאללה ביממה כולל נ"ט ונ"מ — תנועה בצירי דרום לבנון בסיכון גבוה, נדרשת זהירות מוגברת בכל יציאה</div>
-        </div>
-      </div>
-    </div>
-
-<section class="hero">
-  <div class="hero-dates">י״ז ניסן תשפ״ו | יום שבת, 4 אפריל 2026</div>
-  <h1 dir="ltr">04-APRIL-2026</h1>
-
-  <!-- Commander Brief — pre-departure decisions -->
-  
-    <div class="commander-brief-section">
-      <div class="commander-brief-card">
-        <h2>▶ בריפינג למפקד — לפני יציאה</h2>
-        <div class="commander-brief-item">לא להפעיל מסוקים בגובה נמוך מעל ראמיה ואזורי בינת ג'ביל — דיווח על טיל קרקע-אוויר פעיל</div><div class="commander-brief-item">ציר אלח'יאם–קנטרה: שני טנקי מרכבה הושמדו — לעבור רק עם כיסוי ולאחר סיור מוקדם</div><div class="commander-brief-item">לוודא נהלי הגנה על שריון לפני כל יציאה לגזרת בינת ג'ביל</div>
-      </div>
-    </div>
-
-  <div class="situation-box">יממה אינטנסיבית בשתי זירות עיקריות: בגזרת לבנון — עימותים כבדים בדרום, בדגש על ציר בינת ג'ביל ואלח'יאם, עם דיווחים על 60 תקיפות חזבאללה כנגד שריון ובסיסי צה"ל. בזירה האיראנית — הסלמה אסטרטגית סביב מצרי הורמוז, תקיפות משותפות איראן-תימן, ושינויים בפיקוד הצבאי האמריקאי המרמזים על מעבר לדוקטרינת פעולה מהירה.</div>
-  <div class="takeaways"><div class="takeaway">חזבאללה מדווח על 60 תקיפות ביממה כולל השמדת שני טנקי מרכבה ואיום על מסוק קרב — מתקפת התשה שיטתית בדרום לבנון</div><div class="takeaway">איראן מאיימת בסגירת מצרי הורמוז 'לטווח ארוך' לארה"ב וישראל, במקביל לחשיפת מנהרות נשק תת-קרקעיות — הצגת כוח והרתעה</div><div class="takeaway">החלפת רמטכ"ל ארה"ב בזמן מלחמה — מעבר מדוקטרינה זהירה לדוקטרינת פריסה מהירה, רלוונטי להורמוז ובאב אל-מנדב</div></div>
-</section>
-
-<!-- Navigator Brief — axis-by-axis threats -->
-
-    <div class="navigator-section">
-      <h2>🗺 בריפינג לנווט — איומים לפי ציר</h2>
-      <div class="navigator-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>הימנע</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>זהירות</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>עקוב</div>
-      </div>
-      <div class="axis-cards">
-    <div class="axis-card action-AVOID">
-      <div class="axis-main">
-        <div class="axis-header">
-          <span class="axis-name">ציר אלח'יאם–קנטרה</span>
-          <span class="axis-area">דרום לבנון</span>
-          <span class="axis-threat-type">DIRECT_FIRE</span>
-        </div>
-        <div class="axis-detail">שני טנקי מרכבה הושמדו בנ"ט. חזבאללה מחזיק ציוד נ"ט מדויק לאורך הציר</div>
-      </div>
-      <div class="axis-badges">
-        <span class="time-badge time-BOTH">יום+לילה</span>
-        <span class="action-badge badge-AVOID">הימנע</span>
-      </div>
-    </div>
-    <div class="axis-card action-CAUTION">
-      <div class="axis-main">
-        <div class="axis-header">
-          <span class="axis-name">ציר בינת ג'ביל–עיתרון</span>
-          <span class="axis-area">בינת ג'ביל, עינאתא, דבל</span>
-          <span class="axis-threat-type">AMBUSH</span>
-        </div>
-        <div class="axis-detail">קרבות פעילים — כיתור צה"ל נתקל בהתנגדות. לא להיכנס ללא תיאום עם גורמי שטח</div>
-      </div>
-      <div class="axis-badges">
-        <span class="time-badge time-BOTH">יום+לילה</span>
-        <span class="action-badge badge-CAUTION">זהירות</span>
-      </div>
-    </div>
-    <div class="axis-card action-CAUTION">
-      <div class="axis-main">
-        <div class="axis-header">
-          <span class="axis-name">ציר שמע–נאקורה</span>
-          <span class="axis-area">שמע, אלנאקורה, חאמול</span>
-          <span class="axis-threat-type">MIXED</span>
-        </div>
-        <div class="axis-detail">קרבות 60+ דקות בשמע. צה"ל לא נוכח על הכביש הראשי — חשיפה לאש בצירים פתוחים</div>
-      </div>
-      <div class="axis-badges">
-        <span class="time-badge time-BOTH">יום+לילה</span>
-        <span class="action-badge badge-CAUTION">זהירות</span>
-      </div>
-    </div>
-    <div class="axis-card action-MONITOR">
-      <div class="axis-main">
-        <div class="axis-header">
-          <span class="axis-name">ציר ראמיה–צור</span>
-          <span class="axis-area">ראמיה, חזבאללה צפון</span>
-          <span class="axis-threat-type">AERIAL</span>
-        </div>
-        <div class="axis-detail">טיל קרקע-אוויר אילץ מסוק קרב לסגת. אין פעילות מסוקים בגובה נמוך מעל האזור</div>
-      </div>
-      <div class="axis-badges">
-        <span class="time-badge time-DAY">יום</span>
-        <span class="action-badge badge-MONITOR">עקוב</span>
-      </div>
-    </div></div>
-    </div>
-
-<!-- Sector quick-nav -->
-<div class="sector-nav">
-  <div class="sector-nav-title">בחר גזרה</div>
-  <div class="sector-nav-hint">לחץ על גזרה כדי לסנן את הדוח ולהתמקד רק בפריטי המודיעין הרלוונטיים לה. כל גזרה מציגה את רמת האיום, מספר הפריטים, ומקורות ההצלבה שלה.</div>
-  <div class="sector-cards"><div class="sector-card" data-actor="HEZBOLLAH" class="actor-tab active">
-      <span class="sector-dot"></span>
-      <span class="sector-name">חיזבאללה</span>
-      <span class="sector-count">11 פריטים</span>
-      <span class="sector-level threat-badge threat-HIGH">HIGH</span>
-    </div><div class="sector-card" data-actor="IRAN">
-      <span class="sector-dot"></span>
-      <span class="sector-name">איראן</span>
-      <span class="sector-count">8 פריטים</span>
-      <span class="sector-level threat-badge threat-HIGH">HIGH</span>
-    </div></div>
-</div>
-
-<main class="content">
-  <!-- Day / Night mission threat split -->
-  
-    <div class="daynight-wrapper">
-      <div class="daynight-grid">
-        <div class="daynight-col col-day">
-          <div class="daynight-header">
-            <span class="daynight-icon">☀</span>
-            <span class="daynight-title">משימות יום</span>
-          </div>
-          
-    <div class="mission-threat-item">
-      <div>נ"ט מדויק של חזבאללה — השמדת שריון בציר אלח'יאם ביום</div>
-      <div class="mission-threat-area">אלח'יאם, קנטרה</div>
-      <div class="mission-threat-action">→ לא לנוע עם שריון ללא כיסוי אווירי ומסלעות</div>
-    </div>
-    <div class="mission-threat-item">
-      <div>כיסוי אנטי-אוויר (SA-7 משופר) — פעיל בשעות האור מעל ראמיה</div>
-      <div class="mission-threat-area">ראמיה, ציר צור</div>
-      <div class="mission-threat-action">→ לא להפעיל מסוקים בגובה נמוך — רק בגובה 500m+</div>
-    </div>
-        </div>
-        <div class="daynight-col col-night">
-          <div class="daynight-header">
-            <span class="daynight-icon">🌙</span>
-            <span class="daynight-title">משימות לילה</span>
-          </div>
-          
-    <div class="mission-threat-item">
-      <div>ניווט מורכב בציר בינת ג'ביל — לוחמי חזבאללה מנוסים בלחימת לילה עירונית</div>
-      <div class="mission-threat-area">בינת ג'ביל, עינאתא</div>
-      <div class="mission-threat-action">→ לא להיכנס לשטח בנוי ללא ידע מוקדם ותיאום מלא — BLUFOR tracking חובה</div>
-    </div>
-    <div class="mission-threat-item">
-      <div>כוחות איראן בסביבת מצרי הורמוז — תרגילים ליליים עם סירות טילים מהירות</div>
-      <div class="mission-threat-area">הורמוז, מפרץ עומאן</div>
-      <div class="mission-threat-action">→ ניטור ערוצי תקשורת — כל פעילות ימית ליד הורמוז מדווחת מיד</div>
-    </div>
-        </div>
-      </div>
-    </div>
-
-  <div class="actor-tabs"><button class="actor-tab" data-actor="HAMAS">
-    <span class="dot"></span>
-    🔴 חמאס
-    <span class="tab-count">0</span>
-  </button><button class="actor-tab" data-actor="HEZBOLLAH">
-    <span class="dot"></span>
-    🟠 חיזבאללה
-    <span class="tab-count">11</span>
-  </button><button class="actor-tab" data-actor="IRAN">
-    <span class="dot"></span>
-    🟣 איראן
-    <span class="tab-count">8</span>
-  </button><button class="actor-tab" data-actor="OTHERS">
-    <span class="dot"></span>
-    ⚫ אחרים
-    <span class="tab-count">0</span>
-  </button></div>
-  <div class="domain-filters">
-    <button class="domain-btn active" data-domain="ALL">הכל</button>
-    <button class="domain-btn" data-domain="KINETIC">KINETIC</button>
-    <button class="domain-btn" data-domain="TERRAIN">TERRAIN</button>
-    <button class="domain-btn" data-domain="SOCIAL">SOCIAL</button>
-    <button class="domain-btn" data-domain="CYBER">CYBER</button>
-    <button class="domain-btn" data-domain="GENERAL">GENERAL</button>
-  </div>
-
-  <div class="actor-panel" id="panel-HAMAS"><p style="color:var(--text-dim);padding:20px;text-align:center;">אין פריטים</p></div><div class="actor-panel" id="panel-HEZBOLLAH" class="actor-panel active">
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">L-K1</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">60 תקיפות חזבאללה ביממה — השמדת שריון ואיום על מסוק</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>חזבאללה ביצע 60 תקיפות מדויקות כנגד טנקים, מסוקים ובסיסים צבאיים. שני טנקי מרכבה הושמדו בקנטרה ובאלח'יאם, דחפור D9 נפגע, וטיל קרקע-אוויר אילץ מסוק קרב לסגת מעל ראמיה.</div>
-        <div><span class="field-label">איפה: </span>דרום לבנון — קנטרה, אלח'יאם, ראמיה, ח'רבת מאעז, בסיס דדו (פיקוד צפון)</div>
-        <div><span class="field-label">משמעות: </span>עליונות השריון והאוויר של צה"ל מאותגרת. חזבאללה מפגין יכולת נ"ט ונ"מ שמאיימת על חופש פעולה בגזרה.</div>
-      </div>
-      <div class="item-action">פעולה: לוודא נהלי הגנה על שריון בגזרת אלח'יאם. להזהיר מפעילות מסוקים בנמוך מעל ראמיה.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">L-K2</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">קרב בינת ג'ביל — תוכנית כיתור צה"ל נתקלת בהתנגדות</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>צה"ל ניסה כיתור מעיתרון לעינאתא ומוואדי אלחג'יר לצור. לפי מקורות לבנוניים, צה"ל הצליח להתקדם בצירים מסוימים אך לא הצליח להתבסס בשל ירי רקטות.</div>
-        <div><span class="field-label">איפה: </span>בינת ג'ביל, עיתרון, עינאתא, בית ליף, דבל, רשאף</div>
-        <div><span class="field-label">משמעות: </span>בינת ג'ביל נותרת מוקד לחימה מרכזי. כישלון ההתבססות מצביע על עוצמת הגנת חזבאללה באזור.</div>
-      </div>
-      <div class="item-action">פעולה: לעקוב אחר התקדמות בצירים. בינת ג'ביל נקודת כובד למבצע.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">L-K3</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">עימותים ממושכים בשמע ואלנאקורה</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>קרבות של למעלה משעה בעיירת שמע. צה"ל ביצע פיצוץ בנאקורה. אין נוכחות צה"לית על הכביש הראשי של נאקורה — משתמש במלון באזור חאמול כמרכז פעילות.</div>
-        <div><span class="field-label">איפה: </span>שמע, אלנאקורה, חאמול</div>
-        <div><span class="field-label">משמעות: </span>צה"ל מתמקם בנקודות פנימיות ולא על צירים ראשיים — מרמז על חשיפה לאש.</div>
-      </div>
-      <div class="item-action">פעולה: מודעות לפגיעות על צירים פתוחים. מלון חאמול — יעד מודיעיני.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN">
-      <div class="item-top">
-        <span class="item-id">L-T1</span>
-        <span class="domain-tag">TERRAIN</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">סוללת ארטילריה חדשה של צה"ל בגבול כפרשובא</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>צה"ל הקים סוללת ארטילריה חדשה בגבול כפרשובא לתמיכה בסוללת אלזעורה בגולן הסורי.</div>
-        <div><span class="field-label">איפה: </span>כפרשובא, גולן</div>
-        <div><span class="field-label">משמעות: </span>חיזוק כוח אש בגזרה המזרחית. מגביר יכולת תמיכה באש למבצע באלח'יאם.</div>
-      </div>
-      <div class="item-action">פעולה: לעקוב אחר פריסת ארטילריה נוספת בגזרה.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN">
-      <div class="item-top">
-        <span class="item-id">L-T2</span>
-        <span class="domain-tag">TERRAIN</span>
-        <span class="confidence confidence-HIGH">HIGH</span>
-        
-      </div>
-      <div class="item-title">כטב"מים מעל עשרות יישובים בדרום לבנון</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>פעילות כטב"מית נרחבת מעל נבטיה, צידון, צור, מרג'עיון, בינת ג'ביל, אלח'יאם, שקרא, כפרא, בקעע אלע'רבי.</div>
-        <div><span class="field-label">איפה: </span>דרום לבנון ובקעע המערבי — עשרות יישובים</div>
-        <div><span class="field-label">משמעות: </span>היקף הכטב"מים מצביע על סיקור פעיל רחב. רלוונטי ל-OPSEC של אוכלוסייה וכוחות.</div>
-      </div>
-      <div class="item-action">פעולה: אזהרת OPSEC — הימנעות מתנועה חשופה באזורים מנוטרים.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">L-K4</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-HIGH">HIGH</span>
-        
-      </div>
-      <div class="item-title">תקיפות צה"ל בצריפא, ג'מג'ייה, חניה, דיר אלזהראני</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>ארבע תקיפות רצופות בצריפא עם פגיעה במבנים ותשתיות. תקיפות בג'מג'ייה ובחניה. בדיר אלזהראני — טילים לא התפוצצו.</div>
-        <div><span class="field-label">איפה: </span>צריפא, ג'מג'ייה (בינת ג'ביל), חניה (צור), דיר אלזהראני</div>
-        <div><span class="field-label">משמעות: </span>היקף תקיפות רחב מצביע על מאמץ להכין את הקרקע. כשל בדיר אלזהראני — בעיית אמינות תחמושת.</div>
-      </div>
-      <div class="item-action">פעולה: לתעד כשלי חימוש. לעקוב אחר דפוס תקיפות הכנה.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">L-K5</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-LOW">LOW</span>
-        
-      </div>
-      <div class="item-title">חזבאללה מתרברב בכמויות טילים — פאדי 2, מלאכ 2, פאדי 4</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>סרטון תעמולה של חזבאללה מציג שפע נשק וטילים. נטען ירי של 'פאדי 2' (16 רקטות 'מלאכ 2') ואיום ב'פאדי 4'.</div>
-        <div><span class="field-label">איפה: </span>לא ידוע — סרטון השפעה</div>
-        <div><span class="field-label">משמעות: </span>הצגת יכולת שיגור מרובה. פאדי 4 = טווח ארוך יותר. מסר הרתעה.</div>
-      </div>
-      <div class="item-action">פעולה: להעריך יכולת פאדי 4. לעקוב אחר תדירות שיגורים.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">L-K6</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-HIGH">HIGH</span>
-        
-      </div>
-      <div class="item-title">תקיפת כטב"מ בסחמר — 2 הרוגים ו-11 פצועים מבין מתפללים</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>כטב"מ צה"לי תקף קבוצת מתפללים ביציאה ממסגד בסחמר, בקעע אלע'רבי. 2 הרוגים, 11 פצועים.</div>
-        <div><span class="field-label">איפה: </span>סחמר, בקעע המערבי</div>
-        <div><span class="field-label">משמעות: </span>פגיעה באזרחים — השלכות תקשורתיות ומשפטיות. חזבאללה ינצל לתעמולה.</div>
-      </div>
-      <div class="item-action">פעולה: מודעות לרגישות תקיפות באזורי אוכלוסייה אזרחית.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL">
-      <div class="item-top">
-        <span class="item-id">L-G1</span>
-        <span class="domain-tag">GENERAL</span>
-        <span class="confidence confidence-HIGH">HIGH</span>
-        
-      </div>
-      <div class="item-title">צה"ל קורא לפינוי שכונות בדרום ביירות</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>צה"ל הוציא קריאה לפינוי מיידי של שכונות בדרום ביירות.</div>
-        <div><span class="field-label">איפה: </span>דרום ביירות (דאחיה)</div>
-        <div><span class="field-label">משמעות: </span>עשוי לסמן תקיפות נוספות בעומק. הסלמה מול מרכזי אוכלוסייה.</div>
-      </div>
-      <div class="item-action">פעולה: לעקוב אחר תקיפות בביירות בשעות הקרובות.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="GENERAL">
-      <div class="item-top">
-        <span class="item-id">L-G2</span>
-        <span class="domain-tag">GENERAL</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">הוותיקן נכנס למשבר — מסר תקיף על לבנון</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>הוותיקן פרסם מסר תקיף בנוגע למשבר בלבנון, עם דגש על הקהילה הנוצרית.</div>
-        <div><span class="field-label">איפה: </span>וותיקן, לבנון</div>
-        <div><span class="field-label">משמעות: </span>מעורבות בינלאומית-דתית. עשוי להשפיע על לחץ דיפלומטי.</div>
-      </div>
-      <div class="item-action">פעולה: לעקוב אחר תגובות בינלאומיות ודתיות.</div>
-    </div>
-    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN">
-      <div class="item-top">
-        <span class="item-id">L-T3</span>
-        <span class="domain-tag">TERRAIN</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">ישראל מצמצמת יעדים — מתמקדת בבינת ג'ביל ואלח'יאם</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>לפי ניתוח לבנוני, צה"ל מצמצם את פריסת היעדים ומתרכז בבינת ג'ביל ואלח'יאם כנקודות כובד.</div>
-        <div><span class="field-label">איפה: </span>בינת ג'ביל, אלח'יאם</div>
-        <div><span class="field-label">משמעות: </span>מיקוד מאמץ צה"לי — רלוונטי לתכנון הגנתי של חזבאללה ולזיהוי צירי התקדמות.</div>
-      </div>
-      <div class="item-action">פעולה: לאמת מול מידע ישראלי. ציר בינת ג'ביל-אלח'יאם = עדיפות.</div>
-    </div></div><div class="actor-panel" id="panel-IRAN">
-    <div class="item-card" data-actor="IRAN" data-domain="GENERAL">
-      <div class="item-top">
-        <span class="item-id">I-G1</span>
-        <span class="domain-tag">GENERAL</span>
-        <span class="confidence confidence-LOW">LOW</span>
-        
-      </div>
-      <div class="item-title">ניתוח: לאיראן 5 מיליון חמושים — עלולים לפעול מחוץ לגבולות</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>דר' אל-כביסי מנתח: 50,000 חיילים אמריקאים באזור. אם תשתיות חשמל יותקפו, איראן עלולה לשלוח חלק מ-5 מיליון חמושיה לעיראק והמפרץ. ארה"ב מנסה לבנות קואליציה בינלאומית.</div>
-        <div><span class="field-label">איפה: </span>איראן, עיראק, המפרץ הפרסי</div>
-        <div><span class="field-label">משמעות: </span>תרחיש הסלמה: תקיפת תשתיות → הפצת מיליציות מחוץ לאיראן. רלוונטי להערכת איום אזורי.</div>
-      </div>
-      <div class="item-action">פעולה: לעקוב אחר ריכוזי כוחות אמריקאיים ותרגילים משותפים.</div>
-    </div>
-    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">I-K1</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-LOW">LOW</span>
-        
-      </div>
-      <div class="item-title">איראן מציגה מנהרות נשק תת-קרקעיות — טילים בליסטיים וכטב"מים</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>טהראן פרסמה סרטון מנהרות ענקיות תת-קרקעיות המכילות טילים בליסטיים, משגרים וכטב"מים תוקפים.</div>
-        <div><span class="field-label">איפה: </span>איראן — מנהרות תת-קרקעיות</div>
-        <div><span class="field-label">משמעות: </span>מסר הרתעה: יכולות איראן שלמות למרות תקיפות. תשתית מוגנת מפני מכות אוויריות.</div>
-      </div>
-      <div class="item-action">פעולה: להעריך יכולת חדירה למנהרות. סרטון השפעה — לא ניתן לאמת מיקום.</div>
-    </div>
-    <div class="item-card" data-actor="IRAN" data-domain="GENERAL">
-      <div class="item-top">
-        <span class="item-id">I-G2</span>
-        <span class="domain-tag">GENERAL</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">החלפת רמטכ"ל ארה"ב — מעבר לדוקטרינת פריסה מהירה</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>רמטכ"ל ארה"ב הוחלף בזמן מלחמה. המפקד החדש כריסטופר לניף — רקע בדיוויזיה 82 המוטסת. ניתוח: מעבר מחשיבה מקצועית-זהירה לדוקטרינת 'נקודות חדירה מהירה'.</div>
-        <div><span class="field-label">איפה: </span>ארה"ב, רלוונטי להורמוז ובאב אל-מנדב</div>
-        <div><span class="field-label">משמעות: </span>שינוי דוקטרינה אמריקאית — הורמוז ובאב אל-מנדב כנקודות שליטה צבאית, לא עניין נפטי. מהירות פעולה גוברת.</div>
-      </div>
-      <div class="item-action">פעולה: לעקוב אחר פריסה אמריקאית בהורמוז. שינוי בקצב ייתכן בימים הקרובים.</div>
-    </div>
-    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">I-K2</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-LOW">LOW</span>
-        
-      </div>
-      <div class="item-title">איראן טוענת להפלת מטוס קרב אמריקאי ליד קשם</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>הכוחות המזוינים של איראן הודיעו על הפלת מטוס קרב מתקדם של ארה"ב במים שבין הנגאם לקשם. נטען כתגובה לטענות טראמפ על השמדת הגנה אווירית איראנית.</div>
-        <div><span class="field-label">איפה: </span>מצרי הורמוז — בין איי הנגאם וקשם</div>
-        <div><span class="field-label">משמעות: </span>אם אמת — יכולת נ"מ איראנית פעילה בהורמוז. סביר יותר: תעמולה כתגובה לטענות טראמפ.</div>
-      </div>
-      <div class="item-action">פעולה: לחפש אישור ממקורות מערביים. לעקוב אחר תגובה אמריקאית.</div>
-    </div>
-    <div class="item-card" data-actor="IRAN" data-domain="GENERAL">
-      <div class="item-top">
-        <span class="item-id">I-G3</span>
-        <span class="domain-tag">GENERAL</span>
-        <span class="confidence confidence-HIGH">HIGH</span>
-        
-      </div>
-      <div class="item-title">מצרי הורמוז — איראן מאיימת בסגירה ארוכת טווח, רמזים להקלה</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>דובר הצבא האיראני: הורמוז ייסגר 'לטווח ארוך' לארה"ב וישראל. טראמפ טען שייפתח לאחר המלחמה. בנוסף — דיווח על הקלה אפשרית בסגירה.</div>
-        <div><span class="field-label">איפה: </span>מצרי הורמוז</div>
-        <div><span class="field-label">משמעות: </span>סתירה בין הצהרות — ייתכן משא ומתן מאחורי הקלעים. סגירת הורמוז = משבר נפט עולמי.</div>
-      </div>
-      <div class="item-action">פעולה: לנטר תנועת ספינות בהורמוז. לעקוב אחר הצהרות דיפלומטיות.</div>
-    </div>
-    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">I-K3</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-MEDIUM">MEDIUM</span>
-        
-      </div>
-      <div class="item-title">תקיפה משותפת איראן-תימן נגד נושאת מטוסים וספינות ארה"ב</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>תקיפה משותפת של משמרות המהפיכה וכוחות תימן נגד נושאת מטוסים וספינות מלחמה אמריקאיות. חות'ים: טילים בליסטיים וכטב"מים נגד USS Truman.</div>
-        <div><span class="field-label">איפה: </span>ים סוף / מפרץ עדן</div>
-        <div><span class="field-label">משמעות: </span>שיתוף פעולה מבצעי איראן-תימן. איום ישיר על נכסי ספינות ארה"ב. הסלמה ימית.</div>
-      </div>
-      <div class="item-action">פעולה: לעקוב אחר תגובה אמריקאית ומצב נושאות מטוסים.</div>
-    </div>
-    <div class="item-card" data-actor="IRAN" data-domain="KINETIC">
-      <div class="item-top">
-        <span class="item-id">I-K4</span>
-        <span class="domain-tag">KINETIC</span>
-        <span class="confidence confidence-LOW">LOW</span>
-        
-      </div>
-      <div class="item-title">דיווחים על סדקים ונזק לסכרים באיראן לאחר תקיפות</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>דיווחים על סדקים בסכר כארון 3 בצ'הארמהאל ובח'תיארי, ופגיעה בסכר גוטואנד בחוזסתאן עם נזילת מים. משמרות המהפיכה גויסו לסייע.</div>
-        <div><span class="field-label">איפה: </span>חוזסתאן, צ'הארמהאל ובח'תיארי — סכרים</div>
-        <div><span class="field-label">משמעות: </span>אם מדובר בתוצאת תקיפה — פגיעה בתשתית מים/חשמל קריטית. שיטפונות אפשריים.</div>
-      </div>
-      <div class="item-action">פעולה: לנטר מצב סכרים באיראן. רלוונטי להערכת נזק תשתיתי.</div>
-    </div>
-    <div class="item-card" data-actor="IRAN" data-domain="SOCIAL">
-      <div class="item-top">
-        <span class="item-id">I-S1</span>
-        <span class="domain-tag">SOCIAL</span>
-        <span class="confidence confidence-LOW">LOW</span>
-        
-      </div>
-      <div class="item-title">תמונות כיסא מפלט טייס F-18 מופצות ברשת</div>
-      <div class="item-fields">
-        <div><span class="field-label">מה: </span>תמונות המתיימרות להציג כיסא מפלט של טייס F-18 אמריקאי מופצות ברשתות. לא ברור אם אותנטיות.</div>
-        <div><span class="field-label">איפה: </span>רשתות חברתיות איראניות</div>
-        <div><span class="field-label">משמעות: </span>ניסיון לחזק נרטיב של הפלת מטוס. אם אמיתי — ראיה ליכולת נ"מ.</div>
-      </div>
-      <div class="item-action">פעולה: לבדוק אותנטיות מול מקורות מערביים.</div>
-    </div></div><div class="actor-panel" id="panel-OTHERS"><p style="color:var(--text-dim);padding:20px;text-align:center;">אין פריטים</p></div>
-
-  <div class="alerts-section"><h2>דפוסי איום חוזרים</h2><div class="alert-item">חזבאללה מפגין שיטתיות בתקיפות נ"ט — כל יממה דיווח על פגיעה בשריון. דפוס קבוע של טילים מונחים נגד מרכבה.</div><div class="alert-item">שיתוף פעולה מבצעי איראן-תימן מתהדק — תקיפות משותפות נגד ספינות ארה"ב. ציר הורמוז-באב אל-מנדב פעיל.</div><div class="alert-item">דפוס השפעה: כל פעולה צבאית מלווה בסרטון תעמולה תוך שעות — מנהרות, ירי, 'הפלת מטוס'. מלחמת תודעה מתואמת.</div></div>
-  <div class="alerts-section"><h2>התראות OPSEC</h2><div class="alert-item opsec-item">כטב"מים פעילים מעל עשרות יישובים בדרום לבנון — כל תנועה חשופה לסיקור. נדרשת הקפדה על הסוואה ותנועה.</div><div class="alert-item opsec-item">חזבאללה מציין את בסיס דדו (פיקוד צפון) כיעד — מודעות לאיום על מתקנים אסטרטגיים בעומק.</div><div class="alert-item opsec-item">דיווחים על שימוש צה"ל במלון בחאמול כמרכז פעילות — ייתכן שמיקום נחשף. לבחון חלופות.</div></div>
-
-  <!-- Lessons Learned from the field -->
-  
-    <div class="lessons-section">
-      <h2>📋 לקחים מהשטח</h2>
-      
-    <div class="lesson-card">
-      <span class="lesson-what-label">מה קרה</span>
-      <div class="lesson-what">מסוק קרב נכנס לגובה נמוך מעל ראמיה ונאלץ לסגת לאחר שנורה עליו טיל קרקע-אוויר. לא היה מיפוי SA עדכני לאזור.</div>
-      <div class="lesson-apply">
-        <span class="lesson-apply-label">💡 מה ללמוד</span>
-        <div class="lesson-apply-text">לפני כל פעילות אוויר — לבצע סיור SA (Surface-to-Air) עדכני. מידע ישן מסוכן. לוחמה נ"מ של חזבאללה שודרגה — הנחות הבסיס ישנות.</div>
-      </div>
-    </div>
-    <div class="lesson-card">
-      <span class="lesson-what-label">מה קרה</span>
-      <div class="lesson-what">כוח שריון נכנס לציר אלח'יאם מבלי לדעת שחזבאללה מחזיק נ"ט מדויק בנקודת שליטה — שני טנקים הושמדו.</div>
-      <div class="lesson-apply">
-        <span class="lesson-apply-label">💡 מה ללמוד</span>
-        <div class="lesson-apply-text">כל ציר שלא עבר בו כוח מדווח ב-24 שעות האחרונות — חוזר להיות לא ידוע. סיור מוקדם חובה. הקדמי של כוח שריון מנחה תנועה.</div>
-      </div>
-    </div>
-    <div class="lesson-card">
-      <span class="lesson-what-label">מה קרה</span>
-      <div class="lesson-what">כוח עצר במלון חאמול כמרכז פעילות — המיקום זוהה ותועד ע"י מקורות חזבאללה כיעד מודיעיני.</div>
-      <div class="lesson-apply">
-        <span class="lesson-apply-label">💡 מה ללמוד</span>
-        <div class="lesson-apply-text">עצירה ממושכת בנקודה קבועה = חשיפה. יחידת ניוד אינה עוצרת יותר מ-30 דקות בנקודה חשופה. EMCON נוקשה בעצירות.</div>
-      </div>
-    </div>
-    </div>
-
-  <div class="commander-note">
-    יממה מסוכנת בשתי זירות. בלבנון — חזבאללה מדגים יכולת התשה משמעותית בדגש על נ"ט ונ"מ, עם 60 תקיפות מדווחות. בזירת איראן — הסלמה אסטרטגית סביב הורמוז עם סתירות שמרמזות על מו"מ סמוי. החלפת רמטכ"ל ארה"ב בזמן מלחמה היא אירוע חריג שעשוי לסמן שינוי בקצב הפעולה. עדיפות: הגנה על שריון בגזרת אלח'יאם ומעקב אחר הורמוז.
-  </div>
-</main>
-
-<!-- Tactical Map -->
-
+<!-- ── Tactical Map (lazy, collapsible) ──────────────────────────────────── -->
 <div class="map-section" id="map-section">
   <div class="map-section-bar" id="map-bar">
-    <div class="map-section-title">🗺 מפה טקטית — צירים חשופים</div>
-    <span class="map-section-meta">4 צירים ממופים | לחץ להרחבה</span>
+    <div class="map-section-title">🗺 מפה מודיעינית — כל הגזרות</div>
+    <span class="map-section-meta">5 ידיעות ממופות · לחץ לסגירה ✕</span>
   </div>
   <div id="tactical-map"></div>
   <div class="map-legend">
-    <div class="map-legend-item"><span class="map-legend-dot" style="background:#dc2626"></span>הימנע</div>
-    <div class="map-legend-item"><span class="map-legend-dot" style="background:#f59e0b"></span>זהירות</div>
-    <div class="map-legend-item"><span class="map-legend-dot" style="background:#16a34a"></span>עקוב</div>
-    <div class="map-legend-item" style="margin-right:auto;color:var(--text-muted)">לחץ על marker לפרטים</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-hamas)"></span>חמאס</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-hizb)"></span>חיזבאללה</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-iran)"></span>איראן</div>
+    <div class="map-legend-item"><span class="map-legend-dot" style="background:var(--c-others)"></span>אחרים</div>
+    <span class="map-hint">לחץ מרקר → עבור לידיעה · כל הגזרות על המפה</span>
   </div>
 </div>
 
-<!-- Cross-reference sidebar -->
-<div class="crossref-overlay" id="crossref-overlay"></div>
-<div class="crossref-sidebar"><button class="crossref-close">&times;</button><h2>הצלבת מקורות</h2><div class="crossref-desc">מקורות חיצוניים לאימות ובדיקה</div><div class="crossref-item" data-item-id="L-K1"><div class="crossref-item-header"><span class="crossref-id">L-K1</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K2"><div class="crossref-item-header"><span class="crossref-id">L-K2</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K3"><div class="crossref-item-header"><span class="crossref-id">L-K3</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-T1"><div class="crossref-item-header"><span class="crossref-id">L-T1</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-T2"><div class="crossref-item-header"><span class="crossref-id">L-T2</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K4"><div class="crossref-item-header"><span class="crossref-id">L-K4</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K5"><div class="crossref-item-header"><span class="crossref-id">L-K5</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-K6"><div class="crossref-item-header"><span class="crossref-id">L-K6</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-G1"><div class="crossref-item-header"><span class="crossref-id">L-G1</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-G2"><div class="crossref-item-header"><span class="crossref-id">L-G2</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="L-T3"><div class="crossref-item-header"><span class="crossref-id">L-T3</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח מזרח תיכוני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.timesofisrael.com/?s=hezbollah%20Hezbollah%20military%20position%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Times of Israel</span><span class="crossref-reason">ראייה ישראלית</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-G1"><div class="crossref-item-header"><span class="crossref-id">I-G1</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K1"><div class="crossref-item-header"><span class="crossref-id">I-K1</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-G2"><div class="crossref-item-header"><span class="crossref-id">I-G2</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20%20-%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K2"><div class="crossref-item-header"><span class="crossref-id">I-K2</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-G3"><div class="crossref-item-header"><span class="crossref-id">I-G3</span><span class="crossref-status" style="color:#16a34a">מאומת ממספר מקורות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K3"><div class="crossref-item-header"><span class="crossref-id">I-K3</span><span class="crossref-status" style="color:#ca8a04">מאומת חלקית</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-K4"><div class="crossref-item-header"><span class="crossref-id">I-K4</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.understandingwar.org/search?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">ISW</span><span class="crossref-reason">ניתוח צבאי מקצועי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.reuters.com/search/news?query=Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20attack%20strike%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a></div></div><div class="crossref-item" data-item-id="I-S1"><div class="crossref-item-header"><span class="crossref-id">I-S1</span><span class="crossref-status" style="color:#dc2626">לא מאומת — נדרש אימות</span></div><div class="crossref-links"><a href="https://www.reuters.com/search/news?query=Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Reuters</span><span class="crossref-reason">אימות עובדתי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.al-monitor.com/search?q=iran%20Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">Al-Monitor</span><span class="crossref-reason">ניתוח איראני</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://www.bbc.com/search?q=iran%20Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">BBC</span><span class="crossref-reason">סיקור בינלאומי</span><span class="crossref-reliability" style="color:#16a34a">✅</span></a><a href="https://x.com/search?q=Iran%20propaganda%20%20Lebanon" target="_blank" rel="noopener" class="crossref-link"><span class="crossref-source">X/Twitter</span><span class="crossref-reason">ניטור רשתות</span><span class="crossref-reliability" style="color:#dc2626">🔴</span></a></div></div></div>
-<button class="crossref-toggle" id="crossref-toggle">הצלבת מקורות</button>
+<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-emblem">
+    <img src="../assets/logo.png" alt="לוגו" onerror="this.style.display='none'">
+  </div>
+  <div class="hero-text">
+    <div class="hero-unit-name">יל״ק 5550 — יסוד האש</div>
+    <div class="hero-dates">יום שבת, 4 אפריל 2026 | י״ז ניסן תשפ״ו</div>
+  </div>
+  <div class="hero-date-badge">04-APRIL-2026</div>
+</section>
 
-<footer class="footer">
-  יל"ק 5550 — יסוד האש | רס"ן רועי להב | מידע פתוח בלבד<br>
-  יום שבת, 4 אפריל 2026 | י״ז ניסן תשפ״ו
+<!-- ── Sector quick-nav ───────────────────────────────────────────────────── -->
+<div class="sector-nav"><div class="sector-card" data-actor="HAMAS">
+      <span class="sector-dot"></span>
+      <span class="sector-name">חמאס</span>
+      <span class="sector-count">3 ידיעות</span>
+    </div><div class="sector-card" data-actor="HEZBOLLAH">
+      <span class="sector-dot"></span>
+      <span class="sector-name">חיזבאללה</span>
+      <span class="sector-count">2 ידיעות</span>
+    </div><div class="sector-card" data-actor="IRAN">
+      <span class="sector-dot"></span>
+      <span class="sector-name">איראן</span>
+      <span class="sector-count">1 ידיעות</span>
+    </div><div class="sector-card" data-actor="OTHERS">
+      <span class="sector-dot"></span>
+      <span class="sector-name">אחרים</span>
+      <span class="sector-count">1 ידיעות</span>
+    </div></div>
+
+<!-- ── Main content ──────────────────────────────────────────────────────── -->
+<main class="content">
+
+  <div class="actor-tabs"><button class="actor-tab" data-actor="HAMAS">
+    <span class="dot"></span>
+    חמאס
+    <span class="tab-count">3</span>
+  </button><button class="actor-tab active" data-actor="HEZBOLLAH">
+    <span class="dot"></span>
+    חיזבאללה
+    <span class="tab-count">2</span>
+  </button><button class="actor-tab" data-actor="IRAN">
+    <span class="dot"></span>
+    איראן
+    <span class="tab-count">1</span>
+  </button><button class="actor-tab" data-actor="OTHERS">
+    <span class="dot"></span>
+    אחרים
+    <span class="tab-count">1</span>
+  </button></div>
+
+  <div class="domain-filters">
+    <button class="domain-btn active" data-domain="ALL">הכל</button>
+    <button class="domain-btn" data-domain="KINETIC">קינטי</button>
+    <button class="domain-btn" data-domain="TERRAIN">שטח</button>
+    <button class="domain-btn" data-domain="SOCIAL">חברתי</button>
+    <button class="domain-btn" data-domain="CYBER">סייבר</button>
+    <button class="domain-btn" data-domain="GENERAL">כללי</button>
+  </div>
+
+  <div class="actor-panel" id="panel-HAMAS">
+    <div class="item-card" data-actor="HAMAS" data-domain="KINETIC" data-id="H-K1">
+      <div class="item-header">
+        <span class="item-time">06:14</span>
+        <span class="item-id">H-K1</span>
+        <span class="domain-tag">קינטי</span>
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
+    data-item-id="H-K1"
+    title="הצג על המפה">📍</button>
+          <a href="https://t.me/qassam1brigades/12345" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-translated">שהידי אל-קסאם: תקפנו ריכוז חיילי כיבוש בירי חי צפון מחנה אל-נוסיירט, ואושרו פגיעות בשורותיהם.</div>
+      </div>
+      
+      <details class="item-original">
+        <summary>מקור ערבי</summary>
+        <div class="item-original-text">شهداء القسام: استهدفنا تجمعًا لجنود الاحتلال بالرصاص الحي شمال مخيم النصيرات، وتأكد وقوع إصابات في صفوفهم.</div>
+      </details>
+    </div>
+    <div class="item-card" data-actor="HAMAS" data-domain="KINETIC" data-id="H-K2">
+      <div class="item-header">
+        <span class="item-time">08:52</span>
+        <span class="item-id">H-K2</span>
+        <span class="domain-tag">קינטי</span>
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
+    data-item-id="H-K2"
+    title="הצג על המפה">📍</button>
+          <a href="https://t.me/qassam1brigades/12346" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-translated">גדודי אל-קסאם: ירי 3 פגזי מרגמה לעבר כלי רכב של הכיבוש המרוכזים על ציר נצרים.</div>
+      </div>
+      
+      <details class="item-original">
+        <summary>מקור ערבי</summary>
+        <div class="item-original-text">كتائب القسام: إطلاق 3 قذائف هاون صوب آليات الاحتلال المتمركزة على محور نتساريم.</div>
+      </details>
+    </div>
+    <div class="item-card" data-actor="HAMAS" data-domain="SOCIAL" data-id="H-S1">
+      <div class="item-header">
+        <span class="item-time">10:30</span>
+        <span class="item-id">H-S1</span>
+        <span class="domain-tag">חברתי</span>
+        <div class="item-header-actions">
+          <button class="map-pin-btn no-location"
+    data-item-id="H-S1"
+    title="מיקום לא ידוע">📍</button>
+          
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-translated">המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.</div>
+      </div>
+      
+      <details class="item-original">
+        <summary>מקור ערבי</summary>
+        <div class="item-original-text">المكتب الإعلامي لحركة حماس: نؤكد أن المقاومة ستواصل عملياتها حتى انسحاب كامل قوات الاحتلال من القطاع.</div>
+      </details>
+    </div></div><div class="actor-panel active" id="panel-HEZBOLLAH">
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="KINETIC" data-id="HZ-K1">
+      <div class="item-header">
+        <span class="item-time">07:20</span>
+        <span class="item-id">HZ-K1</span>
+        <span class="domain-tag">קינטי</span>
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
+    data-item-id="HZ-K1"
+    title="הצג על המפה">📍</button>
+          <a href="https://t.me/moqawama/9871" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-translated">ההתנגדות האסלאמית בלבנון: תקפנו את עמדת מירון בשני טילי בורקן ואושרה הפגיעה.</div>
+      </div>
+      
+      <details class="item-original">
+        <summary>מקור ערבי</summary>
+        <div class="item-original-text">المقاومة الإسلامية في لبنان: استهدفنا موقع ميرون بصاروخَي بركان وأُكّدت الإصابة.</div>
+      </details>
+    </div>
+    <div class="item-card" data-actor="HEZBOLLAH" data-domain="TERRAIN" data-id="HZ-T1">
+      <div class="item-header">
+        <span class="item-time">11:05</span>
+        <span class="item-id">HZ-T1</span>
+        <span class="domain-tag">שטח</span>
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
+    data-item-id="HZ-T1"
+    title="הצג על המפה">📍</button>
+          
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-translated">נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.</div>
+      </div>
+      
+      <details class="item-original">
+        <summary>מקור ערבי</summary>
+        <div class="item-original-text">رصد تعزيزات عسكرية إسرائيلية على طول الشريط الحدودي من رأس الناقورة حتى المطلة.</div>
+      </details>
+    </div></div><div class="actor-panel" id="panel-IRAN">
+    <div class="item-card" data-actor="IRAN" data-domain="SOCIAL" data-id="IR-S1">
+      <div class="item-header">
+        <span class="item-time">09:00</span>
+        <span class="item-id">IR-S1</span>
+        <span class="domain-tag">חברתי</span>
+        <div class="item-header-actions">
+          <button class="map-pin-btn no-location"
+    data-item-id="IR-S1"
+    title="מיקום לא ידוע">📍</button>
+          <a href="https://www.tasnimnews.com/fa/news/2026/04/04/123456" target="_blank" rel="noopener" class="item-source-link">מקור ↗</a>
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-translated">סוכנות תסנים: דובר משמרות המהפכה מאשר המשך תמיכת איראן בהתנגדות בפלסטין ולבנון.</div>
+      </div>
+      
+      <details class="item-original">
+        <summary>מקור ערבי</summary>
+        <div class="item-original-text">وكالة تسنيم: المتحدث باسم الحرس الثوري يؤكد استمرار دعم إيران للمقاومة في فلسطين ولبنان.</div>
+      </details>
+    </div></div><div class="actor-panel" id="panel-OTHERS">
+    <div class="item-card" data-actor="OTHERS" data-domain="KINETIC" data-id="O-K1">
+      <div class="item-header">
+        <span class="item-time">13:15</span>
+        <span class="item-id">O-K1</span>
+        <span class="domain-tag">קינטי</span>
+        <div class="item-header-actions">
+          <button class="map-pin-btn"
+    data-item-id="O-K1"
+    title="הצג על המפה">📍</button>
+          
+        </div>
+      </div>
+      <div class="item-body">
+        <div class="item-translated">גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.</div>
+      </div>
+      
+      <details class="item-original">
+        <summary>מקור ערבי</summary>
+        <div class="item-original-text">كتائب شهداء الأقصى: إطلاق نار على قوة إسرائيلية في منطقة جنين — لا إصابات معلنة.</div>
+      </details>
+    </div></div>
+
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer class="page-footer">
+  <div class="footer-logo">🛡</div>
+  <div>יל"ק 5550 — יסוד האש</div>
+  <div><a href="../../">ארכיון תחקירים</a> · <a href="digest.pdf">PDF</a></div>
+  <div style="margin-top:6px">v2026.04.04 · 04-APRIL-2026</div>
 </footer>
 
 <script>
-// Actor tabs
+// ── Map items injected by sitebuilder ────────────────────────────────────────
+const MAP_ITEMS = [{"id":"H-K1","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 06:14","text":"שהידי אל-קסאם: תקפנו ריכוז חיילי כיבוש בירי חי צפון מחנה אל-נוסיירט, ואושרו פגיעות בשורותיהם.","lat":31.426,"lon":34.395},{"id":"H-K2","actor":"HAMAS","domain":"KINETIC","datetime":"04/04/2026 08:52","text":"גדודי אל-קסאם: ירי 3 פגזי מרגמה לעבר כלי רכב של הכיבוש המרוכזים על ציר נצרים.","lat":31.389,"lon":34.337},{"id":"H-S1","actor":"HAMAS","domain":"SOCIAL","datetime":"04/04/2026 10:30","text":"המשרד התקשורתי של חמאס: אנו מאשרים כי ההתנגדות תמשיך בפעולותיה עד נסיגה מלאה של כוחות הכיבוש מהרצועה.","lat":null,"lon":null},{"id":"HZ-K1","actor":"HEZBOLLAH","domain":"KINETIC","datetime":"04/04/2026 07:20","text":"ההתנגדות האסלאמית בלבנון: תקפנו את עמדת מירון בשני טילי בורקן ואושרה הפגיעה.","lat":32.997,"lon":35.421},{"id":"HZ-T1","actor":"HEZBOLLAH","domain":"TERRAIN","datetime":"04/04/2026 11:05","text":"נרשמו תגבורות צבאיות ישראליות לאורך הסרט הגבולי מראס אל-נאקורה ועד המטולה.","lat":33.113,"lon":35.137},{"id":"IR-S1","actor":"IRAN","domain":"SOCIAL","datetime":"04/04/2026 09:00","text":"סוכנות תסנים: דובר משמרות המהפכה מאשר המשך תמיכת איראן בהתנגדות בפלסטין ולבנון.","lat":null,"lon":null},{"id":"O-K1","actor":"OTHERS","domain":"KINETIC","datetime":"04/04/2026 13:15","text":"גדודי שהידי אל-אקצא: ירי על כוח ישראלי באזור ג'נין — אין נפגעים שהוכרזו.","lat":32.46,"lon":35.3}];
+
+const ACTOR_COLOR = {
+  HAMAS:'#dc2626', HEZBOLLAH:'#ea580c', IRAN:'#7c3aed', OTHERS:'#16a34a'
+};
+const ACTOR_HEB = {
+  HAMAS:'חמאס', HEZBOLLAH:'חיזבאללה', IRAN:'איראן', OTHERS:'אחרים'
+};
+const DOMAIN_HEB = {
+  KINETIC:'קינטי', TERRAIN:'שטח', SOCIAL:'חברתי', CYBER:'סייבר', GENERAL:'כללי'
+};
+
+// ── Actor tabs ────────────────────────────────────────────────────────────────
 document.querySelectorAll('.actor-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
     tab.classList.add('active');
-    document.getElementById('panel-' + tab.dataset.actor).classList.add('active');
-    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
-    filterDomain('ALL');
+    const panel = document.getElementById('panel-' + tab.dataset.actor);
+    if (panel) panel.classList.add('active');
+    applyDomain(currentDomain);
   });
 });
 
-// Domain filters
-document.querySelectorAll('.domain-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    filterDomain(btn.dataset.domain);
-  });
-});
-
-function filterDomain(domain) {
-  const activePanel = document.querySelector('.actor-panel.active');
-  if (!activePanel) return;
-  activePanel.querySelectorAll('.item-card').forEach(card => {
-    card.style.display = (domain === 'ALL' || card.dataset.domain === domain) ? '' : 'none';
-  });
-}
-
-// Sector cards → scroll to content and activate actor tab
+// ── Sector cards → activate tab + scroll ─────────────────────────────────────
 document.querySelectorAll('.sector-card').forEach(card => {
   card.addEventListener('click', () => {
     const actor = card.dataset.actor;
-    // Activate the matching actor tab
     document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
     const tab = document.querySelector('.actor-tab[data-actor="' + actor + '"]');
     if (tab) tab.classList.add('active');
     const panel = document.getElementById('panel-' + actor);
     if (panel) panel.classList.add('active');
-    // Reset domain filter
+    card.classList.add('active');
     document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
-    filterDomain('ALL');
-    // Highlight sector card
-    document.querySelectorAll('.sector-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-    // Scroll to content
+    currentDomain = 'ALL';
+    applyDomain('ALL');
     document.querySelector('.content').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 
-// Cross-ref sidebar
-const sidebar = document.querySelector('.crossref-sidebar');
-const overlay = document.getElementById('crossref-overlay');
-const toggle = document.getElementById('crossref-toggle');
+// ── Domain filter ─────────────────────────────────────────────────────────────
+let currentDomain = 'ALL';
 
-function openSidebar() {
-  sidebar.classList.add('open');
-  overlay.classList.add('open');
-  toggle.classList.add('hidden');
-}
-function closeSidebar() {
-  sidebar.classList.remove('open');
-  overlay.classList.remove('open');
-  toggle.classList.remove('hidden');
+function applyDomain(domain) {
+  currentDomain = domain;
+  const panel = document.querySelector('.actor-panel.active');
+  if (!panel) return;
+  panel.querySelectorAll('.item-card').forEach(card => {
+    card.classList.toggle('hidden', domain !== 'ALL' && card.dataset.domain !== domain);
+  });
 }
 
-toggle.addEventListener('click', openSidebar);
-overlay.addEventListener('click', closeSidebar);
-document.querySelector('.crossref-close')?.addEventListener('click', closeSidebar);
+document.querySelectorAll('.domain-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyDomain(btn.dataset.domain);
+  });
+});
 
-// ── Tactical Map ────────────────────────────────────────────────────────────
-const MAP_AXES = [{"axis_name":"ציר אלח'יאם–קנטרה","area":"דרום לבנון","threat_type":"DIRECT_FIRE","time_pattern":"BOTH","recommended_action":"AVOID","detail":"שני טנקי מרכבה הושמדו בנ\"ט. חזבאללה מחזיק ציוד נ\"ט מדויק לאורך הציר","lat":33.35,"lon":35.487},{"axis_name":"ציר בינת ג'ביל–עיתרון","area":"בינת ג'ביל, עינאתא, דבל","threat_type":"AMBUSH","time_pattern":"BOTH","recommended_action":"CAUTION","detail":"קרבות פעילים — כיתור צה\"ל נתקל בהתנגדות. לא להיכנס ללא תיאום עם גורמי שטח","lat":33.115,"lon":35.43},{"axis_name":"ציר שמע–נאקורה","area":"שמע, אלנאקורה, חאמול","threat_type":"MIXED","time_pattern":"BOTH","recommended_action":"CAUTION","detail":"קרבות 60+ דקות בשמע. צה\"ל לא נוכח על הכביש הראשי — חשיפה לאש בצירים פתוחים","lat":33.103,"lon":35.193},{"axis_name":"ציר ראמיה–צור","area":"ראמיה, חזבאללה צפון","threat_type":"AERIAL","time_pattern":"DAY","recommended_action":"MONITOR","detail":"טיל קרקע-אוויר אילץ מסוק קרב לסגת. אין פעילות מסוקים בגובה נמוך מעל האזור","lat":33.133,"lon":35.34}];
-const mapSection = document.getElementById('map-section');
-const mapBtn = document.getElementById('map-btn');
+// ── Expand / collapse item text ───────────────────────────────────────────────
+document.querySelectorAll('.item-expand-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = btn.closest('.item-card').querySelector('.item-translated');
+    const expanded = body.classList.toggle('expanded');
+    btn.textContent = expanded ? '▲ פחות' : '▼ קרא עוד';
+  });
+});
+
+// ── Map pin buttons (📍 on each item card) ────────────────────────────────────
+document.querySelectorAll('.map-pin-btn:not(.no-location)').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const itemId = btn.dataset.itemId;
+    const ms = document.getElementById('map-section');
+    const mb = document.getElementById('map-btn');
+    if (!ms.classList.contains('open')) {
+      ms.classList.add('open');
+      mb && mb.classList.add('active');
+      ms.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => loadLeaflet(() => initMap(itemId)), 350);
+    } else {
+      flyToItem(itemId);
+      ms.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ── Highlight item card ───────────────────────────────────────────────────────
+function highlightItem(itemId) {
+  const card = document.querySelector('.item-card[data-id="' + itemId + '"]');
+  if (!card) return;
+  const actor = card.dataset.actor;
+  // Activate tab
+  document.querySelectorAll('.actor-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.actor-panel').forEach(p => p.classList.remove('active'));
+  const tab = document.querySelector('.actor-tab[data-actor="' + actor + '"]');
+  if (tab) tab.classList.add('active');
+  const panel = document.getElementById('panel-' + actor);
+  if (panel) panel.classList.add('active');
+  // Reset domain
+  document.querySelectorAll('.domain-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.domain-btn[data-domain="ALL"]').classList.add('active');
+  applyDomain('ALL');
+  // Highlight animation
+  document.querySelectorAll('.item-card.map-highlight').forEach(c => c.classList.remove('map-highlight'));
+  card.classList.add('map-highlight');
+  setTimeout(() => card.classList.remove('map-highlight'), 3200);
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120);
+}
+
+// ── Called from Leaflet popup button ─────────────────────────────────────────
+function handleMapItemClick(itemId) {
+  if (leafletMap) leafletMap.closePopup();
+  highlightItem(itemId);
+}
+
+// ── Leaflet lazy-load + map init ──────────────────────────────────────────────
 let mapReady = false;
 let leafletMap = null;
+let markersMap = {};
 
 function loadLeaflet(cb) {
   if (window.L) { cb(); return; }
@@ -1752,70 +952,92 @@ function loadLeaflet(cb) {
   document.head.appendChild(js);
 }
 
-function initLeafletMap() {
-  if (mapReady) { leafletMap && leafletMap.invalidateSize(); return; }
+function initMap(focusItemId) {
+  if (mapReady) {
+    leafletMap && leafletMap.invalidateSize();
+    if (focusItemId) flyToItem(focusItemId);
+    return;
+  }
   mapReady = true;
 
-  const ACTION_COLOR = { AVOID: '#dc2626', CAUTION: '#f59e0b', MONITOR: '#16a34a' };
-  const ACTION_HEB   = { AVOID: 'הימנע', CAUTION: 'זהירות', MONITOR: 'עקוב' };
-  const TIME_HEB     = { DAY: 'יום ☀', NIGHT: 'לילה 🌙', BOTH: 'יום+לילה' };
-
-  // Center on valid axes or default to Israel/Lebanon border
-  const valid = MAP_AXES.filter(a => a.lat && a.lon);
-  let center = [33.1, 35.35], zoom = 10;
-  if (valid.length > 0) {
-    const lat = valid.reduce((s, a) => s + a.lat, 0) / valid.length;
-    const lon = valid.reduce((s, a) => s + a.lon, 0) / valid.length;
+  const valid = MAP_ITEMS.filter(i => i.lat && i.lon);
+  let center = [32.0, 35.2], zoom = 8;
+  if (valid.length === 1) { center = [valid[0].lat, valid[0].lon]; zoom = 12; }
+  else if (valid.length > 1) {
+    const lat = valid.reduce((s,i) => s + i.lat, 0) / valid.length;
+    const lon = valid.reduce((s,i) => s + i.lon, 0) / valid.length;
     center = [lat, lon];
-    zoom = valid.length === 1 ? 12 : 10;
+    zoom = 9;
   }
 
   leafletMap = L.map('tactical-map', { zoomControl: true, attributionControl: false })
                .setView(center, zoom);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '© OpenStreetMap',
-  }).addTo(leafletMap);
-
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 })
+   .addTo(leafletMap);
   L.control.attribution({ prefix: '© OpenStreetMap' }).addTo(leafletMap);
 
-  valid.forEach(ax => {
-    const color  = ACTION_COLOR[ax.recommended_action] || '#94a3b8';
-    const popup  = `
-      <div style="min-width:220px;max-width:280px;">
-        <div style="font-size:16px;font-weight:900;margin-bottom:4px;">${ax.axis_name}</div>
-        <div style="font-size:12px;color:#64748b;margin-bottom:10px;">${ax.area || ''}</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-          <span style="background:#f1f5f9;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;">${ax.threat_type}</span>
-          <span style="background:#f8fafc;padding:2px 8px;border-radius:4px;font-size:11px;">${TIME_HEB[ax.time_pattern] || ax.time_pattern}</span>
+  valid.forEach(item => {
+    const color  = ACTOR_COLOR[item.actor] || '#94a3b8';
+    const aHeb   = ACTOR_HEB[item.actor]   || item.actor;
+    const dHeb   = DOMAIN_HEB[item.domain] || item.domain;
+    const snippet = item.text.length > 110 ? item.text.substring(0, 110) + '…' : item.text;
+
+    const popup = `
+      <div style="min-width:240px;max-width:300px;line-height:1.55;font-family:Heebo,sans-serif;">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px;">
+          <span style="background:${color}22;color:${color};border:1.5px solid ${color};border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;">${item.id}</span>
+          <span style="font-size:11px;color:#64748b;">${aHeb} · ${dHeb}</span>
         </div>
-        <div style="font-size:13px;color:#334155;line-height:1.55;margin-bottom:10px;">${ax.detail}</div>
-        <div style="background:${color}22;border:1.5px solid ${color};border-radius:6px;padding:7px 12px;font-weight:800;color:${color};font-size:14px;text-align:center;">${ACTION_HEB[ax.recommended_action]}</div>
+        ${item.datetime ? '<div style="font-size:11px;color:#94a3b8;margin-bottom:7px;">' + item.datetime + '</div>' : ''}
+        <div style="font-size:13px;color:#1e293b;line-height:1.6;margin-bottom:12px;">${snippet}</div>
+        <button onclick="handleMapItemClick('${item.id}')"
+          style="width:100%;background:${color};color:#fff;border:none;border-radius:7px;padding:8px 12px;font-weight:700;font-size:13px;cursor:pointer;font-family:Heebo,sans-serif;">
+          עבור לידיעה ↓
+        </button>
       </div>`;
 
-    L.circleMarker([ax.lat, ax.lon], {
-      radius: 18,
+    const marker = L.circleMarker([item.lat, item.lon], {
+      radius: 14,
       fillColor: color,
       color: '#fff',
       weight: 2.5,
       opacity: 1,
-      fillOpacity: 0.88,
+      fillOpacity: 0.85,
     }).addTo(leafletMap)
-      .bindPopup(popup, { maxWidth: 300, className: 'tactical-popup' })
-      .bindTooltip(`<b>${ax.axis_name}</b>`, { direction: 'top', sticky: true });
+      .bindPopup(popup, { maxWidth: 320, className: 'tactical-popup' })
+      .bindTooltip('<b>' + item.id + '</b> ' + snippet.substring(0, 40), { direction: 'top', sticky: true });
+
+    markersMap[item.id] = marker;
   });
+
+  if (focusItemId) setTimeout(() => flyToItem(focusItemId), 200);
 }
 
-// Map button — toggle section and lazy-load Leaflet
+function flyToItem(itemId) {
+  const marker = markersMap[itemId];
+  if (!marker) return;
+  leafletMap.flyTo(marker.getLatLng(), 13, { duration: 0.8 });
+  setTimeout(() => marker.openPopup(), 900);
+}
+
+// ── Map open / close ──────────────────────────────────────────────────────────
+const mapBtn = document.getElementById('map-btn');
+const mapSection = document.getElementById('map-section');
+
 mapBtn && mapBtn.addEventListener('click', () => {
-  if (!mapSection) return;
   const isOpen = mapSection.classList.toggle('open');
   mapBtn.classList.toggle('active', isOpen);
   if (isOpen) {
     mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setTimeout(() => loadLeaflet(initLeafletMap), 250);
+    setTimeout(() => loadLeaflet(() => initMap(null)), 350);
   }
+});
+
+// Click bar to close
+document.getElementById('map-bar') && document.getElementById('map-bar').addEventListener('click', () => {
+  mapSection.classList.remove('open');
+  mapBtn && mapBtn.classList.remove('active');
 });
 </script>
 </body>
